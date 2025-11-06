@@ -1,11 +1,5 @@
-Here’s a **tailored README.md** for your specific code and project structure:
-
----
-
-```markdown
 # DuckDB OLAP Demo on E-Commerce Behavior Data
-
-This project demonstrates basic OLAP (Online Analytical Processing) operations on the [Ecommerce Behavior Data from Multi-category Store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store) using [DuckDB](https://duckdb.org/) in Python.
+This project demonstrates basic OLAP (Online Analytical Processing) operations on the [Ecommerce Behavior Data from Multi-category Store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store) using DuckDB in Python.
 
 ## Project Overview
 
@@ -27,12 +21,9 @@ your_project/
 
 ## Requirements
 
-- Python 3.7+
-- [DuckDB Python package](https://pypi.org/project/duckdb/)
-
-Install DuckDB:
-```bash
-pip install duckdb
+See requirements.txt and install with 
+```bash 
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -68,33 +59,9 @@ Each query will print its results and the time taken.
 - **purchases_per_event_by_category:**  
   Show a pivot table: views, carts, and purchases per category.
 
-## Example Output
-
-```
-category_code           views   carts   purchases
-electronics.smartphone  10000   500     200
-...
-2.13 seconds elapsed
-```
-
 ## Extending
 
 To add your own OLAP query:
 1. Define a new function in `main.py`.
 2. Use DuckDB SQL to query the CSV.
 3. Pass your function to `main()` at the bottom of the script.
-
-## License
-
-MIT License
-
-## Credits
-
-- [DuckDB](https://duckdb.org/)
-- [Ecommerce Behavior Data from Multi-category Store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store)
-```
-
----
-
-**Copy and save this as `README.md` in your project directory.**  
-Let me know if you want to add more usage examples or further details!
