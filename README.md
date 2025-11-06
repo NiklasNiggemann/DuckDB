@@ -9,12 +9,12 @@ It is maintained by Niklas Niggemann, a Working Student.
 ## 📦 Project Overview
 
 ### ✅ Finished Projects
-- **DuckDB Basics**  
-  Introductory examples and simple queries to get started with DuckDB.
 
 ### 🚧 In Progress
 - **DuckDB, Polars, Pandas & PyArrow Comparison**  
   Side-by-side performance and feature comparison of popular data processing libraries.
+  - **DuckDB Basics**  
+  Introductory examples and simple queries to get started with DuckDB.
 
 ### 📝 Planned Projects
 - **DuckDB & SQLite Comparison**
