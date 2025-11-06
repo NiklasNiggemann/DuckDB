@@ -1,0 +1,1 @@
+In this project we take the code form the DuckDB_Basic demo and compare it with common DataFrame formats.
