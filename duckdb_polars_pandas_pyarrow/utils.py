@@ -3,11 +3,12 @@ import os
 
 class Timer:
     def __enter__(self):
-        self._enter_time = time.time()
+        self.start = time.perf_counter()
+        return self
 
-    def __exit__(self, *exc_args):
-        self._exit_time = time.time()
-        print(f"{self._exit_time - self._enter_time:.2f} seconds elapsed")
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.end = time.perf_counter()
+        self.elapsed = self.end - self.start
 
 def get_dataset_dir():
     current_dir = os.path.dirname(os.path.abspath(__file__))
