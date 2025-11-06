@@ -1,10 +1,16 @@
-import sys
-import os
-import duckdb
-import polars as pl
-import pandas as pd
-import pyarrow as pa
 import utils
+import duckdb_basics
+import polars_basics
+import pandas_basics
+from memory_profiler import profile
 
-duckdb.sql(f"SELECT * FROM read_csv_auto('{utils.get_dataset_dir()}/netflix.csv')").show()
+dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
 
+@profile
+def main(selected_function):
+    with utils.Timer():
+        selected_function()
+
+main(duckdb_basics.purchases_and_count)
+main(polars_basics.purchases_and_count)
+main(pandas_basics.purchases_and_count)
