@@ -21,7 +21,7 @@ your_project/
 
 ## Requirements
 
-See requirements.txt and install with 
+See requirements.txt and install with:  
 ```bash 
 pip install -r requirements.txt
 ```
