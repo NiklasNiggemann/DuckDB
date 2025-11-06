@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="d8f990ef-0c00-4faa-a9af-458104080741" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../duckdb_polars_pandas/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../duckdb_basics/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../duckdb_basics/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../duckdb_basics/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/lib.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../duckdb_basics/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../duckdb_basics/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../duckdb_polars_pandas/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../duckdb_polars_pandas/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../duckdb_polars_pandas/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../duckdb_polars_pandas/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +29,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="356Vebi4RWll9sYkrf4UNAjyeLw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -34,7 +42,13 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "basic",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/niklasniggemann/duckdb_motherduck_lab/utils",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -55,6 +69,7 @@
       <option name="presentableId" value="Default" />
       <updated>1762430604745</updated>
       <workItem from="1762430605809" duration="27000" />
+      <workItem from="1762434789662" duration="436000" />
     </task>
     <servers />
   </component>
