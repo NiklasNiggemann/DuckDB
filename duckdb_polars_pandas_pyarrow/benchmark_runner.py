@@ -16,13 +16,14 @@ def parse_output(output: str) -> Optional[Tuple[float, float]]:
 
 def run_benchmark(n_runs: int) -> Tuple[List[float], List[float]]:
     memories, times = [], []
+    print("Benchmarking Started")
     for i in range(n_runs):
+        print("------------------------------------------------")
         print(f"Run {i+1}/{n_runs}")
         try:
             result = subprocess.check_output(
                 [sys.executable, 'benchmark_target.py'],
-                stderr=subprocess.STDOUT,
-                timeout=60
+                stderr=subprocess.STDOUT
             )
             output = result.decode().strip()
             print(output)
@@ -37,12 +38,12 @@ def run_benchmark(n_runs: int) -> Tuple[List[float], List[float]]:
             print(f"Run failed: {e.output.decode()}")
         except subprocess.TimeoutExpired:
             print("Run timed out!")
+    print("Benchmark Finished!")
     return memories, times
 
 def summarize(label: str, values: List[float]):
     print(f"\n--- {label} ---")
     print(f"Median: {statistics.median(values):.2f}")
-    print(f"Mean:   {statistics.mean(values):.2f}")
     print(f"Min:    {min(values):.2f}")
     print(f"Max:    {max(values):.2f}")
     print(f"Span:   {max(values) - min(values):.2f}")
