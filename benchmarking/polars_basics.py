@@ -23,7 +23,7 @@ def total_sales_per_category():
     df = pl.read_csv(dataset_path)
     result = (
         df.filter(pl.col("event_type") == "purchase")
-        .group_by("category_code")
+        .groupby("category_code")
         .agg(pl.col("price").sum().alias("total_sales"))
     )
     print(result)
@@ -32,7 +32,7 @@ def total_sales_per_category_by_brand():
     df = pl.read_csv(dataset_path)
     result = (
         df.filter(pl.col("event_type") == "purchase")
-        .group_by(["category_code", "brand"])
+        .groupby(["category_code", "brand"])
         .agg(pl.col("price").sum().alias("total_sales"))
     )
     print(result)
@@ -40,7 +40,7 @@ def total_sales_per_category_by_brand():
 def purchases_per_event_by_category():
     df = pl.read_csv(dataset_path)
     result = (
-        df.group_by("category_code")
+        df.groupby("category_code")
         .agg([
             (pl.col("event_type") == "view").sum().alias("views"),
             (pl.col("event_type") == "cart").sum().alias("carts"),
