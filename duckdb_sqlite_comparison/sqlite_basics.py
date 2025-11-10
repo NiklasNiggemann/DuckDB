@@ -1,18 +1,20 @@
-import csv
 import sqlite3
-
+import pandas as pd
 import utils
 
 con = sqlite3.connect(":memory:")
 cur = con.cursor()
-cur.execute("CREATE TABLE ecommerce (event_time, event_type, product_id, category_id, category_code, brand, price, user_id, user_session);")
+print("Database created")
 
-with open(f'{utils.get_dataset_dir()}/ecommerce.csv') as csvfile:
-    reader = csv.DictReader(csvfile)
-    to_db = [(i['event_time'], i['event_type'], i['product_id'], i['category_id'], i['category_code'], i['brand'], i['price'], i['user_id'], i['user_session']) for i in reader]
+df = pd.read_csv(f"{utils.get_dataset_dir()}/ecommerce.csv")
+print("DataFrame created")
 
-cur.executemany("INSERT INTO ecommerce ecommerce (event_time, event_type, product_id, category_id, category_code, brand, price, user_id, user_session) VALUES (?,?,?,?,?,?,?,?,?);", to_db)
-con.commit()
+df.to_sql("ecommerce", con, if_exists='replace', index=False)
+print("DataFrame converted to Table")
 
 res = cur.execute("SELECT * FROM ecommerce")
-res.fetchall()
+rows = res.fetchall()
+print("SQL query executed")
+
+for row in rows[:5]:
+    print(row)
