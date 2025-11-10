@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Query Profile Graph for Query</title>
+	<link rel="stylesheet" href="https://unpkg.com/treeflex/dist/css/treeflex.css">
+
+	<style>
+		<style>
+
+.styled-table {
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+	background-color: #009879;
+	color: #ffffff;
+	text-align: left;
+}
+.styled-table th,
+.styled-table td {
+	padding: 12px 15px;
+}
+.styled-table tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+	border-bottom: 2px solid #009879;
+}
+
+.node-body {
+	font-size:15px;
+}
+.tf-nc {
+	position: relative;
+	width: 180px;
+	text-align: center;
+	background-color: #fff100;
+}
+.custom-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 0px;
+  border-radius: 1px;
+
+  /* Positioning */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+
+  /* Tooltip Arrow */
+  width: 400px;
+}
+
+.custom-tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
+</style>
+
+	</style>
+</head>
+<body>
+	<div id="meta-info"></div>
+	<div class="chart" id="query-profile">
+		
+	<table class="styled-table">
+		<thead>
+			<tr>
+				<th>Phase</th>
+				<th>Time</th>
+				<th>Percentage</th>
+			</tr>
+		</thead><tbody>
+	<tr>
+			<td><b>TOTAL TIME</b></td>
+            <td>0.001392791</td>
+            <td>100.0%</td>
+    </tr>
+
+	<tr>
+			<td><b>Execution Time</b></td>
+            <td>2.0429999999999998e-06</td>
+            <td>0.1466%</td>
+    </tr>
+
+	<tr>
+			<td>COLUMN_DATA_SCAN</td>
+            <td>2.0429999999999998e-06</td>
+            <td>0.1466%</td>
+    </tr>
+</tbody></table>
+	</div>
+	<div class="tf-tree tf-gap-sm"> 
+ <ul><li><span class="tf-nc custom-tooltip" style="background-color: #ff1493;"><div class="node-body"><p><b>COLUMN DATA SCAN</b> </p><p>time: 0.0000 seconds</p><span class="tooltip-text">  </span><p>cardinality: 1</p><p>estimate: 0</p><p>width: 32 bytes</p></div></span></li></ul> </div>
+</body>
+</html>
