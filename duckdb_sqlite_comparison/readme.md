@@ -18,7 +18,7 @@ Although comparing these engines in an OLAP setting may seem unfair—since SQLi
 
 ### Key Findings
 
-- **Performance:** DuckDB completes analytical queries in seconds, while SQLite requires several minutes for the same tasks.
+- **Performance:** DuckDB completes analytical queries in seconds, while SQLite requires several minutes for the same tasks – even if it only needs to print the first 5 rows. 
 - **Simplicity:** DuckDB queries can be executed in just 4 lines of code, whereas SQLite requires more than double that, even with the help of pandas.
 - **Suitability:** DuckDB is purpose-built for analytics, while SQLite is best suited for transactional workloads and smaller datasets.
 
