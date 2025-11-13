@@ -21,7 +21,6 @@ def filtering_grouping_aggregation():
         df.filter(pl.col("event_type") == "purchase")
         .group_by("category_code")
         .agg(pl.col("price").sum().alias("total_sales"))
-        .sort("total_sales", reverse=True)
     )
     print(result)
 
@@ -37,6 +36,5 @@ def grouping_and_conditional_aggregation():
             (pl.col("event_type") == "cart").sum().alias("carts"),
             (pl.col("event_type") == "purchase").sum().alias("purchases"),
         ])
-        .sort("purchases", reverse=True)
     )
     print(result)

@@ -23,7 +23,6 @@ def filtering_grouping_aggregation():
         .groupby("category_code")["price"]
         .sum()
         .reset_index(name="total_sales")
-        .sort_values("total_sales", ascending=False)
     )
     print(result)
 
@@ -38,6 +37,5 @@ def grouping_and_conditional_aggregation():
         .value_counts()
         .unstack(fill_value=0)
         .reset_index()
-        .sort_values("purchase", ascending=False)
     )
     print(result)

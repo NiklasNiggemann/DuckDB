@@ -6,9 +6,9 @@ across different backends (DuckDB, Polars, Pandas). It supports cold, hot, and w
 measures memory usage and execution time, and summarizes the results.
 
 Usage example:
-    python benchmark_runner.py --backend duckdb --function filtering_and_counting --mode cold --runs 10
+    python benchmark_runner.py --backend duckdb --function filtering_and_counting --mode cold --runs 10 --output results.csv
 """
-
+import csv
 import os
 import subprocess
 import statistics
@@ -16,6 +16,16 @@ import re
 import sys
 import argparse
 from typing import Optional, Tuple, List
+
+def export_results_csv(filename, backend, function, mode, memories, times):
+    """
+    Exports the results of a benchmark to a CSV file.
+    """
+    with open(filename, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["backend", "function", "mode", "run", "memory_mb", "time_s"])
+        for i, (mem, t) in enumerate(zip(memories, times), 1):
+            writer.writerow([backend, function, mode, i, mem, t])
 
 def parse_output(output: str) -> Optional[Tuple[float, float]]:
     """
@@ -34,18 +44,25 @@ def parse_output(output: str) -> Optional[Tuple[float, float]]:
     return None
 
 def summarize(label: str, values: List[float]):
-    """
-    Prints summary statistics (median, min, max, span) for a list of values.
-
-    Args:
-        label (str): The label for the summary (e.g., "Elapsed Time (s)").
-        values (List[float]): The list of values to summarize.
-    """
+    if not values:
+        print(f"\n--- {label} ---")
+        print("No data.")
+        return
+    mean = statistics.mean(values)
+    std = statistics.stdev(values) if len(values) > 1 else 0.0
+    cv = (std / mean) * 100 if mean != 0 else 0
+    median = statistics.median(values)
+    minv = min(values)
+    maxv = max(values)
+    span = maxv - minv
     print(f"\n--- {label} ---")
-    print(f"Median: {statistics.median(values):.2f}")
-    print(f"Min:    {min(values):.2f}")
-    print(f"Max:    {max(values):.2f}")
-    print(f"Span:   {max(values) - min(values):.2f}")
+    print(f"Mean:   {mean:.2f}")
+    print(f"Std:    {std:.2f}")
+    print(f"CV:     {cv:.1f}%")
+    print(f"Median: {median:.2f}")
+    print(f"Min:    {minv:.2f}")
+    print(f"Max:    {maxv:.2f}")
+    print(f"Span:   {span:.2f}")
 
 def benchmarking(n_runs: int, backend: str, function: str, memories: List[float], times: List[float]):
     """
@@ -72,9 +89,9 @@ def benchmarking(n_runs: int, backend: str, function: str, memories: List[float]
                 "--function", function
             ]
             benchmark_target.main()
-            output = mystdout.getvalue()
-            print(output.strip())
-            parsed = parse_output(output)
+            run_output = mystdout.getvalue()
+            print(run_output.strip())
+            parsed = parse_output(run_output)
             if parsed:
                 mem, t = parsed
                 memories.append(mem)
@@ -90,7 +107,7 @@ def benchmarking(n_runs: int, backend: str, function: str, memories: List[float]
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
 
-def run_cold_benchmark(n_runs: int, backend: str, function: str):
+def run_cold_benchmark(n_runs: int, backend: str, function: str, mode, output=None):
     """
     Runs the benchmark in a subprocess for each run (cold start), capturing and parsing output.
 
@@ -111,8 +128,8 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str):
                  '--function', function],
                 stderr=subprocess.STDOUT
             )
-            output = result.decode().strip()
-            parsed = parse_output(output)
+            run_output = result.decode().strip()
+            parsed = parse_output(run_output)
             if parsed:
                 mem, t = parsed
                 memories.append(mem)
@@ -121,15 +138,17 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str):
             else:
                 print("Warning: Could not parse output!")
         except subprocess.CalledProcessError as e:
-            print(f"Run failed: {e.output.decode()}")
+            print(f"Run failed: {e.run_output.decode()}")
         except subprocess.TimeoutExpired:
             print("Run timed out!")
     print("------------------------------------------------")
     print("Benchmark Finished!")
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
+    if output:
+        export_results_csv(output, backend, function, mode, memories, times)
 
-def run_hot_benchmark(n_runs: int, backend: str, function: str):
+def run_hot_benchmark(n_runs: int, backend: str, function: str, mode, output=None):
     """
     Runs the benchmark in-process for the specified number of runs (hot start).
 
@@ -141,8 +160,10 @@ def run_hot_benchmark(n_runs: int, backend: str, function: str):
     memories, times = [], []
     print("Benchmarking Started (HOT)")
     benchmarking(n_runs, backend, function, memories, times)
+    if output:
+        export_results_csv(output, backend, function, mode, memories, times)
 
-def run_warm_benchmark(n_warmup: int, n_runs: int, backend: str, function: str):
+def run_warm_benchmark(n_warmup: int, n_runs: int, backend: str, function: str, mode, output=None):
     """
     Runs a specified number of warmup runs (output suppressed), then benchmarks as in hot mode.
 
@@ -177,6 +198,85 @@ def run_warm_benchmark(n_warmup: int, n_runs: int, backend: str, function: str):
     print("Warmup complete. Starting measured runs.")
     memories, times = [], []
     benchmarking(n_runs, backend, function, memories, times)
+    if output:
+        export_results_csv(output, backend, function, mode, memories, times)
+
+def plot_results(output_file):
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    df = pd.read_csv(output_file)
+    sns.set(style="whitegrid", palette="muted", font_scale=1.2)
+
+    # Create a unique label for each backend/function combo
+    df['label'] = df['backend'] + ' | ' + df['function']
+    df = df.sort_values(by=['label', 'run'])
+
+    unique_labels = df['label'].unique()
+    palette = sns.color_palette("husl", len(unique_labels))
+    color_dict = dict(zip(unique_labels, palette))
+
+    fig, axes = plt.subplots(2, 1, figsize=(14, 12), sharex=True)
+
+    for idx, (metric, ylabel, title) in enumerate([
+        ('time_s', 'Time (s)', 'Execution Time per Run'),
+        ('memory_mb', 'Memory (MB)', 'Memory Usage per Run')
+    ]):
+        ax = axes[idx]
+        for label in unique_labels:
+            group = df[df['label'] == label]
+            runs = group['run']
+            values = group[metric]
+            color = color_dict[label]
+
+            # Plot line and points
+            ax.plot(runs, values, marker='o', label=label, color=color)
+
+            # Mean and std
+            mean = values.mean()
+            std = values.std()
+            median = values.median()
+            minv = values.min()
+            maxv = values.max()
+
+            # Error band (mean ± std)
+            ax.fill_between(runs, mean - std, mean + std, color=color, alpha=0.15)
+
+            # Annotate stddev value at the right end of the band
+            ax.text(
+                runs.max() + 0.5, mean + std,
+                f"+1 std={std:.2f}", va='bottom', ha='left', color=color, fontsize=9, alpha=0.8
+            )
+            ax.text(
+                runs.max() + 0.5, mean - std,
+                f"-1 std={-std:.2f}", va='top', ha='left', color=color, fontsize=9, alpha=0.8
+            )
+
+            # Mean line
+            ax.axhline(mean, linestyle='--', color=color, alpha=0.7)
+            ax.text(runs.max() + 0.5, mean, f"mean={mean:.2f}", va='center', ha='left', color=color, fontsize=10)
+
+            # Median line
+            ax.axhline(median, linestyle=':', color=color, alpha=0.7)
+            ax.text(runs.max() + 0.5, median, f"median={median:.2f}", va='center', ha='left', color=color, fontsize=10)
+
+            # Annotate min and max
+            ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80)
+            ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80)
+
+        ax.set_title(title)
+        ax.set_ylabel(ylabel)
+        ax.legend(title='Backend | Function', bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
+        ax.grid(True, linestyle='--', alpha=0.5)
+
+    axes[1].set_xlabel('Run')
+    plt.tight_layout()
+    plt.show()
+    # Optionally save to file:
+    # fig.savefig("benchmark_lines_stats.png", dpi=150)
+
 
 def main():
     """
@@ -188,6 +288,7 @@ def main():
         --mode:      Benchmark mode ('cold', 'hot', or 'warm').
         --runs:      Number of measured runs.
         --warmup:    Number of warmup runs (for warm mode).
+        --output:    CSV file to export raw results.
     """
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing backends.")
     parser.add_argument("--backend", choices=["duckdb", "polars", "pandas"], required=True)
@@ -199,14 +300,20 @@ def main():
     parser.add_argument("--mode", choices=["cold", "hot", "warm"], default="cold")
     parser.add_argument("--runs", type=int, default=10)
     parser.add_argument("--warmup", type=int, default=3, help="Number of warmup runs (for warm mode)")
+    parser.add_argument("--output", type=str, help="CSV file to export raw results")
+
     args = parser.parse_args()
 
     if args.mode == "cold":
-        run_cold_benchmark(args.runs, args.backend, args.function)
+        run_cold_benchmark(args.runs, args.backend, args.function, args.mode, args.output)
     elif args.mode == "hot":
-        run_hot_benchmark(args.runs, args.backend, args.function)
+        run_hot_benchmark(args.runs, args.backend, args.function, args.mode, args.output)
     elif args.mode == "warm":
-        run_warm_benchmark(args.warmup, args.runs, args.backend, args.function)
+        run_warm_benchmark(args.warmup, args.runs, args.backend, args.function, args.mode, args.output)
+
+    # Plot only if output file is specified and exists
+    if args.output and os.path.exists(args.output):
+        plot_results(args.output)
 
 if __name__ == "__main__":
     main()

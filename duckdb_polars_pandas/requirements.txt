@@ -1,3 +1,5 @@
+matplotlib
+seaborn
 duckdb~=1.4.1
 pandas~=2.3.3
 polars~=1.35.1

@@ -10,6 +10,8 @@ Usage example:
 """
 
 import argparse
+import csv
+
 import psutil
 import time
 import os

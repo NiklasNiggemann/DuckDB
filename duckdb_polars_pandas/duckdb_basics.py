@@ -25,7 +25,6 @@ def filtering_grouping_aggregation():
         FROM read_csv_auto('{dataset_path}')
         WHERE event_type = 'purchase'
         GROUP BY category_code
-        ORDER BY total_sales DESC
         """
     ).show()
 
@@ -43,6 +42,5 @@ def grouping_and_conditional_aggregation():
             SUM(CASE WHEN event_type = 'purchase' THEN 1 ELSE 0 END) AS purchases
         FROM read_csv_auto('{dataset_path}')
         GROUP BY category_code
-        ORDER BY purchases DESC
         """
     ).show()
