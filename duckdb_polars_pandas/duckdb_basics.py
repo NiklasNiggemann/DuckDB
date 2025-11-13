@@ -7,11 +7,9 @@ def filtering_and_counting():
     """
     Filters for purchase events and prints a sample of the filtered rows and their count.
     """
-    # Show only the first 5 purchase events
     duckdb.sql(
         f"SELECT * FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'"
     ).show()
-    # Show the total count of purchase events
     duckdb.sql(
         f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'"
     ).show()
