@@ -1,16 +1,14 @@
-import subprocess
-import statistics
-import re
-import sys
+import subprocess, statistics, re, sys
 from typing import Optional, Tuple, List
 
 N_RUNS = 10
 
 def parse_output(output: str) -> Optional[Tuple[float, float]]:
-    """Parse MEMORY_USED_MB and ELAPSED_SECONDS from output."""
+    # extracts memory and time values from the output string using regex
     mem_match = re.search(r"Memory\s*=\s*([0-9.]+)\s*MB", output)
     time_match = re.search(r"Time\s*=\s*([0-9.]+)\s*s", output)
     if mem_match and time_match:
+        # returns tuple of memory & time
         return float(mem_match.group(1)), float(time_match.group(1))
     return None
 
@@ -38,6 +36,7 @@ def run_benchmark(n_runs: int) -> Tuple[List[float], List[float]]:
             print(f"Run failed: {e.output.decode()}")
         except subprocess.TimeoutExpired:
             print("Run timed out!")
+    print("------------------------------------------------")
     print("Benchmark Finished!")
     return memories, times
 
