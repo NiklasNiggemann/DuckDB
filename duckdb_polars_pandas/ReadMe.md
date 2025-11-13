@@ -165,14 +165,3 @@ Contributions and suggestions are welcome.
 ---
 
 *For questions, improvements, or to contribute additional benchmarks, please open an issue or pull request.*
-```
-
----
-
-**Key changes:**
-- Updated all operation names to match the new CLI (`filtering_and_counting`, etc.).
-- Added a section on CLI usage and available options.
-- Clarified the modular, parameterized, and reproducible nature of the new framework.
-- Updated operation descriptions and results to match the new function names.
-
-Let me know if you want a section on environment setup, dependencies, or example output!
