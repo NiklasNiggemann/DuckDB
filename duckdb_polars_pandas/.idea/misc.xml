@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.14 (duckdb_polars_pandas)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.14 virtualenv at ~/duckdb_motherduck_lab/duckdb_polars_pandas_pyarrow/.venv" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.14 (duckdb_polars_pandas)" project-jdk-type="Python SDK" />
 </project>
