@@ -28,11 +28,47 @@ This scale is representative of production analytics scenarios.
 
 ## Benchmarking Methodology
 
-Benchmarks are conducted using a robust setup that leverages [Python subprocesses](https://docs.python.org/3/library/subprocess.html) to ensure each run is "cold"—eliminating caching effects and ensuring fair, repeatable results. Each operation is executed 10 times, and the median, minimum, maximum, and span (max - min) are reported for both execution time (in seconds) and memory usage (in MB).
+Benchmarks are conducted using a robust, **modular, and fully CLI-driven** setup. The framework supports three benchmarking modes:
+
+- **Cold:** Each run is executed in a new subprocess, eliminating caching effects and simulating a "cold start."
+- **Hot:** All runs are executed in the same process, measuring performance with potential caching effects.
+- **Warm:** Several warmup runs are performed (output suppressed), followed by measured runs in the same process.
+
+Each operation is executed multiple times (default: 10), and the median, minimum, maximum, and span (max - min) are reported for both execution time (in seconds) and memory usage (in MB).
 
 **Test Environment:**  
 - MacBook Pro (2021), Apple M1 Max, 32 GB RAM  
 - Python environment as specified in the repository
+
+---
+
+## How to Run Benchmarks
+
+The benchmarking framework is fully parameterized via the command line.  
+You can select the backend, operation, mode, and number of runs without editing any code.
+
+### **Example CLI Usage**
+
+```sh
+# Cold run, 10 times, DuckDB, filtering_and_counting
+python benchmark_runner.py --backend duckdb --function filtering_and_counting --mode cold --runs 10
+
+# Hot run, 5 times, Polars, filtering_grouping_aggregation
+python benchmark_runner.py --backend polars --function filtering_grouping_aggregation --mode hot --runs 5
+
+# Warm run, 3 warmups, 7 runs, Pandas, grouping_and_conditional_aggregation
+python benchmark_runner.py --backend pandas --function grouping_and_conditional_aggregation --mode warm --runs 7 --warmup 3
+```
+
+**Available options:**
+- `--backend`: `duckdb`, `polars`, or `pandas`
+- `--function`:  
+    - `filtering_and_counting`  
+    - `filtering_grouping_aggregation`  
+    - `grouping_and_conditional_aggregation`
+- `--mode`: `cold`, `hot`, or `warm`
+- `--runs`: Number of measured runs (default: 10)
+- `--warmup`: Number of warmup runs (for warm mode, default: 3)
 
 ---
 
@@ -45,13 +81,13 @@ Three fundamental OLAP operations are evaluated:
 2. **Filtering, Grouping & Aggregation**  
    Filter rows, group by a category, and aggregate a numeric column.
 3. **Grouping & Conditional Aggregation**  
-   Group by multiple columns and perform conditional aggregations.
+   Group by category and count views, carts, and purchases for each category.
 
 ---
 
 ## Results
 
-### 1. Filtering & Counting (`purchases_and_count`)
+### 1. Filtering & Counting (`filtering_and_counting`)
 
 | Library | Median Time (s) | Min Time (s) | Max Time (s) | Span Time (s) | Median Memory (MB) | Min Memory (MB) | Max Memory (MB) | Span Memory (MB) |
 |---------|-----------------|--------------|--------------|---------------|--------------------|-----------------|-----------------|------------------|
@@ -64,7 +100,7 @@ DuckDB provides both the fastest execution and the lowest memory usage for this 
 
 ---
 
-### 2. Filtering, Grouping & Aggregation (`total_sales_per_category`)
+### 2. Filtering, Grouping & Aggregation (`filtering_grouping_aggregation`)
 
 | Library | Median Time (s) | Min Time (s) | Max Time (s) | Span Time (s) | Median Memory (MB) | Min Memory (MB) | Max Memory (MB) | Span Memory (MB) |
 |---------|-----------------|--------------|--------------|---------------|--------------------|-----------------|-----------------|------------------|
@@ -77,7 +113,7 @@ DuckDB again outperforms both Polars and Pandas, with sub-2.5 second execution a
 
 ---
 
-### 3. Grouping & Conditional Aggregation (`purchases_per_event_by_category`)
+### 3. Grouping & Conditional Aggregation (`grouping_and_conditional_aggregation`)
 
 | Library | Median Time (s) | Min Time (s) | Max Time (s) | Span Time (s) | Median Memory (MB) | Min Memory (MB) | Max Memory (MB) | Span Memory (MB) |
 |---------|-----------------|--------------|--------------|---------------|--------------------|-----------------|-----------------|------------------|
@@ -116,8 +152,27 @@ For high-performance, large-scale data processing in Python, **DuckDB** is the p
 
 ## Reproducibility
 
-All benchmarking scripts, environment specifications, and raw results are available in this repository. Contributions and suggestions are welcome.
+All benchmarking scripts, environment specifications, and raw results are available in this repository.  
+**The benchmarking framework is fully CLI-driven and modular—no code edits are needed to run any combination of backend, operation, or mode.**
+
+**Example:**
+```sh
+python benchmark_runner.py --backend duckdb --function filtering_and_counting --mode cold --runs 10
+```
+
+Contributions and suggestions are welcome.
 
 ---
 
 *For questions, improvements, or to contribute additional benchmarks, please open an issue or pull request.*
+```
+
+---
+
+**Key changes:**
+- Updated all operation names to match the new CLI (`filtering_and_counting`, etc.).
+- Added a section on CLI usage and available options.
+- Clarified the modular, parameterized, and reproducible nature of the new framework.
+- Updated operation descriptions and results to match the new function names.
+
+Let me know if you want a section on environment setup, dependencies, or example output!
