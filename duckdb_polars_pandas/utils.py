@@ -1,5 +1,4 @@
-import time
-import os
+import time, os
 
 class Timer:
     def __enter__(self):

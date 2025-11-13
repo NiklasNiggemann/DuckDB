@@ -15,7 +15,7 @@ def main():
     start = time.perf_counter()
     mem_before = get_memory_usage_mb()
     # change function for individual benchmarks
-    duckdb_basics.purchases_and_count()
+    duckdb_basics.filtering_and_counting()
     mem_after = get_memory_usage_mb()
     end = time.perf_counter()
     print(f"Memory = {mem_after - mem_before:.2f} MB")

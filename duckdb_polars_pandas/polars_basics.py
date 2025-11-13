@@ -1,25 +1,15 @@
-import utils
 import polars as pl
+import utils
 
 dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
 
-def purchases_and_count():
+def filtering_and_counting():
     df = pl.read_csv(dataset_path)
     purchases = df.filter(pl.col("event_type") == "purchase")
     print(purchases)
     print("Count:", purchases.height)
 
-def purchases_samsung_and_count():
-    df = pl.read_csv(dataset_path)
-    samsung = df.filter(
-        (pl.col("event_type") == "purchase") &
-        (pl.col("category_code") == "electronics.smartphone") &
-        (pl.col("brand") == "samsung")
-    )
-    print(samsung)
-    print("Count:", samsung.height)
-
-def total_sales_per_category():
+def filtering_grouping_aggregation():
     df = pl.read_csv(dataset_path)
     result = (
         df.filter(pl.col("event_type") == "purchase")
@@ -28,16 +18,7 @@ def total_sales_per_category():
     )
     print(result)
 
-def total_sales_per_category_by_brand():
-    df = pl.read_csv(dataset_path)
-    result = (
-        df.filter(pl.col("event_type") == "purchase")
-        .group_by(["category_code", "brand"])
-        .agg(pl.col("price").sum().alias("total_sales"))
-    )
-    print(result)
-
-def purchases_per_event_by_category():
+def grouping_and_conditional_aggregation():
     df = pl.read_csv(dataset_path)
     result = (
         df.group_by("category_code")
