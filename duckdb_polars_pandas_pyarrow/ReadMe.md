@@ -1,73 +1,38 @@
 # DuckDB vs Polars vs Pandas: A Modern DataFrame Benchmark
 
-## Abstract
+## Overview
 
-This document benchmarks and compares the performance, design, and use cases of leading DataFrame and analytical query engines in Python: **DuckDB**, **Polars**, and **Pandas**. Each tool represents a distinct approach to tabular analytics, and this comparison aims to clarify their strengths, weaknesses, and best use cases.
+This project benchmarks the performance of leading DataFrame and analytical query engines in Python: **DuckDB**, **Polars**, and **Pandas**. Each tool represents a distinct approach to tabular analytics:
 
----
+- **DuckDB**: An in-process SQL OLAP database, similar to SQLite but optimized for analytical workloads.
+- **Polars**: A modern, high-performance DataFrame library written in Rust, designed for speed and efficiency.
+- **Pandas**: The most widely used DataFrame library in Python, known for its rich API and extensive ecosystem.
 
-## Introduction
-
-Analytical workloads—such as filtering, grouping, and aggregation—are fundamental to data warehousing and business intelligence. The choice of engine can dramatically affect both performance and resource usage, especially as data volumes increase. This comparison provides a practical guide for selecting the right tool for your data processing needs.
-
----
-
-## Background
-
-### DataFrames
-
-DataFrames are two-dimensional, tabular data structures with rows and columns, similar to spreadsheets or database tables. They are a fundamental data structure in libraries like Pandas and Polars, providing an intuitive way to store, view, and manipulate data.
-
----
-
-## Overview of Libraries
-
-### DuckDB
-
-DuckDB is an in-process SQL OLAP database, similar to SQLite but optimized for analytical workloads. It is SQL-centric and built for those who work with SQL on a daily basis, focusing on simplicity and high performance for analytics and databases.
-
-### Pandas
-
-Pandas is an open-source library for Python, designed for data manipulation and analysis. It is the most widely used DataFrame library in Python, known for its rich API and extensive ecosystem. The DataFrame is its key data structure, offering many functions for cleaning, wrangling, and preparing data for analysis.
-
-### Polars
-
-Polars is a modern, high-performance DataFrame library written in Rust, designed for speed and efficiency. It leverages the Apache Arrow columnar memory format to achieve speed through parallel and lazy execution, query optimization, and efficient data handling. Polars is considered the new Pandas for data science and machine learning workflows.
-
----
-
-## Benchmarking
+Future benchmarks will also include **PyArrow**, which is increasingly used for efficient in-memory columnar data and interoperability between analytical engines.
 
 ### Purpose of Benchmarking
 
-Performance is one of the easiest quality metrics to measure for any system. It is an attractive, "objective" measurement that makes it easy to compare different systems. However, fair benchmarking is challenging, and it is easy to misrepresent performance information, intentionally or not.
-
-#### Common Mistakes in Benchmarking
-
-1. **Non-Reproducibility:** All configuration parameters must be known and experiments must be reproducible.
-2. **Failure to Optimize:** Systems should be properly optimized for the workload.
-3. **Apples vs Oranges:** Ensure the same functionality is measured.
-4. **Overly-specific Tuning:** Avoid tuning systems only for standardized benchmarks.
-5. **Cold vs Hot Runs:** Report performance for both initial and subsequent runs.
-6. **Cold vs Warm Runs:** Properly clear OS caches for cold run measurements.
-7. **Ignoring Preprocessing Time:** Include setup and index creation time in benchmarks.
-8. **Incorrect Code:** Always verify correctness of results.
-
-### Benchmarking Methodology
-
-Benchmarks are conducted using robust setups (e.g., Python subprocesses) to ensure each run is "cold"—eliminating caching effects and ensuring fair, repeatable results. Each operation is executed 10 times, and the median, minimum, maximum, and span are reported for both execution time and memory usage.
-
-**Test Environment:**  
-- MacBook Pro (2021), Apple M1 Max, 32 GB RAM  
-- Python environment as specified in the repository
+Analytical workloads—such as filtering, grouping, and aggregation—are fundamental to data warehousing and business intelligence. The choice of engine can dramatically affect both performance and resource usage, especially as data volumes increase.
 
 ### Dataset
 
-The [Ecommerce Behavior Data from Multi-category Store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store) dataset is used:
+The [Ecommerce Behavior Data from Multi-category Store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store) dataset is used for these benchmarks. It is a real-world dataset with:
 
 - **Size:** 9 GB
 - **Rows:** 67,501,979
 - **Columns:** 18
+
+This scale is representative of production analytics scenarios.
+
+---
+
+## Benchmarking Methodology
+
+Benchmarks are conducted using a robust setup that leverages [Python subprocesses](https://docs.python.org/3/library/subprocess.html) to ensure each run is "cold"—eliminating caching effects and ensuring fair, repeatable results. Each operation is executed 10 times, and the median, minimum, maximum, and span (max - min) are reported for both execution time (in seconds) and memory usage (in MB).
+
+**Test Environment:**  
+- MacBook Pro (2021), Apple M1 Max, 32 GB RAM  
+- Python environment as specified in the repository
 
 ---
 
@@ -75,90 +40,77 @@ The [Ecommerce Behavior Data from Multi-category Store](https://www.kaggle.com/d
 
 Three fundamental OLAP operations are evaluated:
 
-1. **Filtering & Counting:** Select rows based on a condition and count them.
-2. **Filtering, Grouping & Aggregation:** Filter rows, group by a category, and aggregate a numeric column.
-3. **Grouping & Conditional Aggregation:** Group by multiple columns and perform conditional aggregations.
+1. **Filtering & Counting**  
+   Select rows based on a condition and count them.
+2. **Filtering, Grouping & Aggregation**  
+   Filter rows, group by a category, and aggregate a numeric column.
+3. **Grouping & Conditional Aggregation**  
+   Group by multiple columns and perform conditional aggregations.
 
 ---
 
 ## Results
 
-### 1. Filtering & Counting
+### 1. Filtering & Counting (`purchases_and_count`)
 
-| Library | Median Time (s) | Median Memory (MB) |
-|---------|-----------------|--------------------|
-| DuckDB  | 2.72            | 443.45             |
-| Polars  | 3.59            | 10,470.15          |
-| Pandas  | 59.53           | 10,696.31          |
-
-**Analysis:**  
-DuckDB is fastest and most memory-efficient. Polars is competitive in speed but uses much more memory. Pandas is slowest and most memory-intensive.
-
----
-
-### 2. Filtering, Grouping & Aggregation
-
-| Library | Median Time (s) | Median Memory (MB) |
-|---------|-----------------|--------------------|
-| DuckDB  | 2.33            | 241.85             |
-| Polars  | 4.21            | 10,071.15          |
-| Pandas  | 61.28           | 10,167.39          |
+| Library | Median Time (s) | Min Time (s) | Max Time (s) | Span Time (s) | Median Memory (MB) | Min Memory (MB) | Max Memory (MB) | Span Memory (MB) |
+|---------|-----------------|--------------|--------------|---------------|--------------------|-----------------|-----------------|------------------|
+| DuckDB  | 2.72            | 2.62         | 2.78         | 0.16          | 443.45             | 322.50          | 565.66          | 234.16           |
+| Polars  | 3.59            | 2.98         | 6.10         | 3.12          | 10,470.15          | 8,975.81        | 11,437.34       | 2,461.53         |
+| Pandas  | 59.53           | 58.64        | 61.05        | 2.41          | 10,696.31          | 9,955.73        | 10,859.45       | 903.72           |
 
 **Analysis:**  
-DuckDB again outperforms both Polars and Pandas. Polars is faster than Pandas but still uses much more memory. Pandas is slowest and most memory-hungry.
+DuckDB provides both the fastest execution and the lowest memory usage for this operation. Polars is competitive in speed but uses significantly more memory. Pandas is much slower and more memory-intensive.
 
 ---
 
-### 3. Grouping & Conditional Aggregation
+### 2. Filtering, Grouping & Aggregation (`total_sales_per_category`)
 
-| Library | Median Time (s) | Median Memory (MB) |
-|---------|-----------------|--------------------|
-| DuckDB  | 2.38            | 180.24             |
-| Polars  | 11.73           | 6,308.01           |
-| Pandas  | 61.75           | 9,840.26           |
+| Library | Median Time (s) | Min Time (s) | Max Time (s) | Span Time (s) | Median Memory (MB) | Min Memory (MB) | Max Memory (MB) | Span Memory (MB) |
+|---------|-----------------|--------------|--------------|---------------|--------------------|-----------------|-----------------|------------------|
+| DuckDB  | 2.33            | 2.28         | 2.43         | 0.15          | 241.85             | 240.66          | 363.50          | 122.84           |
+| Polars  | 4.21            | 3.76         | 5.89         | 2.13          | 10,071.15          | 7,994.36        | 10,725.25       | 2,730.89         |
+| Pandas  | 61.28           | 59.60        | 63.13        | 3.53          | 10,167.39          | 9,385.39        | 10,438.36       | 1,052.97         |
 
 **Analysis:**  
-DuckDB’s performance is exceptional, with both the lowest execution time and memory usage. Polars’ execution time increases for more complex operations, and memory usage remains high. Pandas is again the slowest.
+DuckDB again outperforms both Polars and Pandas, with sub-2.5 second execution and minimal memory usage. Polars is faster than Pandas but still uses much more memory than DuckDB. Pandas is the slowest and most memory-hungry.
 
 ---
 
-## Discussion
+### 3. Grouping & Conditional Aggregation (`purchases_per_event_by_category`)
 
-### Pandas vs Polars
+| Library | Median Time (s) | Min Time (s) | Max Time (s) | Span Time (s) | Median Memory (MB) | Min Memory (MB) | Max Memory (MB) | Span Memory (MB) |
+|---------|-----------------|--------------|--------------|---------------|--------------------|-----------------|-----------------|------------------|
+| DuckDB  | 2.38            | 2.35         | 2.41         | 0.06          | 180.24             | 179.31          | 210.88          | 31.57            |
+| Polars  | 11.73           | 8.49         | 14.15        | 5.66          | 6,308.01           | 5,684.81        | 7,499.42        | 1,814.61         |
+| Pandas  | 61.75           | 61.61        | 62.98        | 1.37          | 9,840.26           | 9,329.61        | 10,243.22       | 913.61           |
 
-- **Polars** is designed for performance, written in Rust, and leverages safe concurrency and parallelism. It uses Apache Arrow for efficient, columnar, and interoperable data storage.
-- **Pandas** is built on Python and NumPy, which limits its performance, especially with non-numeric data types and large datasets. It uses eager execution, while Polars supports both eager and lazy execution with query optimization.
-- **API Expressiveness:** Polars has an expressive API, allowing most operations as built-in methods, while Pandas often requires custom functions with `.apply()`, which is slower.
-
-### DuckDB vs Polars
-
-- **DuckDB** is SQL-centric, simple, and optimized for analytics and databases.
-- **Polars** is DataFrame-centric, high-performance, and aimed at ETL and pipeline tools. It is fast but can be more complex and require more code for the same functionality.
-- **Overlap:** Both tools have overlapping use cases, but DuckDB is generally more accessible for SQL-heavy workflows, while Polars excels in DataFrame-centric, columnar operations.
-
-### When to Use What?
-
-- **Pandas** is best for small to medium datasets and when leveraging the extensive Python data science ecosystem.
-- **Polars** is ideal for high-performance, columnar operations and can handle larger datasets efficiently if memory is available.
-- **DuckDB** is the preferred choice for large-scale analytics, offering the best performance and memory efficiency.
-- **Interoperability:** DuckDB, Polars, and Pandas can often be used together, depending on the workflow.
+**Analysis:**  
+DuckDB’s performance is exceptional, with both the lowest execution time and memory usage. Polars’ execution time increases for this more complex operation, and memory usage remains high. Pandas is again the slowest, with high memory consumption.
 
 ---
 
-## DuckDB Integration
+## Summary & Recommendations
 
-DuckDB integrates well with Polars and other Python tools. See [DuckDB Polars Integration Guide](https://duckdb.org/docs/stable/guides/python/polars) for more details.
+### Key Takeaways
+
+- **DuckDB** consistently delivers the fastest execution and lowest memory usage across all tested operations. Its SQL interface and in-process architecture make it ideal for large-scale analytics on modern hardware.
+- **Polars** offers impressive speed, especially for simpler operations, but its memory usage is substantially higher than DuckDB’s. It is a strong choice for users who need fast columnar operations and can accommodate higher RAM usage.
+- **Pandas** remains the most accessible and feature-rich for small to medium datasets, but it struggles with performance and memory efficiency at scale.
+
+### Recommendation
+
+For high-performance, large-scale data processing in Python, **DuckDB** is the preferred choice based on these benchmarks. For those needing a modern DataFrame API and working with columnar data, **Polars** is a compelling alternative. **Pandas** is best reserved for smaller datasets or when its extensive ecosystem is required.
 
 ---
 
-## Conclusion
+## Future Work: PyArrow and Beyond
 
-- **DuckDB** consistently delivers the fastest execution and lowest memory usage across all tested operations. Its SQL interface and in-process architecture make it ideal for large-scale analytics.
-- **Polars** offers impressive speed and a modern API, but with higher memory usage.
-- **Pandas** remains the most accessible and feature-rich for small to medium datasets but struggles at scale.
+**PyArrow** is rapidly becoming the backbone of the Python data ecosystem, enabling zero-copy data interchange between libraries and supporting efficient columnar storage. Future benchmarks will:
 
-**Recommendation:**  
-For high-performance, large-scale data processing in Python, **DuckDB** is the preferred choice. For those needing a modern DataFrame API and working with columnar data, **Polars** is a compelling alternative. **Pandas** is best reserved for smaller datasets or when its extensive ecosystem is required.
+- Evaluate PyArrow’s performance for similar OLAP operations
+- Explore interoperability scenarios (e.g., DuckDB + PyArrow, Polars + PyArrow)
+- Benchmark file format read/write speeds (Parquet, Feather, Arrow IPC)
 
 ---
 
