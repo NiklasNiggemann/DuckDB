@@ -1,4 +1,5 @@
-import subprocess, statistics, re, sys
+import os
+import subprocess, statistics, re, sys, argparse
 from typing import Optional, Tuple, List
 
 def parse_output(output: str) -> Optional[Tuple[float, float]]:
@@ -17,15 +18,23 @@ def summarize(label: str, values: List[float]):
     print(f"Max:    {max(values):.2f}")
     print(f"Span:   {max(values) - min(values):.2f}")
 
-def benchmarking(n_runs, benchmark_target, memories, times):
+def benchmarking(n_runs, backend, function, memories, times):
+    import importlib
+    # Dynamically import benchmark_target with CLI args
+    import benchmark_target
+    import io
     for i in range(n_runs):
         print("------------------------------------------------")
         print(f"Run {i+1}/{n_runs}")
         from io import StringIO
-        import sys
         old_stdout = sys.stdout
         sys.stdout = mystdout = StringIO()
         try:
+            sys.argv = [
+                "benchmark_target.py",
+                "--backend", backend,
+                "--function", function
+            ]
             benchmark_target.main()
             output = mystdout.getvalue()
             print(output.strip())
@@ -45,7 +54,7 @@ def benchmarking(n_runs, benchmark_target, memories, times):
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
 
-def run_cold_benchmark(n_runs: int = 10):
+def run_cold_benchmark(n_runs, backend, function):
     memories, times = [], []
     print("Benchmarking Started (COLD)")
     for i in range(n_runs):
@@ -53,7 +62,9 @@ def run_cold_benchmark(n_runs: int = 10):
         print(f"Run {i+1}/{n_runs}")
         try:
             result = subprocess.check_output(
-                [sys.executable, 'benchmark_target.py'],
+                [sys.executable, 'benchmark_target.py',
+                 '--backend', backend,
+                 '--function', function],
                 stderr=subprocess.STDOUT
             )
             output = result.decode().strip()
@@ -74,20 +85,58 @@ def run_cold_benchmark(n_runs: int = 10):
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
 
-def run_hot_benchmark(n_runs: int = 10):
-    import benchmark_target
+def run_hot_benchmark(n_runs, backend, function):
     memories, times = [], []
     print("Benchmarking Started (HOT)")
-    benchmarking(n_runs, benchmark_target, memories, times)
+    benchmarking(n_runs, backend, function, memories, times)
 
-def run_warm_benchmark(n_warmup: int = 3, n_runs: int = 10):
+def run_warm_benchmark(n_warmup, n_runs, backend, function):
     import benchmark_target
     print(f"Running {n_warmup} warmup runs (results ignored)...")
     for i in range(n_warmup):
         try:
-            benchmark_target.main()
+            sys.argv = [
+                "benchmark_target.py",
+                "--backend", backend,
+                "--function", function
+            ]
+            # Redirect stdout and stderr to suppress output
+            with open(os.devnull, 'w') as devnull:
+                old_stdout = sys.stdout
+                old_stderr = sys.stderr
+                sys.stdout = devnull
+                sys.stderr = devnull
+                try:
+                    benchmark_target.main()
+                finally:
+                    sys.stdout = old_stdout
+                    sys.stderr = old_stderr
         except Exception as e:
-            print(f"Warmup run {i+1} failed: {e}")
+            # Optionally, you can log warmup errors if you want
+            pass
     print("Warmup complete. Starting measured runs.")
     memories, times = [], []
-    benchmarking(n_runs, benchmark_target, memories, times)
+    benchmarking(n_runs, backend, function, memories, times)
+
+def main():
+    parser = argparse.ArgumentParser(description="Benchmark runner for data processing backends.")
+    parser.add_argument("--backend", choices=["duckdb", "polars", "pandas"], required=True)
+    parser.add_argument("--function", choices=[
+        "filtering_and_counting",
+        "filtering_grouping_aggregation",
+        "grouping_and_conditional_aggregation"
+    ], required=True)
+    parser.add_argument("--mode", choices=["cold", "hot", "warm"], default="cold")
+    parser.add_argument("--runs", type=int, default=10)
+    parser.add_argument("--warmup", type=int, default=3, help="Number of warmup runs (for warm mode)")
+    args = parser.parse_args()
+
+    if args.mode == "cold":
+        run_cold_benchmark(args.runs, args.backend, args.function)
+    elif args.mode == "hot":
+        run_hot_benchmark(args.runs, args.backend, args.function)
+    elif args.mode == "warm":
+        run_warm_benchmark(args.warmup, args.runs, args.backend, args.function)
+
+if __name__ == "__main__":
+    main()
