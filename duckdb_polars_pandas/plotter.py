@@ -1,0 +1,179 @@
+from readline import backend
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import os
+
+def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.png"):
+    """
+    Plot execution time and memory usage per run for different backends and functions.
+
+    Parameters:
+        output_file (str): Path to the CSV file containing results.
+        save_fig (bool): Whether to save the figure to a file.
+        fig_name (str): Filename for saving the figure.
+    """
+
+    if not os.path.isfile(output_file):
+        raise FileNotFoundError(f"File not found: {output_file}")
+    df = pd.read_csv(output_file)
+    required_cols = {'backend', 'function', 'run', 'time_s', 'memory_mb'}
+    if not required_cols.issubset(df.columns):
+        raise ValueError(f"CSV must contain columns: {required_cols}")
+
+    # Prepare DataFrame
+    sns.set(style="whitegrid", palette="muted", font_scale=1.2)
+    df['label'] = df['backend'].astype(str) + ' | ' + df['function'].astype(str)
+    df = df.sort_values(by=['label', 'run'])
+
+    unique_labels = df['label'].unique()
+    palette = sns.color_palette("husl", len(unique_labels))
+    color_dict = dict(zip(unique_labels, palette))
+
+    fig, axes = plt.subplots(2, 1, figsize=(14, 12), sharex=True)
+    metrics = [
+        ('time_s', 'Time (s)', 'Execution Time per Run'),
+        ('memory_mb', 'Memory (MB)', 'Memory Usage per Run')
+    ]
+
+    for idx, (metric, ylabel, title) in enumerate(metrics):
+        ax = axes[idx]
+        for label in unique_labels:
+            group = df[df['label'] == label]
+            runs = group['run']
+            values = group[metric]
+            color = color_dict[label]
+
+            # Plot line and points
+            ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
+
+            # Mean, std, CV, min, max
+            mean = values.mean()
+            std = values.std()
+            cv = std / mean if mean != 0 else float('nan')
+            minv, maxv = values.min(), values.max()
+
+            # Error band (mean ± std)
+            ax.fill_between(runs, mean - std, mean + std, color=color, alpha=0.15)
+
+            # Annotate mean and CV
+            x_annot = runs.max() + 0.5
+            ax.axhline(mean, linestyle='--', color=color, alpha=0.7)
+            ax.text(
+                x_annot, mean,
+                f"mean={mean:.2f}\nCV={cv*100:.1f}%",
+                va='center', ha='left', color=color, fontsize=11, fontweight='bold',
+                bbox=dict(facecolor='white', edgecolor=color, boxstyle='round,pad=0.3', alpha=0.7)
+            )
+
+            # Annotate min and max
+            ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
+            ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
+
+        ax.set_title(title, fontsize=15)
+        ax.set_ylabel(ylabel, fontsize=13)
+        ax.legend(title='Backend | Function', bbox_to_anchor=(1.01, 1), loc='upper left', fontsize=10)
+        ax.grid(True, linestyle='--', alpha=0.5)
+
+    axes[1].set_xlabel('Run', fontsize=13)
+    plt.tight_layout()
+
+    if save_fig:
+        fig.savefig(fig_name, dpi=150, bbox_inches='tight')
+        print(f"Figure saved as {fig_name}")
+
+    plt.show()
+
+def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stats.png"):
+    """
+    Plot execution time and memory usage per run for different backends and functions,
+    combining multiple CSV files for comparison.
+
+    Parameters:
+        csv_files (list of str): List of CSV file paths.
+        save_fig (bool): Whether to save the figure to a file.
+        fig_name (str): Filename for saving the figure.
+    """
+
+    # Read and concatenate all CSVs, adding a 'source' column
+    dfs = []
+    for file in csv_files:
+        if not os.path.isfile(file):
+            raise FileNotFoundError(f"File not found: {file}")
+        df = pd.read_csv(file)
+        df['source'] = os.path.splitext(os.path.basename(file))[0]
+        dfs.append(df)
+    df = pd.concat(dfs, ignore_index=True)
+
+    required_cols = {'backend', 'function', 'run', 'time_s', 'memory_mb', 'source'}
+    if not required_cols.issubset(df.columns):
+        raise ValueError(f"CSV must contain columns: {required_cols}")
+
+    # Prepare DataFrame
+    sns.set(style="whitegrid", palette="muted", font_scale=1.2)
+    df['label'] = (
+        df['backend'].astype(str) + ' | ' +
+        df['function'].astype(str) + ' | ' +
+        df['source'].astype(str)
+    )
+    df = df.sort_values(by=['label', 'run'])
+
+    unique_labels = df['label'].unique()
+    palette = sns.color_palette("husl", len(unique_labels))
+    color_dict = dict(zip(unique_labels, palette))
+
+    fig, axes = plt.subplots(2, 1, figsize=(16, 13), sharex=True)
+    metrics = [
+        ('time_s', 'Time (s)', 'Execution Time per Run'),
+        ('memory_mb', 'Memory (MB)', 'Memory Usage per Run')
+    ]
+
+    for idx, (metric, ylabel, title) in enumerate(metrics):
+        ax = axes[idx]
+        for label in unique_labels:
+            group = df[df['label'] == label]
+            runs = group['run']
+            values = group[metric]
+            color = color_dict[label]
+
+            # Plot line and points
+            ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
+
+            # Mean, std, CV, min, max
+            mean = values.mean()
+            std = values.std()
+            cv = std / mean if mean != 0 else float('nan')
+            minv, maxv = values.min(), values.max()
+
+            # Error band (mean ± std)
+            ax.fill_between(runs, mean - std, mean + std, color=color, alpha=0.15)
+
+            # Annotate mean and CV
+            x_annot = runs.max() + 0.5
+            ax.axhline(mean, linestyle='--', color=color, alpha=0.7)
+            ax.text(
+                x_annot, mean,
+                f"mean={mean:.2f}\nCV={cv*100:.1f}%",
+                va='center', ha='left', color=color, fontsize=11, fontweight='bold',
+                bbox=dict(facecolor='white', edgecolor=color, boxstyle='round,pad=0.3', alpha=0.7)
+            )
+
+            # Annotate min and max
+            ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
+            ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
+
+        ax.set_title(title, fontsize=15)
+        ax.set_ylabel(ylabel, fontsize=13)
+        ax.legend(title='Backend | Function | Source', bbox_to_anchor=(1.01, 1), loc='upper left', fontsize=10)
+        ax.grid(True, linestyle='--', alpha=0.5)
+
+    axes[1].set_xlabel('Run', fontsize=13)
+    plt.tight_layout()
+
+    if save_fig:
+        fig.savefig(fig_name, dpi=150, bbox_inches='tight')
+        print(f"Figure saved as {fig_name}")
+
+    plt.show()
+
