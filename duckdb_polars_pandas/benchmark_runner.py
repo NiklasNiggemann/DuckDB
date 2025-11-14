@@ -51,7 +51,6 @@ def summarize(label: str, values: List[float]):
     mean = statistics.mean(values)
     std = statistics.stdev(values) if len(values) > 1 else 0.0
     cv = (std / mean) * 100 if mean != 0 else 0
-    median = statistics.median(values)
     minv = min(values)
     maxv = max(values)
     span = maxv - minv
@@ -59,7 +58,6 @@ def summarize(label: str, values: List[float]):
     print(f"Mean:   {mean:.2f}")
     print(f"Std:    {std:.2f}")
     print(f"CV:     {cv:.1f}%")
-    print(f"Median: {median:.2f}")
     print(f"Min:    {minv:.2f}")
     print(f"Max:    {maxv:.2f}")
     print(f"Span:   {span:.2f}")
@@ -107,7 +105,7 @@ def benchmarking(n_runs: int, backend: str, function: str, memories: List[float]
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
 
-def run_cold_benchmark(n_runs: int, backend: str, function: str, mode, output=None):
+def run_cold_benchmark(n_runs: int, backend: str, function: str, mode: str):
     """
     Runs the benchmark in a subprocess for each run (cold start), capturing and parsing output.
 
@@ -115,6 +113,7 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str, mode, output=No
         n_runs (int): Number of benchmark runs.
         backend (str): Backend to benchmark.
         function (str): Function to benchmark.
+        mode (str): Mode to benchmark.
     """
     memories, times = [], []
     print("Benchmarking Started (COLD)")
@@ -145,10 +144,9 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str, mode, output=No
     print("Benchmark Finished!")
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
-    if output:
-        export_results_csv(output, backend, function, mode, memories, times)
+    export_results_csv(f"{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
 
-def run_hot_benchmark(n_runs: int, backend: str, function: str, mode, output=None):
+def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
     """
     Runs the benchmark in-process for the specified number of runs (hot start).
 
@@ -156,14 +154,14 @@ def run_hot_benchmark(n_runs: int, backend: str, function: str, mode, output=Non
         n_runs (int): Number of benchmark runs.
         backend (str): Backend to benchmark.
         function (str): Function to benchmark.
+        mode (str): Mode to benchmark.
     """
     memories, times = [], []
     print("Benchmarking Started (HOT)")
     benchmarking(n_runs, backend, function, memories, times)
-    if output:
-        export_results_csv(output, backend, function, mode, memories, times)
+    export_results_csv(f"{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
 
-def run_warm_benchmark(n_warmup: int, n_runs: int, backend: str, function: str, mode, output=None):
+def run_warm_benchmark(n_warmup: int, n_runs: int, backend: str, function: str, mode: str):
     """
     Runs a specified number of warmup runs (output suppressed), then benchmarks as in hot mode.
 
@@ -172,6 +170,7 @@ def run_warm_benchmark(n_warmup: int, n_runs: int, backend: str, function: str, 
         n_runs (int): Number of measured benchmark runs.
         backend (str): Backend to benchmark.
         function (str): Function to benchmark.
+        mode (str): Mode to benchmark.
     """
     import benchmark_target
     print(f"Running {n_warmup} warmup runs (results ignored)...")
@@ -198,20 +197,33 @@ def run_warm_benchmark(n_warmup: int, n_runs: int, backend: str, function: str, 
     print("Warmup complete. Starting measured runs.")
     memories, times = [], []
     benchmarking(n_runs, backend, function, memories, times)
-    if output:
-        export_results_csv(output, backend, function, mode, memories, times)
+    export_results_csv(f"{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
 
-def plot_results(output_file):
+def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.png"):
+    """
+    Plot execution time and memory usage per run for different backends and functions.
+
+    Parameters:
+        output_file (str): Path to the CSV file containing results.
+        save_fig (bool): Whether to save the figure to a file.
+        fig_name (str): Filename for saving the figure.
+    """
     import pandas as pd
     import seaborn as sns
     import matplotlib.pyplot as plt
-    import numpy as np
+    import os
 
+    # Load data
+    if not os.path.isfile(output_file):
+        raise FileNotFoundError(f"File not found: {output_file}")
     df = pd.read_csv(output_file)
-    sns.set(style="whitegrid", palette="muted", font_scale=1.2)
+    required_cols = {'backend', 'function', 'run', 'time_s', 'memory_mb'}
+    if not required_cols.issubset(df.columns):
+        raise ValueError(f"CSV must contain columns: {required_cols}")
 
-    # Create a unique label for each backend/function combo
-    df['label'] = df['backend'] + ' | ' + df['function']
+    # Prepare DataFrame
+    sns.set(style="whitegrid", palette="muted", font_scale=1.2)
+    df['label'] = df['backend'].astype(str) + ' | ' + df['function'].astype(str)
     df = df.sort_values(by=['label', 'run'])
 
     unique_labels = df['label'].unique()
@@ -219,11 +231,12 @@ def plot_results(output_file):
     color_dict = dict(zip(unique_labels, palette))
 
     fig, axes = plt.subplots(2, 1, figsize=(14, 12), sharex=True)
-
-    for idx, (metric, ylabel, title) in enumerate([
+    metrics = [
         ('time_s', 'Time (s)', 'Execution Time per Run'),
         ('memory_mb', 'Memory (MB)', 'Memory Usage per Run')
-    ]):
+    ]
+
+    for idx, (metric, ylabel, title) in enumerate(metrics):
         ax = axes[idx]
         for label in unique_labels:
             group = df[df['label'] == label]
@@ -232,51 +245,44 @@ def plot_results(output_file):
             color = color_dict[label]
 
             # Plot line and points
-            ax.plot(runs, values, marker='o', label=label, color=color)
+            ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
 
-            # Mean and std
+            # Mean, std, CV, min, max
             mean = values.mean()
             std = values.std()
-            median = values.median()
-            minv = values.min()
-            maxv = values.max()
+            cv = std / mean if mean != 0 else float('nan')
+            minv, maxv = values.min(), values.max()
 
             # Error band (mean ± std)
             ax.fill_between(runs, mean - std, mean + std, color=color, alpha=0.15)
 
-            # Annotate stddev value at the right end of the band
-            ax.text(
-                runs.max() + 0.5, mean + std,
-                f"+1 std={std:.2f}", va='bottom', ha='left', color=color, fontsize=9, alpha=0.8
-            )
-            ax.text(
-                runs.max() + 0.5, mean - std,
-                f"-1 std={-std:.2f}", va='top', ha='left', color=color, fontsize=9, alpha=0.8
-            )
-
-            # Mean line
+            # Annotate mean and CV
+            x_annot = runs.max() + 0.5
             ax.axhline(mean, linestyle='--', color=color, alpha=0.7)
-            ax.text(runs.max() + 0.5, mean, f"mean={mean:.2f}", va='center', ha='left', color=color, fontsize=10)
-
-            # Median line
-            ax.axhline(median, linestyle=':', color=color, alpha=0.7)
-            ax.text(runs.max() + 0.5, median, f"median={median:.2f}", va='center', ha='left', color=color, fontsize=10)
+            ax.text(
+                x_annot, mean,
+                f"mean={mean:.2f}\nCV={cv*100:.1f}%",
+                va='center', ha='left', color=color, fontsize=11, fontweight='bold',
+                bbox=dict(facecolor='white', edgecolor=color, boxstyle='round,pad=0.3', alpha=0.7)
+            )
 
             # Annotate min and max
-            ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80)
-            ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80)
+            ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
+            ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
 
-        ax.set_title(title)
-        ax.set_ylabel(ylabel)
-        ax.legend(title='Backend | Function', bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
+        ax.set_title(title, fontsize=15)
+        ax.set_ylabel(ylabel, fontsize=13)
+        ax.legend(title='Backend | Function', bbox_to_anchor=(1.01, 1), loc='upper left', fontsize=10)
         ax.grid(True, linestyle='--', alpha=0.5)
 
-    axes[1].set_xlabel('Run')
+    axes[1].set_xlabel('Run', fontsize=13)
     plt.tight_layout()
-    plt.show()
-    # Optionally save to file:
-    # fig.savefig("benchmark_lines_stats.png", dpi=150)
 
+    if save_fig:
+        fig.savefig(fig_name, dpi=150, bbox_inches='tight')
+        print(f"Figure saved as {fig_name}")
+
+    plt.show()
 
 def main():
     """
@@ -300,20 +306,18 @@ def main():
     parser.add_argument("--mode", choices=["cold", "hot", "warm"], default="cold")
     parser.add_argument("--runs", type=int, default=10)
     parser.add_argument("--warmup", type=int, default=3, help="Number of warmup runs (for warm mode)")
-    parser.add_argument("--output", type=str, help="CSV file to export raw results")
 
     args = parser.parse_args()
 
     if args.mode == "cold":
-        run_cold_benchmark(args.runs, args.backend, args.function, args.mode, args.output)
+        run_cold_benchmark(args.runs, args.backend, args.function, args.mode)
     elif args.mode == "hot":
-        run_hot_benchmark(args.runs, args.backend, args.function, args.mode, args.output)
+        run_hot_benchmark(args.runs, args.backend, args.function, args.mode)
     elif args.mode == "warm":
-        run_warm_benchmark(args.warmup, args.runs, args.backend, args.function, args.mode, args.output)
+        run_warm_benchmark(args.warmup, args.runs, args.backend, args.function, args.mode)
 
-    # Plot only if output file is specified and exists
-    if args.output and os.path.exists(args.output):
-        plot_results(args.output)
+    print(f"\nBenchmark for {args.function} with {args.backend} in {args.mode} mode with {args.runs} runs.\n")
+    plot_results(f"{args.backend}_{args.function}_{args.mode}.csv")
 
 if __name__ == "__main__":
     main()
