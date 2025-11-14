@@ -237,8 +237,10 @@ def main():
         print(f"\nBenchmark-Results for {args.function} with DuckDB in {args.mode} mode with {args.runs} runs.\n")
         run_cold_benchmark(args.runs, "polars", args.function, args.mode)
         print(f"\nBenchmark-Results for {args.function} with Polars in {args.mode} mode with {args.runs} runs.\n")
-        print(f"Benchmark-Comparison for {args.function} with DuckDB & Polars in {args.mode} mode with {args.runs} runs finished.\n")
-        plotter.plot_results_multi([f"duckdb_{args.function}_{args.mode}.csv", f"polars_{args.function}_{args.mode}.csv"], True, f"{args.backend}_{args.function}_{args.mode}")
+        run_cold_benchmark(args.runs, "pandas", args.function, args.mode)
+        print(f"\nBenchmark-Results for {args.function} with Pandas in {args.mode} mode with {args.runs} runs.\n")
+        print(f"Benchmark-Comparison for {args.function} with DuckDB, Polars & Pandas in {args.mode} mode with {args.runs} runs finished.\n")
+        plotter.plot_results_multi([f"duckdb_{args.function}_{args.mode}.csv", f"polars_{args.function}_{args.mode}.csv", f"pandas_{args.function}_{args.mode}.csv"], True, f"duckdb_polars_pandas_{args.function}_{args.mode}.png")
     else:
         if args.mode == "cold":
             run_cold_benchmark(args.runs, args.backend, args.function, args.mode)
@@ -247,7 +249,7 @@ def main():
         elif args.mode == "warm":
             run_warm_benchmark(args.warmup, args.runs, args.backend, args.function, args.mode)
         print(f"\nBenchmark-Results for {args.function} with {args.backend} in {args.mode} mode with {args.runs} runs.\n")
-        plotter.plot_results(f"{args.backend}_{args.function}_{args.mode}.csv", True, f"{args.backend}_{args.function}_{args.mode}")
+        plotter.plot_results(f"{args.backend}_{args.function}_{args.mode}.csv", True, f"{args.backend}_{args.function}_{args.mode}.png")
 
 if __name__ == "__main__":
     main()
