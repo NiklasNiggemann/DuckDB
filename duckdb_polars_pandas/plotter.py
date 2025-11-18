@@ -5,16 +5,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import os
+
 def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.png"):
-    """
-    Plot execution time and memory usage per run for different backends and functions.
-
-    Parameters:
-        output_file (str): Path to the CSV file containing results.
-        save_fig (bool): Whether to save the figure to a file.
-        fig_name (str): Filename for saving the figure.
-    """
-
     if not os.path.isfile(output_file):
         raise FileNotFoundError(f"File not found: {output_file}")
     df = pd.read_csv(output_file)
@@ -22,7 +18,6 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
     if not required_cols.issubset(df.columns):
         raise ValueError(f"CSV must contain columns: {required_cols}")
 
-    # Prepare DataFrame
     sns.set(style="whitegrid", palette="muted", font_scale=1.2)
     df['label'] = df['backend'].astype(str) + ' | ' + df['function'].astype(str)
     df = df.sort_values(by=['label', 'run'])
@@ -48,26 +43,18 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
             # Plot line and points
             ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
 
-            # Mean, std, CV, min, max
+            # Mean, std
             mean = values.mean()
             std = values.std()
-            cv = std / mean if mean != 0 else float('nan')
             minv, maxv = values.min(), values.max()
 
             # Error band (mean ± std)
             ax.fill_between(runs, mean - std, mean + std, color=color, alpha=0.15)
 
-            # Annotate mean and CV
-            x_annot = runs.max() + 0.5
+            # Mean line
             ax.axhline(mean, linestyle='--', color=color, alpha=0.7)
-            ax.text(
-                x_annot, mean,
-                f"mean={mean:.2f}\nCV={cv*100:.1f}%",
-                va='center', ha='left', color=color, fontsize=11, fontweight='bold',
-                bbox=dict(facecolor='white', edgecolor=color, boxstyle='round,pad=0.3', alpha=0.7)
-            )
 
-            # Annotate min and max
+            # Annotate min and max (no info box)
             ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
             ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
 
@@ -85,18 +72,8 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
 
     plt.show()
 
+
 def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stats.png"):
-    """
-    Plot execution time and memory usage per run for different backends and functions,
-    combining multiple CSV files for comparison.
-
-    Parameters:
-        csv_files (list of str): List of CSV file paths.
-        save_fig (bool): Whether to save the figure to a file.
-        fig_name (str): Filename for saving the figure.
-    """
-
-    # Read and concatenate all CSVs, adding a 'source' column
     dfs = []
     for file in csv_files:
         if not os.path.isfile(file):
@@ -110,7 +87,6 @@ def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stat
     if not required_cols.issubset(df.columns):
         raise ValueError(f"CSV must contain columns: {required_cols}")
 
-    # Prepare DataFrame
     sns.set(style="whitegrid", palette="muted", font_scale=1.2)
     df['label'] = (
         df['backend'].astype(str) + ' | ' +
@@ -140,26 +116,18 @@ def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stat
             # Plot line and points
             ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
 
-            # Mean, std, CV, min, max
+            # Mean, std
             mean = values.mean()
             std = values.std()
-            cv = std / mean if mean != 0 else float('nan')
             minv, maxv = values.min(), values.max()
 
             # Error band (mean ± std)
             ax.fill_between(runs, mean - std, mean + std, color=color, alpha=0.15)
 
-            # Annotate mean and CV
-            x_annot = runs.max() + 0.5
+            # Mean line
             ax.axhline(mean, linestyle='--', color=color, alpha=0.7)
-            ax.text(
-                x_annot, mean,
-                f"mean={mean:.2f}\nCV={cv*100:.1f}%",
-                va='center', ha='left', color=color, fontsize=11, fontweight='bold',
-                bbox=dict(facecolor='white', edgecolor=color, boxstyle='round,pad=0.3', alpha=0.7)
-            )
 
-            # Annotate min and max
+            # Annotate min and max (no info box)
             ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
             ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
 
@@ -176,4 +144,5 @@ def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stat
         print(f"Figure saved as {fig_name}")
 
     plt.show()
+
 
