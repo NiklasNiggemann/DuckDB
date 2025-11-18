@@ -8,6 +8,7 @@ measures memory usage and execution time, and summarizes the results.
 Usage example:
     python benchmark_runner.py --backend duckdb --function filtering_and_counting --mode cold --runs 10 --output results.csv
 """
+
 import csv
 import subprocess
 import statistics
@@ -15,12 +16,14 @@ import re
 import sys
 import argparse
 from typing import Optional, Tuple, List
+import duckdb_basics
+import pandas_basics
 import plotter
+import polars_basics
+import utils
+
 
 def export_results_csv(filename, backend, function, mode, memories, times):
-    """
-    Exports the results of a benchmark to a CSV file.
-    """
     with open(filename, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["backend", "function", "mode", "run", "memory_mb", "time_s"])
@@ -28,15 +31,6 @@ def export_results_csv(filename, backend, function, mode, memories, times):
             writer.writerow([backend, function, mode, i, mem, t])
 
 def parse_output(output: str) -> Optional[Tuple[float, float]]:
-    """
-    Parses the output string to extract memory and time values.
-
-    Args:
-        output (str): The output string from the benchmarked process.
-
-    Returns:
-        Optional[Tuple[float, float]]: A tuple of (memory in MB, time in seconds) if found, else None.
-    """
     mem_match = re.search(r"Memory\s*=\s*([0-9.]+)\s*MB", output)
     time_match = re.search(r"Time\s*=\s*([0-9.]+)\s*s", output)
     if mem_match and time_match:
@@ -63,15 +57,6 @@ def summarize(label: str, values: List[float]):
     print(f"Span:   {span:.2f}")
 
 def run_cold_benchmark(n_runs: int, backend: str, function: str, mode: str):
-    """
-    Runs the benchmark in a subprocess for each run (cold start), capturing and parsing output.
-
-    Args:
-        n_runs (int): Number of benchmark runs.
-        backend (str): Backend to benchmark.
-        function (str): Function to benchmark.
-        mode (str): Mode to benchmark.
-    """
     memories, times = [], []
     print("\n-----------------------------------------------\n")
     print(f"\nBenchmark for {function} with {backend} started!\n")
@@ -105,64 +90,35 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str, mode: str):
     export_results_csv(f"{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
 
 def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
-    """
-    Runs the benchmark in-process for the specified number of runs (hot start).
-
-    Args:
-        n_runs (int): Number of benchmark runs.
-        backend (str): Backend to benchmark.
-        function (str): Function to benchmark.
-        mode (str): Mode to benchmark.
-    """
     memories, times = [], []
     print("\n-----------------------------------------------\n")
-    print(f"\nBenchmark for {function} with {backend} started!\n")
+    print(f"results/\nBenchmark for {function} with {backend} started!\n")
+
+    backend_map = {
+        "duckdb": duckdb_basics,
+        "polars": polars_basics,
+        "pandas": pandas_basics
+    }
+    mapped_backend = backend_map[backend]
+    func = getattr(mapped_backend, function)
+
     import benchmark_target
     for i in range(n_runs):
         print("\n------------------------------------------------\n")
         print(f"Run {i + 1}/{n_runs}")
-        from io import StringIO
-        old_stdout = sys.stdout
-        sys.stdout = mystdout = StringIO()
-        try:
-            sys.argv = [
-                "benchmark_target.py",
-                "--backend", backend,
-                "--function", function
-            ]
-            benchmark_target.main()
-            run_output = mystdout.getvalue()
-            print(run_output.strip())
-            parsed = parse_output(run_output)
-            if parsed:
-                mem, t = parsed
-                memories.append(mem)
-                times.append(t)
-                print(f"Memory = {mem:.2f} MB, Time = {t:.2f} s")
-            else:
-                print("Warning: Could not parse output!")
-        except Exception as e:
-            print(f"Run failed: {e}")
-        finally:
-            sys.stdout = old_stdout
+        with utils.suppress_stdout():
+            mem, t = benchmark_target.run_hot_benchmark(func)
+        memories.append(mem)
+        times.append(t)
+        print(f"Memory = {mem:.2f} MB, Time = {t:.2f} s")
+
     print("\n------------------------------------------------\n")
     print(f"\nBenchmark for {function} with {backend} finished!\n")
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
-    export_results_csv(f"{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
+    export_results_csv(f"results/{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
 
 def main():
-    """
-    Parses command-line arguments and runs the selected benchmark mode.
-
-    Command-line Arguments:
-        --backend:   The backend to use ('duckdb', 'polars', or 'pandas').
-        --function:  The function to benchmark.
-        --mode:      Benchmark mode ('cold', 'hot', or 'warm').
-        --runs:      Number of measured runs.
-        --warmup:    Number of warmup runs (for warm mode).
-        --output:    CSV file to export raw results.
-    """
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing backends.")
     parser.add_argument("--comparison", choices=["full", "duckdb_polars", None], default=None)
     parser.add_argument("--backend", choices=["duckdb", "polars", "pandas"])
@@ -193,8 +149,8 @@ def main():
             run_hot_benchmark(args.runs, "pandas", args.function, args.mode)
             print(f"\nBenchmark-Results for {args.function} with Pandas in {args.mode} mode with {args.runs} runs.\n")
             print(f"Benchmark-Comparison for {args.function} with DuckDB, Polars & Pandas in {args.mode} mode with {args.runs} runs finished.\n")
-        plotter.plot_results_multi([f"duckdb_{args.function}_{args.mode}.csv", f"polars_{args.function}_{args.mode}.csv", f"pandas_{args.function}_{args.mode}.csv"], True, f"duckdb_polars_pandas_{args.function}_{args.mode}.png")
-        plotter.plot_results_multi([f"duckdb_{args.function}_{args.mode}.csv", f"polars_{args.function}_{args.mode}.csv"], True, f"duckdb_polars_{args.function}_{args.mode}.png")
+        plotter.plot_results_multi([f"results/duckdb_{args.function}_{args.mode}.csv", f"polars_{args.function}_{args.mode}.csv", f"pandas_{args.function}_{args.mode}.csv"], True, f"results/duckdb_polars_pandas_{args.function}_{args.mode}.png")
+        plotter.plot_results_multi([f"results/duckdb_{args.function}_{args.mode}.csv", f"polars_{args.function}_{args.mode}.csv"], True, f"results/duckdb_polars_{args.function}_{args.mode}.png")
     elif args.comparison == "duckdb_polars":
         if args.mode == "cold":
             run_cold_benchmark(args.runs, "duckdb", args.function, args.mode)
@@ -208,14 +164,14 @@ def main():
             run_hot_benchmark(args.runs, "polars", args.function, args.mode)
             print(f"\nBenchmark-Results for {args.function} with Polars in {args.mode} mode with {args.runs} runs.\n")
             print(f"Benchmark-Comparison for {args.function} with DuckDB & Polars in {args.mode} mode with {args.runs} runs finished.\n")
-        plotter.plot_results_multi([f"duckdb_{args.function}_{args.mode}.csv", f"polars_{args.function}_{args.mode}.csv"], True, f"duckdb_polars_{args.function}_{args.mode}.png")
+        plotter.plot_results_multi([f"results/duckdb_{args.function}_{args.mode}.csv", f"polars_{args.function}_{args.mode}.csv"], True, f"results/duckdb_polars_{args.function}_{args.mode}.png")
     else:
         if args.mode == "cold":
             run_cold_benchmark(args.runs, args.backend, args.function, args.mode)
         elif args.mode == "hot":
             run_hot_benchmark(args.runs, args.backend, args.function, args.mode)
         print(f"\nBenchmark-Results for {args.function} with {args.backend} in {args.mode} mode with {args.runs} runs.\n")
-        plotter.plot_results(f"{args.backend}_{args.function}_{args.mode}.csv", True, f"{args.backend}_{args.function}_{args.mode}.png")
+        plotter.plot_results(f"results/{args.backend}_{args.function}_{args.mode}.csv", True, f"results/{args.backend}_{args.function}_{args.mode}.png")
 
 if __name__ == "__main__":
     main()
