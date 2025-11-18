@@ -1,10 +1,3 @@
-from readline import backend
-
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import os
-
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -43,6 +36,18 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
             # Plot line and points
             ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
 
+            # Improved annotation for each point
+            y_range = values.max() - values.min()
+            offset = y_range * 0.04 if y_range > 0 else 0.5
+            for i, (x, y) in enumerate(zip(runs, values)):
+                va = 'bottom' if i % 2 == 0 else 'top'
+                y_text = y + offset if va == 'bottom' else y - offset
+                ax.text(
+                    x, y_text, f"{y:.2f}",
+                    fontsize=9, color=color, ha='center', va=va, fontweight='bold',
+                    bbox=dict(facecolor='white', edgecolor='none', alpha=0.7, pad=0.5)
+                )
+
             # Mean, std
             mean = values.mean()
             std = values.std()
@@ -58,6 +63,15 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
             ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
             ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
 
+            # Annotate mean at left edge, aligned with mean line
+            xlim = ax.get_xlim()
+            ax.text(
+                xlim[0] + 0.1 * (xlim[1] - xlim[0]), mean,  # 10% from left
+                f"mean={mean:.2f}",
+                fontsize=11, color=color, ha='left', va='center', fontweight='bold',
+                bbox=dict(facecolor='white', edgecolor=color, alpha=0.8, pad=0.4)
+            )
+
         ax.set_title(title, fontsize=15)
         ax.set_ylabel(ylabel, fontsize=13)
         ax.legend(title='Backend | Function', bbox_to_anchor=(1.01, 1), loc='upper left', fontsize=10)
@@ -72,8 +86,12 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
 
     plt.show()
 
-
 def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stats.png"):
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    import os
+
     dfs = []
     for file in csv_files:
         if not os.path.isfile(file):
@@ -116,6 +134,18 @@ def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stat
             # Plot line and points
             ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
 
+            # Improved annotation for each point
+            y_range = values.max() - values.min()
+            offset = y_range * 0.04 if y_range > 0 else 0.5
+            for i, (x, y) in enumerate(zip(runs, values)):
+                va = 'bottom' if i % 2 == 0 else 'top'
+                y_text = y + offset if va == 'bottom' else y - offset
+                ax.text(
+                    x, y_text, f"{y:.2f}",
+                    fontsize=9, color=color, ha='center', va=va, fontweight='bold',
+                    bbox=dict(facecolor='white', edgecolor='none', alpha=0.7, pad=0.5)
+                )
+
             # Mean, std
             mean = values.mean()
             std = values.std()
@@ -131,6 +161,15 @@ def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stat
             ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
             ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
 
+            # Annotate mean at left edge, aligned with mean line
+            xlim = ax.get_xlim()
+            ax.text(
+                xlim[0] + 0.1 * (xlim[1] - xlim[0]), mean,  # 10% from left
+                f"mean={mean:.2f}",
+                fontsize=11, color=color, ha='left', va='center', fontweight='bold',
+                bbox=dict(facecolor='white', edgecolor=color, alpha=0.8, pad=0.4)
+            )
+
         ax.set_title(title, fontsize=15)
         ax.set_ylabel(ylabel, fontsize=13)
         ax.legend(title='Backend | Function | Source', bbox_to_anchor=(1.01, 1), loc='upper left', fontsize=10)
@@ -144,5 +183,3 @@ def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stat
         print(f"Figure saved as {fig_name}")
 
     plt.show()
-
-
