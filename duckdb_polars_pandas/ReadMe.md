@@ -2,17 +2,19 @@
 
 ## Overview
 
-This project benchmarks the performance of leading DataFrame and analytical query engines in Python: **DuckDB**, **Polars**, and **Pandas**. Each tool represents a distinct approach to tabular analytics:
+This project benchmarks the performance of three leading DataFrame and analytical query engines in Python: **DuckDB**, **Polars**, and **Pandas**. Each tool represents a unique approach to tabular analytics:
 
 - **DuckDB**: An in-process SQL OLAP database, similar to SQLite but optimized for analytical workloads.
 - **Polars**: A modern, high-performance DataFrame library written in Rust, designed for speed and efficiency.
 - **Pandas**: The most widely used DataFrame library in Python, known for its rich API and extensive ecosystem.
 
-This benchmarking project was created for its accompanying blog article for codecentric – refer to that article for more background information, discussion of results etc.
+This benchmarking project was created to accompany a blog article for codecentric. For more background information and discussion of results, please refer to that article.
 
-### Dataset
+---
 
-The [Ecommerce Behavior Data from Multi-category Store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store) dataset is used for these benchmarks. It is a real-world dataset with:
+## Dataset
+
+The benchmarks use the [Ecommerce Behavior Data from Multi-category Store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store) dataset, which is a real-world dataset with:
 
 - **Size:** 9 GB
 - **Rows:** 67,501,979
@@ -22,14 +24,14 @@ This scale is representative of production analytics scenarios.
 
 ---
 
-### Benchmarking Methodology
+## Benchmarking Methodology
 
 Benchmarks are conducted using a robust, **modular, and fully CLI-driven** setup. The framework supports three benchmarking modes:
 
 - **Cold:** Each run is executed in a new subprocess, eliminating caching effects and simulating a "cold start."
 - **Hot:** All runs are executed in the same process, measuring performance with potential caching effects.
 
-Each operation is executed multiple times (default: 10), and the median, minimum, maximum, and span (max - min) are reported for both execution time (in seconds) and memory usage (in MB).
+Each operation is executed multiple times (default: 10), and the median, minimum, maximum, and span (max - min), mean, standard deviation and Coefficient of variation are reported for both execution time (in seconds) and memory usage (in MB).
 
 **Test Environment:**  
 - MacBook Pro (2021), Apple M1 Max, 32 GB RAM  
@@ -37,7 +39,7 @@ Each operation is executed multiple times (default: 10), and the median, minimum
 
 ---
 
-### Benchmarked Operations
+## Benchmarked Operations
 
 Three fundamental OLAP operations are evaluated:
 
@@ -50,30 +52,30 @@ Three fundamental OLAP operations are evaluated:
 
 ---
 
-## Setup 
+## Setup
 
-The repository can simply be copied via the GitHub functionality. Dependencies of the project can be installed via the `requirements.txt`:
+Clone the repository and install dependencies using the provided `requirements.txt`:
 
-```ssh
+```sh
 pip install -r requirements.txt
-
 ```
 
-The dataset `.csv` is to be placed in a different dirctory. This perhaps unusual, bothersome setup stems from the fact that this project is part of multiple testing, benchmarking and playground projects that all utizile a dataset directory to share the same datasets. 
+**Dataset Placement:**  
+The dataset `.csv` file should be placed in a separate directory. This setup allows multiple projects to share the same dataset directory.
 
 ```
-- duckdb_polars_pandas 
-- dataset
--- ecommerce.csv 
+- duckdb_polars_pandas/
+- dataset/
+    └── ecommerce.csv
 ```
 
 ---
 
-## How to Run Benchmarks
+## Running Benchmarks
 
-The benchmarking framework is fully parameterized via the command line.  You can select the backend, operation, mode, and number of runs without editing any code.
+The benchmarking framework is fully parameterized via the command line. You can select the backend, operation, mode, and number of runs without editing any code.
 
-### **Example CLI Usage**
+### Example CLI Usage
 
 ```sh
 # Cold run, 10 times, DuckDB, filtering_and_counting
@@ -82,8 +84,6 @@ python benchmark.py --backend duckdb --function filtering_counting --mode cold -
 # Hot run, 5 times, Polars, filtering_grouping_aggregation
 python benchmark.py --backend polars --function filtering_grouping_aggregation --mode hot --runs 5
 
-# Warm run, 3 warmups, 7 runs, Pandas, grouping_and_conditional_aggregation
-python benchmark.py --backend pandas --function grouping_conditional_aggregation --mode warm --runs 7 --warmup 3
 ```
 
 **Available options:**
@@ -92,24 +92,23 @@ python benchmark.py --backend pandas --function grouping_conditional_aggregation
     - `filtering_counting`  
     - `filtering_grouping_aggregation`  
     - `grouping_conditional_aggregation`
-- `--mode`: `cold` or `hot` 
-- `--runs`: Number of measured runs (default: 10) 
+- `--mode`: `cold` or `hot`
+- `--runs`: Number of measured runs (default: 10)
 
-Additonally, instead of a specific backend for a singular benchmark, we can toggle a comparison mode:
+Additionally, you can run comparative benchmarks across multiple backends:
+
 - `--comparison`: `full`, `duckdb_polars`
 
-`full`runs the selected function and mode on all backends after one another. `duckdb_polars`only uses DuckDB and Polars – Note: `full` exports a comparison of DuckDB and Polars automatically as well.
+  - `full`: Runs the selected function and mode on all backends sequentially.
+  - `duckdb_polars`: Runs only DuckDB and Polars.
 
 ```sh
-# Cold run, 10 times, comparing DuckDB, Polars and Pandas 
+# Cold run, 10 times, comparing DuckDB, Polars, and Pandas
 python benchmark.py --comparison full --function filtering_counting --mode cold --runs 10
 
-# Hot run, 5 times, comparing DuckDB and Polars 
+# Hot run, 5 times, comparing DuckDB and Polars
 python benchmark.py --comparison duckdb_polars --function filtering_grouping_aggregation --mode hot --runs 5
-
 ```
-
-Certainly! Here’s an improved, clearer, and more structured version of your code explanation. I’ve preserved all code and technical details, but enhanced readability, flow, and clarity. No code has been deleted.
 
 ---
 
