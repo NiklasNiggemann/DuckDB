@@ -80,7 +80,7 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str, mode: str):
     summarize("Memory Used (MB)", memories)
     export_results_csv(f"results/{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
 
-def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
+def run_warm_benchmark(n_runs: int, backend: str, function: str, mode: str):
     print("\n-----------------------------------------------\n")
     print(f"Benchmark for {function} with {backend} started!")
     backend_map = {
@@ -93,7 +93,7 @@ def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
     import benchmark_engine
     gc.collect()
     time.sleep(10)
-    memories, times = benchmark_engine.hot_benchmark(func, n_runs)
+    memories, times = benchmark_engine.warm_benchmark(func, n_runs)
     print("\n------------------------------------------------\n")
     print(f"\nBenchmark for {function} with {backend} finished!\n")
     summarize("Elapsed Time (s)", times)
@@ -103,8 +103,8 @@ def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
 def initialize_benchmark(runs, backend, function, mode):
     if mode == "cold":
         run_cold_benchmark(runs, backend, function, mode)
-    elif mode == "hot":
-        run_hot_benchmark(runs, backend, function, mode)
+    elif mode == "warm":
+        run_warm_benchmark(runs, backend, function, mode)
     print(f"\nBenchmark-Results for {function} with {backend.capitalize()} in {mode} mode with {runs} runs.")
 
 def plot_multi(backends, function, mode):
@@ -121,7 +121,7 @@ def main():
         "filtering_grouping_aggregation",
         "grouping_conditional_aggregation"
     ], required=True)
-    parser.add_argument("--mode", choices=["cold", "hot"], default="cold")
+    parser.add_argument("--mode", choices=["cold", "warm"], default="cold")
     parser.add_argument("--runs", type=int, default=10)
 
     args = parser.parse_args()

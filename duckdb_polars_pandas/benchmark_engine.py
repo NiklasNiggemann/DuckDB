@@ -25,7 +25,7 @@ def cold_benchmark(func):
     print(f"Memory = {mem_after - mem_before:.2f} MB")
     print(f"Time = {end - start:.2f} s")
 
-def hot_benchmark(func, n_runs) -> tuple[list[Any], list[Any]]:
+def warm_benchmark(func, n_runs) -> tuple[list[Any], list[Any]]:
     memories, times = [], []
     print("Warming up...")
     for i in range(5):
@@ -65,7 +65,7 @@ def main():
     )
     parser.add_argument(
         "--mode",
-        choices=["hot", "cold"],
+        choices=["warm", "cold"],
         required=True,
     )
     args = parser.parse_args()
@@ -81,8 +81,8 @@ def main():
 
     if args.mode == "cold":
         cold_benchmark(func)
-    elif args.mode == "hot":
-        hot_benchmark(func)
+    elif args.mode == "warm":
+        warm_benchmark(func)
 
 if __name__ == "__main__":
     main()
