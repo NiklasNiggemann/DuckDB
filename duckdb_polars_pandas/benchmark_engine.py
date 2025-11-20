@@ -1,5 +1,5 @@
 import argparse
-from typing import Tuple
+from typing import Tuple, Any
 import psutil
 import time
 import os
@@ -7,6 +7,8 @@ import gc
 import duckdb_olap
 import polars_olap
 import pandas_olap
+import utils
+
 
 def get_memory_usage_mb() -> float:
     process = psutil.Process(os.getpid())
@@ -23,13 +25,23 @@ def cold_benchmark(func):
     print(f"Memory = {mem_after - mem_before:.2f} MB")
     print(f"Time = {end - start:.2f} s")
 
-def hot_benchmark(func) -> Tuple[float, float]:
-    start = time.perf_counter()
-    mem_before = get_memory_usage_mb()
-    func()
-    mem_after = get_memory_usage_mb()
-    end = time.perf_counter()
-    return (mem_after - mem_before), (end - start)
+def hot_benchmark(func, n_runs) -> tuple[list[Any], list[Any]]:
+    memories, times = [], []
+    for i in range(n_runs):
+        print("------------------------------------------------")
+        print(f"Run {i+1}/{n_runs}")
+        start = time.perf_counter()
+        mem_before = get_memory_usage_mb()
+        with utils.suppress_stdout():
+            func()
+        mem_after = get_memory_usage_mb()
+        end = time.perf_counter()
+        time_tmp = end - start
+        mem_tmp = mem_after - mem_before
+        memories.append(mem_tmp)
+        times.append(time_tmp)
+        print(f"Memory = {mem_tmp:.2f} MB, Time = {time_tmp:.2f} s")
+    return memories, times
 
 def main():
     parser = argparse.ArgumentParser(description="Run a benchmark on a selected backend and function.")

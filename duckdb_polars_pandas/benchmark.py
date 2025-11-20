@@ -81,7 +81,6 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str, mode: str):
     export_results_csv(f"results/{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
 
 def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
-    memories, times = [], []
     print("\n-----------------------------------------------\n")
     print(f"Benchmark for {function} with {backend} started!")
     backend_map = {
@@ -92,14 +91,9 @@ def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
     mapped_backend = backend_map[backend]
     func = getattr(mapped_backend, function)
     import benchmark_engine
-    for i in range(n_runs):
-        print("\n------------------------------------------------\n")
-        print(f"Run {i + 1}/{n_runs}")
-        with utils.suppress_stdout():
-            mem, t = benchmark_engine.hot_benchmark(func)
-        memories.append(mem)
-        times.append(t)
-        print(f"Memory = {mem:.2f} MB, Time = {t:.2f} s")
+    gc.collect()
+    time.sleep(10)
+    memories, times = benchmark_engine.hot_benchmark(func, n_runs)
     print("\n------------------------------------------------\n")
     print(f"\nBenchmark for {function} with {backend} finished!\n")
     summarize("Elapsed Time (s)", times)
@@ -133,15 +127,13 @@ def main():
     args = parser.parse_args()
 
     comparison_map = {
-        "full": ["duckdb", "polars", "pandas"],
+        "full": ["pandas", "duckdb", "polars"],
         "duckdb_polars": ["duckdb", "polars"]
     }
 
     if args.comparison in comparison_map:
         backends = comparison_map[args.comparison]
         for backend in backends:
-            gc.collect()
-            time.sleep(5)
             initialize_benchmark(args.runs, backend, args.function, args.mode)
         print(
             f"\nBenchmark-Comparison for {args.function} with {', '.join([b.capitalize() for b in backends])} in {args.mode} mode with {args.runs} runs finished.\n")
