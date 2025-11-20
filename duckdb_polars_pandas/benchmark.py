@@ -55,7 +55,8 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str, mode: str):
             result = subprocess.check_output(
                 [sys.executable, 'benchmark_engine.py',
                  '--backend', backend,
-                 '--function', function],
+                 '--function', function,
+                 '--mode', mode],
                 stderr=subprocess.STDOUT
             )
             run_output = result.decode().strip()
