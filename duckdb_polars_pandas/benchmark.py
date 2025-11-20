@@ -1,9 +1,11 @@
 import csv
+import gc
 import subprocess
 import statistics
 import re
 import sys
 import argparse
+import time
 from typing import Optional, Tuple, List
 import duckdb_olap
 import pandas_olap
@@ -138,6 +140,8 @@ def main():
     if args.comparison in comparison_map:
         backends = comparison_map[args.comparison]
         for backend in backends:
+            gc.collect()
+            time.sleep(5)
             initialize_benchmark(args.runs, backend, args.function, args.mode)
         print(
             f"\nBenchmark-Comparison for {args.function} with {', '.join([b.capitalize() for b in backends])} in {args.mode} mode with {args.runs} runs finished.\n")
