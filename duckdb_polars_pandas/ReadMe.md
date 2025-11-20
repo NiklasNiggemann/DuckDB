@@ -175,6 +175,57 @@ def initialize_benchmark(runs, backend, function, mode):
     print(f"\nBenchmark-Results for {function} with {backend.capitalize()} in {mode} mode with {runs} runs.")
 ```
 
+### Warm Benchmark 
+
+The `run_warm_benchmark`function utilizes the `warm_benchmark`function of the `benchmark_engine.py` module: 
+
+```python 
+def run_warm_benchmark(n_runs: int, backend: str, function: str, mode: str):
+    print("\n-----------------------------------------------\n")
+    print(f"Benchmark for {function} with {backend} started!")
+    backend_map = {
+        "duckdb": duckdb_olap,
+        "polars": polars_olap,
+        "pandas": pandas_olap
+    }
+    mapped_backend = backend_map[backend]
+    func = getattr(mapped_backend, function)
+    import benchmark_engine
+    gc.collect()
+    memories, times = benchmark_engine.warm_benchmark(func, n_runs)
+    print("\n------------------------------------------------\n")
+    print(f"\nBenchmark for {function} with {backend} finished!\n")
+    summarize("Elapsed Time (s)", times)
+    summarize("Memory Used (MB)", memories)
+    export_results_csv(f"results/{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
+```
+
+The `warm_benchmark` function is then mainly tasked with running the benchmark in a loop and measuring the memory and time.
+
+```python
+def warm_benchmark(func, n_runs) -> tuple[list[Any], list[Any]]:
+    memories, times = [], []
+    print("Warming up...")
+    for i in range(5):
+        with utils.suppress_stdout():
+            func()
+    for i in range(n_runs):
+        print("------------------------------------------------")
+        print(f"Run {i+1}/{n_runs}")
+        start = time.perf_counter()
+        mem_before = get_memory_usage_mb()
+        with utils.suppress_stdout():
+            func()
+        mem_after = get_memory_usage_mb()
+        end = time.perf_counter()
+        time_tmp = end - start
+        mem_tmp = mem_after - mem_before
+        memories.append(mem_tmp)
+        times.append(time_tmp)
+        print(f"Memory = {mem_tmp:.2f} MB, Time = {time_tmp:.2f} s")
+    return memories, times
+***
+
 #### Suppressing Output
 
 To keep the terminal output clean, the `suppress_stdout` context manager from `utils.py` is used:
