@@ -29,7 +29,7 @@ This scale is representative of production analytics scenarios.
 Benchmarks are conducted using a robust, **modular, and fully CLI-driven** setup. The framework supports three benchmarking modes:
 
 - **Cold:** Each run is executed in a new subprocess, eliminating caching effects and simulating a "cold start."
-- **Hot:** All runs are executed in the same process, measuring performance with potential caching effects.
+- **Warm:** All runs are executed in the same process, measuring performance with potential caching effects. Additionally, the script is executed 5 times before the measurement, to minimize noise and ensure detailed portraile of the memory efficiency of repeated execution with the help of caching.
 
 Each operation is executed multiple times (default: 10), and the median, minimum, maximum, and span (max - min), mean, standard deviation and Coefficient of variation are reported for both execution time (in seconds) and memory usage (in MB).
 
@@ -82,8 +82,8 @@ The benchmarking framework is fully parameterized via the command line. You can 
 # Cold run, 10 times, DuckDB, filtering_and_counting
 python benchmark.py --backend duckdb --function filtering_counting --mode cold --runs 10
 
-# Hot run, 5 times, Polars, filtering_grouping_aggregation
-python benchmark.py --backend polars --function filtering_grouping_aggregation --mode hot --runs 5
+# warm run, 10 times with 5 warmups, Polars, filtering_grouping_aggregation
+python benchmark.py --backend polars --function filtering_grouping_aggregation --mode warm 
 
 ```
 
@@ -93,7 +93,7 @@ python benchmark.py --backend polars --function filtering_grouping_aggregation -
     - `filtering_counting`  
     - `filtering_grouping_aggregation`  
     - `grouping_conditional_aggregation`
-- `--mode`: `cold` or `hot`
+- `--mode`: `cold` or `warm`
 - `--runs`: Number of measured runs (default: 10)
 
 Additionally, you can run comparative benchmarks across multiple backends:
@@ -107,8 +107,8 @@ Additionally, you can run comparative benchmarks across multiple backends:
 # Cold run, 10 times, comparing DuckDB, Polars, and Pandas
 python benchmark.py --comparison full --function filtering_counting --mode cold --runs 10
 
-# Hot run, 5 times, comparing DuckDB and Polars
-python benchmark.py --comparison duckdb_polars --function filtering_grouping_aggregation --mode hot --runs 5
+# warm run, 10 times with 5 warmups, comparing DuckDB and Polars
+python benchmark.py --comparison duckdb_polars --function filtering_grouping_aggregation --mode warm --runs 5
 ```
 
 ---
@@ -130,7 +130,7 @@ parser.add_argument("--function", choices=[
    "filtering_grouping_aggregation",
    "grouping_conditional_aggregation"
 ], required=True)
-parser.add_argument("--mode", choices=["cold", "hot"], default="cold")
+parser.add_argument("--mode", choices=["cold", "warm"], default="cold")
 parser.add_argument("--runs", type=int, default=10)
 ```
 
@@ -170,8 +170,8 @@ The `initialize_benchmark` function triggers the selected benchmark mode:
 def initialize_benchmark(runs, backend, function, mode):
     if mode == "cold":
         run_cold_benchmark(runs, backend, function, mode)
-    elif mode == "hot":
-        run_hot_benchmark(runs, backend, function, mode)
+    elif mode == "warm":
+        run_warm_benchmark(runs, backend, function, mode)
     print(f"\nBenchmark-Results for {function} with {backend.capitalize()} in {mode} mode with {runs} runs.")
 ```
 
@@ -302,7 +302,7 @@ def main():
     )
     parser.add_argument(
         "--mode",
-        choices=["hot", "cold"],
+        choices=["warm", "cold"],
         required=True,
     )
     args = parser.parse_args()
@@ -318,13 +318,13 @@ def main():
 
     if args.mode == "cold":
         cold_benchmark(func)
-    elif args.mode == "hot":
-        hot_benchmark(func)
+    elif args.mode == "warm":
+        warm_benchmark(func)
 ```
 
 #### Measuring Time and Memory
 
-Both `cold_benchmark` and `hot_benchmark` simply execute the function and measure time and memory usage. Memory is measured using `psutil`:
+Both `cold_benchmark` and `warm_benchmark` simply execute the function and measure time and memory usage. Memory is measured using `psutil`:
 
 ```python
 def get_memory_usage_mb() -> float:
@@ -466,7 +466,7 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_cold.png?ref_type=heads)
 
-#### Hot Mode 
+#### Warm Mode 
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_hot.png?ref_type=heads)
@@ -478,7 +478,7 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_cold.png?ref_type=heads)
 
-#### Hot Mode 
+#### Warm Mode 
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_hot.png?ref_type=heads)
@@ -490,7 +490,7 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_cold.png?ref_type=heads)
 
-#### Hot Mode 
+#### Warm Mode 
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_hot.png?ref_type=heads)
