@@ -175,38 +175,6 @@ def initialize_benchmark(runs, backend, function, mode):
     print(f"\nBenchmark-Results for {function} with {backend.capitalize()} in {mode} mode with {runs} runs.")
 ```
 
-### Hot Benchmarking
-
-The hot benchmark runs the selected function multiple times in a loop, using the `hot_benchmark` function from `benchmark_engine.py`:
-
-```python
-def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
-    memories, times = [], []
-    print("\n-----------------------------------------------\n")
-    print(f"Benchmark for {function} with {backend} started!")
-    backend_map = {
-        "duckdb": duckdb_olap,
-        "polars": polars_olap,
-        "pandas": pandas_olap
-    }
-    mapped_backend = backend_map[backend]
-    func = getattr(mapped_backend, function)
-    import benchmark_engine
-    for i in range(n_runs):
-        print("\n------------------------------------------------\n")
-        print(f"Run {i + 1}/{n_runs}")
-        with utils.suppress_stdout():
-            mem, t = benchmark_engine.hot_benchmark(func)
-        memories.append(mem)
-        times.append(t)
-        print(f"Memory = {mem:.2f} MB, Time = {t:.2f} s")
-    print("\n------------------------------------------------\n")
-    print(f"\nBenchmark for {function} with {backend} finished!\n")
-    summarize("Elapsed Time (s)", times)
-    summarize("Memory Used (MB)", memories)
-    export_results_csv(f"results/{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
-```
-
 #### Suppressing Output
 
 To keep the terminal output clean, the `suppress_stdout` context manager from `utils.py` is used:
