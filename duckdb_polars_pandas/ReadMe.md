@@ -136,11 +136,11 @@ parser.add_argument("--runs", type=int, default=10)
 
 ### Benchmark Execution Logic
 
-Based on the CLI input, the script determines which backends and functions to benchmark. Between runs, the code sleeps for 5 seconds in order to not execute operations to quickly after another. Additionally the garbage collecter is called once.
+Based on the CLI input, the script determines which backends and functions to benchmark. 
 
 ```python
     comparison_map = {
-        "full": ["pandas", "polars", "duckdb"],
+        "full": ["duckdb", "polars", "pandas"],
         "duckdb_polars": ["duckdb", "polars"]
     }
 
@@ -148,8 +148,6 @@ Based on the CLI input, the script determines which backends and functions to be
         backends = comparison_map[args.comparison]
         for backend in backends:
             initialize_benchmark(args.runs, backend, args.function, args.mode)
-            gc.collect()
-            time.sleep(5)
    print(
       f"\nBenchmark-Comparison for {args.function} with {', '.join([b.capitalize() for b in backends])} in {args.mode} mode with {args.runs} runs finished.\n")
    plot_multi(backends, args.function, args.mode)
