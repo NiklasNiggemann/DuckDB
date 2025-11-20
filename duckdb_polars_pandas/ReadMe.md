@@ -61,10 +61,11 @@ pip install -r requirements.txt
 ```
 
 **Dataset Placement:**  
-The dataset `.csv` file should be placed in a separate directory. This setup allows multiple projects to share the same dataset directory.
+The dataset `.csv` file should be placed in a separate directory. This setup allows multiple projects to share the same dataset directory. In the project directory, you need to create a `results` directory where the `.csv` and `.png` files are stored. 
 
 ```
 - duckdb_polars_pandas/
+    └── results 
 - dataset/
     └── ecommerce.csv
 ```
