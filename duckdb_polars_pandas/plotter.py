@@ -87,11 +87,6 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
     plt.show()
 
 def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stats.png"):
-    import pandas as pd
-    import seaborn as sns
-    import matplotlib.pyplot as plt
-    import os
-
     dfs = []
     for file in csv_files:
         if not os.path.isfile(file):
