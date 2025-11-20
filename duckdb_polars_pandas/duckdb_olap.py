@@ -11,7 +11,6 @@ def filtering_counting():
         f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'"
     ).show()
 
-
 def filtering_grouping_aggregation():
     duckdb.sql(
         f"""
@@ -21,7 +20,6 @@ def filtering_grouping_aggregation():
         GROUP BY category_code
         """
     ).show()
-
 
 def grouping_conditional_aggregation():
     duckdb.sql(

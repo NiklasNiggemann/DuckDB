@@ -94,7 +94,7 @@ def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
         print("\n------------------------------------------------\n")
         print(f"Run {i + 1}/{n_runs}")
         with utils.suppress_stdout():
-            mem, t = benchmark_engine.run_hot_benchmark(func)
+            mem, t = benchmark_engine.hot_benchmark(func)
         memories.append(mem)
         times.append(t)
         print(f"Memory = {mem:.2f} MB, Time = {t:.2f} s")

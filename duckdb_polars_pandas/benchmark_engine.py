@@ -12,7 +12,7 @@ def get_memory_usage_mb() -> float:
     process = psutil.Process(os.getpid())
     return process.memory_info().rss / (1024 * 1024)
 
-def run_cold_benchmark(func):
+def cold_benchmark(func):
     gc.collect()
     start = time.perf_counter()
     mem_before = get_memory_usage_mb()
@@ -23,7 +23,7 @@ def run_cold_benchmark(func):
     print(f"Memory = {mem_after - mem_before:.2f} MB")
     print(f"Time = {end - start:.2f} s")
 
-def run_hot_benchmark(func) -> Tuple[float, float]:
+def hot_benchmark(func) -> Tuple[float, float]:
     start = time.perf_counter()
     mem_before = get_memory_usage_mb()
     func()
@@ -64,9 +64,9 @@ def main():
     func = getattr(module, args.function)
 
     if args.mode == "cold":
-        run_cold_benchmark(func)
+        cold_benchmark(func)
     elif args.mode == "hot":
-        run_hot_benchmark(func)
+        hot_benchmark(func)
 
 if __name__ == "__main__":
     main()

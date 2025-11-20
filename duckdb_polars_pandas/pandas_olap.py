@@ -9,7 +9,6 @@ def filtering_counting():
     print(purchases)
     print("Count:", len(purchases))
 
-
 def filtering_grouping_aggregation():
     df = pd.read_csv(dataset_path)
     result = (
@@ -19,7 +18,6 @@ def filtering_grouping_aggregation():
         .reset_index(name="total_sales")
     )
     print(result)
-
 
 def grouping_conditional_aggregation():
     df = pd.read_csv(dataset_path)
