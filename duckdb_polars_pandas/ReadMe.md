@@ -18,7 +18,7 @@ The benchmarks use the [Ecommerce Behavior Data from Multi-category Store](https
 
 - **Size:** 9 GB
 - **Rows:** 67,501,979
-- **Columns:** 18
+- **Columns:** 9
 
 This scale is representative of production analytics scenarios.
 
