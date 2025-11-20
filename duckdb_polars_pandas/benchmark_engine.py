@@ -27,6 +27,10 @@ def cold_benchmark(func):
 
 def hot_benchmark(func, n_runs) -> tuple[list[Any], list[Any]]:
     memories, times = [], []
+    print("Warming up...")
+    for i in range(5):
+        with utils.suppress_stdout():
+            func()
     for i in range(n_runs):
         print("------------------------------------------------")
         print(f"Run {i+1}/{n_runs}")
