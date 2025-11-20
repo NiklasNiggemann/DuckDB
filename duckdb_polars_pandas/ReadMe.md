@@ -485,7 +485,7 @@ def grouping_conditional_aggregation():
 
 ## Visualization
 
-After benchmarking, results are exported as CSV files and visualized. Plots can compare a single backend, two backends (e.g., DuckDB & Polars), or all three backends. (Insert your plot examples here.)
+After benchmarking, results are exported as CSV files and visualized. Plots can compare a single backend, two backends (e.g., DuckDB & Polars), or all three backends.
 
 ---
 
