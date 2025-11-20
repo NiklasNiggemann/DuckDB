@@ -136,18 +136,20 @@ parser.add_argument("--runs", type=int, default=10)
 
 ### Benchmark Execution Logic
 
-Based on the CLI input, the script determines which backends and functions to benchmark:
+Based on the CLI input, the script determines which backends and functions to benchmark. Between runs, the code sleeps for 5 seconds in order to not execute operations to quickly after another. Additionally the garbage collecter is called once.
 
 ```python
-comparison_map = {
-   "full": ["duckdb", "polars", "pandas"],
-   "duckdb_polars": ["duckdb", "polars"]
-}
+    comparison_map = {
+        "full": ["pandas", "polars", "duckdb"],
+        "duckdb_polars": ["duckdb", "polars"]
+    }
 
-if args.comparison in comparison_map:
-   backends = comparison_map[args.comparison]
-   for backend in backends:
-      initialize_benchmark(args.runs, backend, args.function, args.mode)
+    if args.comparison in comparison_map:
+        backends = comparison_map[args.comparison]
+        for backend in backends:
+            initialize_benchmark(args.runs, backend, args.function, args.mode)
+            gc.collect()
+            time.sleep(5)
    print(
       f"\nBenchmark-Comparison for {args.function} with {', '.join([b.capitalize() for b in backends])} in {args.mode} mode with {args.runs} runs finished.\n")
    plot_multi(backends, args.function, args.mode)
@@ -495,54 +497,10 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 
 #### Cold Mode
 
-Elapsed Time (s)
-
-| Metric | DuckDB | Polars | Pandas |
-|--------|--------|--------|--------|
-| **Mean** | 2.40 | 12.69 | 66.12 |
-| **Std**  | 0.04 | 2.22  | 2.01  |
-| **CV**   | 1.5% | 17.5% | 3.0%  |
-| **Min**  | 2.35 | 7.36  | 62.66 |
-| **Max**  | 2.46 | 15.79 | 70.59 |
-| **Span** | 0.11 | 8.43  | 7.93  |
-
-Memory Used (MB)
-
-| Metric | DuckDB | Polars | Pandas |
-|--------|--------|--------|--------|
-| **Mean** | 29.45   | 682.19   | 272.35   |
-| **Std**  | 66.27   | 1955.79  | 1854.91  |
-| **CV**   | 225.0%  | 286.7%   | 681.1%   |
-| **Min**  | 1.16    | -1391.91 | -2269.55 |
-| **Max**  | 210.09  | 5504.22  | 3091.34  |
-| **Span** | 208.94  | 6896.12  | 5360.89  |
-
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_pandas_filtering_counting_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_cold.png?ref_type=heads)
 
 #### Hot Mode 
-
-Elapsed Time (s)
-
-| Metric | DuckDB | Polars | Pandas |
-|--------|--------|--------|--------|
-| **Mean** | 2.68 | 9.66  | 64.89 |
-| **Std**  | 0.06 | 2.12  | 1.49  |
-| **CV**   | 2.3% | 21.9% | 2.3%  |
-| **Min**  | 2.62 | 5.82  | 63.42 |
-| **Max**  | 2.79 | 13.28 | 68.13 |
-| **Span** | 0.17 | 7.46  | 4.71  |
-
-Memory Used (MB)
-
-| Metric | DuckDB | Polars | Pandas |
-|--------|--------|--------|--------|
-| **Mean** | 40.25    | 633.19    | 65.54     |
-| **Std**  | 87.52    | 2201.16   | 1750.45   |
-| **CV**   | 217.4%   | 347.6%    | 2670.9%   |
-| **Min**  | 0.11     | -1790.66  | -3198.94  |
-| **Max**  | 260.69   | 5644.30   | 2808.44   |
-| **Span** | 260.58   | 7434.95   | 6007.38   |
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_pandas_filtering_counting_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_hot.png?ref_type=heads)
@@ -551,54 +509,10 @@ Memory Used (MB)
 
 #### Cold Mode 
 
-Elapsed Time (s)
-
-| Metric | DuckDB | Polars | Pandas |
-|--------|--------|--------|--------|
-| **Mean** | 2.31   | 2.85    | 59.53   |
-| **Std**  | 0.05   | 0.05    | 0.35    |
-| **CV**   | 2.0%   | 1.7%    | 0.6%    |
-| **Min**  | 2.26   | 2.80    | 59.00   |
-| **Max**  | 2.40   | 2.94    | 60.10   |
-| **Span** | 0.14   | 0.14    | 1.10    |
-
-Memory Used (MB)
-
-| Metric | DuckDB   | Polars     | Pandas     |
-|--------|----------|------------|------------|
-| **Mean** | 211.28    | 12426.42   | 12267.93   |
-| **Std**  | 20.91     | 0.63       | 980.08     |
-| **CV**   | 9.9%      | 0.0%       | 8.0%       |
-| **Min**  | 179.64    | 12425.55   | 11039.67   |
-| **Max**  | 243.27    | 12427.61   | 14654.47   |
-| **Span** | 63.63     | 2.06       | 3614.80    |
-
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_pandas_filtering_grouping_aggregation_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_cold.png?ref_type=heads)
 
 #### Hot Mode 
-
-Elapsed Time (s)
-
-| Metric   | DuckDB | Polars | Pandas |
-|----------|--------|--------|--------|
-| **Mean** | 2.32   | 6.29   | 63.45  |
-| **Std**  | 0.05   | 3.75   | 1.29   |
-| **CV**   | 2.0%   | 59.6%  | 2.0%   |
-| **Min**  | 2.25   | 3.13   | 61.99  |
-| **Max**  | 2.38   | 16.08  | 66.36  |
-| **Span** | 0.13   | 12.95  | 4.37   |
-
-Memory Used (MB)
-
-| Metric   | DuckDB | Polars   | Pandas   |
-|----------|--------|----------|----------|
-| **Mean** | 28.80  | 1164.60  | 34.07    |
-| **Std**  | 65.23  | 3914.01  | 1412.61  |
-| **CV**   | 226.5% | 336.1%   | 4146.5%  |
-| **Min**  | 1.02   | -3156.58 | -2151.58 |
-| **Max**  | 210.92 | 11123.97 | 2799.83  |
-| **Span** | 209.91 | 14280.55 | 4951.41  |
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_pandas_filtering_grouping_aggregation_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_hot.png?ref_type=heads)
@@ -607,54 +521,10 @@ Memory Used (MB)
 
 #### Cold Mode
 
-Elapsed Time (s)
-
-| Metric   | DuckDB | Polars | Pandas |
-|----------|--------|--------|--------|
-| **Mean** | 2.42   | 9.75   | 61.62  |
-| **Std**  | 0.06   | 0.79   | 0.83   |
-| **CV**   | 2.5%   | 8.1%   | 1.3%   |
-| **Min**  | 2.36   | 8.54   | 60.68  |
-| **Max**  | 2.52   | 11.30  | 63.03  |
-| **Span** | 0.16   | 2.76   | 2.35   |
-
-Memory Used (MB)
-
-| Metric   | DuckDB  | Polars   | Pandas    |
-|----------|---------|----------|-----------|
-| **Mean** | 219.92  | 8074.84  | 11574.46  |
-| **Std**  | 40.84   | 849.14   | 548.85    |
-| **CV**   | 18.6%   | 10.5%    | 4.7%      |
-| **Min**  | 180.17  | 6093.03  | 11044.94  |
-| **Max**  | 302.03  | 9177.55  | 12999.53  |
-| **Span** | 121.86  | 3084.52  | 1954.59   |
-
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_pandas_grouping_conditional_aggregation_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_cold.png?ref_type=heads)
 
 #### Hot Mode 
-
-Elapsed Time (s)
-
-| Metric | DuckDB | Polars | Pandas |
-|--------|--------|--------|--------|
-| **Mean** | 2.40 | 12.69 | 66.12 |
-| **Std**  | 0.04 | 2.22  | 2.01  |
-| **CV**   | 1.5% | 17.5% | 3.0%  |
-| **Min**  | 2.35 | 7.36  | 62.66 |
-| **Max**  | 2.46 | 15.79 | 70.59 |
-| **Span** | 0.11 | 8.43  | 7.93  |
-
-Memory Used (MB)
-
-| Metric | DuckDB | Polars | Pandas |
-|--------|--------|--------|--------|
-| **Mean** | 29.45   | 682.19   | 272.35   |
-| **Std**  | 66.27   | 1955.79  | 1854.91  |
-| **CV**   | 225.0%  | 286.7%   | 681.1%   |
-| **Min**  | 1.16    | -1391.91 | -2269.55 |
-| **Max**  | 210.09  | 5504.22  | 3091.34  |
-| **Span** | 208.94  | 6896.12  | 5360.89  |
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_pandas_grouping_conditional_aggregation_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_hot.png?ref_type=heads)
