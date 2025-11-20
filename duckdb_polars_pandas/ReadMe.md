@@ -82,7 +82,7 @@ The benchmarking framework is fully parameterized via the command line. You can 
 # Cold run, 10 times, DuckDB, filtering_and_counting
 python benchmark.py --backend duckdb --function filtering_counting --mode cold --runs 10
 
-# warm run, 10 times with 5 warmups, Polars, filtering_grouping_aggregation
+# Warm run, 10 times with 5 warmups, Polars, filtering_grouping_aggregation
 python benchmark.py --backend polars --function filtering_grouping_aggregation --mode warm 
 
 ```
@@ -107,8 +107,8 @@ Additionally, you can run comparative benchmarks across multiple backends:
 # Cold run, 10 times, comparing DuckDB, Polars, and Pandas
 python benchmark.py --comparison full --function filtering_counting --mode cold --runs 10
 
-# warm run, 10 times with 5 warmups, comparing DuckDB and Polars
-python benchmark.py --comparison duckdb_polars --function filtering_grouping_aggregation --mode warm --runs 5
+# Warm run, 10 times with 5 warmups, comparing DuckDB and Polars
+python benchmark.py --comparison duckdb_polars --function filtering_grouping_aggregation --mode warm --runs 10
 ```
 
 ---
