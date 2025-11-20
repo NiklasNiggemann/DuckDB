@@ -76,7 +76,7 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str, mode: str):
     print(f"\nBenchmark for {function} with {backend} finished!\n")
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
-    export_results_csv(f"{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
+    export_results_csv(f"results/{backend}_{function}_{mode}.csv", backend, function, mode, memories, times)
 
 def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
     memories, times = [], []
