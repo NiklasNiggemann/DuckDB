@@ -1,14 +1,3 @@
-"""
-benchmark_runner.py
-
-This module provides a command-line interface for benchmarking data processing functions
-across different backends (DuckDB, Polars, Pandas). It supports cold, hot, and warm benchmarking modes,
-measures memory usage and execution time, and summarizes the results.
-
-Usage example:
-    python benchmark_runner.py --backend duckdb --function filtering_and_counting --mode cold --runs 10 --output results.csv
-"""
-
 import csv
 import subprocess
 import statistics
@@ -16,10 +5,10 @@ import re
 import sys
 import argparse
 from typing import Optional, Tuple, List
-import duckdb_basics
-import pandas_basics
+import duckdb_olap
+import pandas_olap
 import plotter
-import polars_basics
+import polars_olap
 import utils
 
 def export_results_csv(filename, backend, function, mode, memories, times):
@@ -64,7 +53,7 @@ def run_cold_benchmark(n_runs: int, backend: str, function: str, mode: str):
         print(f"Run {i+1}/{n_runs}")
         try:
             result = subprocess.check_output(
-                [sys.executable, 'benchmark_target.py',
+                [sys.executable, 'benchmark_engine.py',
                  '--backend', backend,
                  '--function', function],
                 stderr=subprocess.STDOUT
@@ -93,18 +82,18 @@ def run_hot_benchmark(n_runs: int, backend: str, function: str, mode: str):
     print("\n-----------------------------------------------\n")
     print(f"Benchmark for {function} with {backend} started!")
     backend_map = {
-        "duckdb": duckdb_basics,
-        "polars": polars_basics,
-        "pandas": pandas_basics
+        "duckdb": duckdb_olap,
+        "polars": polars_olap,
+        "pandas": pandas_olap
     }
     mapped_backend = backend_map[backend]
     func = getattr(mapped_backend, function)
-    import benchmark_target
+    import benchmark_engine
     for i in range(n_runs):
         print("\n------------------------------------------------\n")
         print(f"Run {i + 1}/{n_runs}")
         with utils.suppress_stdout():
-            mem, t = benchmark_target.run_hot_benchmark(func)
+            mem, t = benchmark_engine.run_hot_benchmark(func)
         memories.append(mem)
         times.append(t)
         print(f"Memory = {mem:.2f} MB, Time = {t:.2f} s")
@@ -131,9 +120,9 @@ def main():
     parser.add_argument("--comparison", choices=["full", "duckdb_polars", None], default=None)
     parser.add_argument("--backend", choices=["duckdb", "polars", "pandas"])
     parser.add_argument("--function", choices=[
-        "filtering_and_counting",
+        "filtering_counting",
         "filtering_grouping_aggregation",
-        "grouping_and_conditional_aggregation"
+        "grouping_conditional_aggregation"
     ], required=True)
     parser.add_argument("--mode", choices=["cold", "hot"], default="cold")
     parser.add_argument("--runs", type=int, default=10)

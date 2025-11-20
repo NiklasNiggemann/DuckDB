@@ -51,13 +51,13 @@ You can select the backend, operation, mode, and number of runs without editing 
 
 ```sh
 # Cold run, 10 times, DuckDB, filtering_and_counting
-python benchmark_runner.py --backend duckdb --function filtering_and_counting --mode cold --runs 10
+python benchmark.py --backend duckdb --function filtering_and_counting --mode cold --runs 10
 
 # Hot run, 5 times, Polars, filtering_grouping_aggregation
-python benchmark_runner.py --backend polars --function filtering_grouping_aggregation --mode hot --runs 5
+python benchmark.py --backend polars --function filtering_grouping_aggregation --mode hot --runs 5
 
 # Warm run, 3 warmups, 7 runs, Pandas, grouping_and_conditional_aggregation
-python benchmark_runner.py --backend pandas --function grouping_and_conditional_aggregation --mode warm --runs 7 --warmup 3
+python benchmark.py --backend pandas --function grouping_and_conditional_aggregation --mode warm --runs 7 --warmup 3
 ```
 
 **Available options:**
@@ -157,7 +157,7 @@ All benchmarking scripts, environment specifications, and raw results are availa
 
 **Example:**
 ```sh
-python benchmark_runner.py --backend duckdb --function filtering_and_counting --mode cold --runs 10
+python benchmark.py --backend duckdb --function filtering_and_counting --mode cold --runs 10
 ```
 
 Contributions and suggestions are welcome.

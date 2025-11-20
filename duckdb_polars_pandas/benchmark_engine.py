@@ -1,13 +1,12 @@
 import argparse
 from typing import Tuple
-
 import psutil
 import time
 import os
 import gc
-import duckdb_basics
-import polars_basics
-import pandas_basics
+import duckdb_olap
+import polars_olap
+import pandas_olap
 
 def get_memory_usage_mb() -> float:
     process = psutil.Process(os.getpid())
@@ -42,9 +41,9 @@ def main():
     parser.add_argument(
         "--function",
         choices=[
-            "filtering_and_counting",
+            "filtering_counting",
             "filtering_grouping_aggregation",
-            "grouping_and_conditional_aggregation"
+            "grouping_conditional_aggregation"
         ],
         required=True,
     )
@@ -56,9 +55,9 @@ def main():
     args = parser.parse_args()
 
     backend_map = {
-        "duckdb": duckdb_basics,
-        "polars": polars_basics,
-        "pandas": pandas_basics
+        "duckdb": duckdb_olap,
+        "polars": polars_olap,
+        "pandas": pandas_olap
     }
     module = backend_map[args.backend]
 

@@ -33,10 +33,8 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
             values = group[metric]
             color = color_dict[label]
 
-            # Plot line and points
             ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
 
-            # Improved annotation for each point
             y_range = values.max() - values.min()
             offset = y_range * 0.04 if y_range > 0 else 0.5
             for i, (x, y) in enumerate(zip(runs, values)):
@@ -48,25 +46,20 @@ def plot_results(output_file, save_fig=False, fig_name="benchmark_lines_stats.pn
                     bbox=dict(facecolor='white', edgecolor='none', alpha=0.7, pad=0.5)
                 )
 
-            # Mean, std
             mean = values.mean()
             std = values.std()
             minv, maxv = values.min(), values.max()
 
-            # Error band (mean ± std)
             ax.fill_between(runs, mean - std, mean + std, color=color, alpha=0.15)
 
-            # Mean line
             ax.axhline(mean, linestyle='--', color=color, alpha=0.7)
 
-            # Annotate min and max (no info box)
             ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
             ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
 
-            # Annotate mean at left edge, aligned with mean line
             xlim = ax.get_xlim()
             ax.text(
-                xlim[0] + 0.1 * (xlim[1] - xlim[0]), mean,  # 10% from left
+                xlim[0] + 0.1 * (xlim[1] - xlim[0]), mean,
                 f"mean={mean:.2f}",
                 fontsize=11, color=color, ha='left', va='center', fontweight='bold',
                 bbox=dict(facecolor='white', edgecolor=color, alpha=0.8, pad=0.4)
@@ -126,10 +119,8 @@ def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stat
             values = group[metric]
             color = color_dict[label]
 
-            # Plot line and points
             ax.plot(runs, values, marker='o', label=label, color=color, linewidth=2, markersize=7)
 
-            # Improved annotation for each point
             y_range = values.max() - values.min()
             offset = y_range * 0.04 if y_range > 0 else 0.5
             for i, (x, y) in enumerate(zip(runs, values)):
@@ -141,22 +132,17 @@ def plot_results_multi(csv_files, save_fig=False, fig_name="benchmark_lines_stat
                     bbox=dict(facecolor='white', edgecolor='none', alpha=0.7, pad=0.5)
                 )
 
-            # Mean, std
             mean = values.mean()
             std = values.std()
             minv, maxv = values.min(), values.max()
 
-            # Error band (mean ± std)
             ax.fill_between(runs, mean - std, mean + std, color=color, alpha=0.15)
 
-            # Mean line
             ax.axhline(mean, linestyle='--', color=color, alpha=0.7)
 
-            # Annotate min and max (no info box)
             ax.scatter(runs.loc[values.idxmin()], minv, color=color, marker='v', s=80, label=None)
             ax.scatter(runs.loc[values.idxmax()], maxv, color=color, marker='^', s=80, label=None)
 
-            # Annotate mean at left edge, aligned with mean line
             xlim = ax.get_xlim()
             ax.text(
                 xlim[0] + 0.1 * (xlim[1] - xlim[0]), mean,  # 10% from left

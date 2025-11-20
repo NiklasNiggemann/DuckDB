@@ -3,10 +3,7 @@ import utils
 
 dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
 
-def filtering_and_counting():
-    """
-    Filters for purchase events and prints a sample of the filtered rows and their count.
-    """
+def filtering_counting():
     duckdb.sql(
         f"SELECT * FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'"
     ).show()
@@ -16,9 +13,6 @@ def filtering_and_counting():
 
 
 def filtering_grouping_aggregation():
-    """
-    Filters for purchase events, groups by category, and sums total sales.
-    """
     duckdb.sql(
         f"""
         SELECT category_code, SUM(price) AS total_sales
@@ -29,10 +23,7 @@ def filtering_grouping_aggregation():
     ).show()
 
 
-def grouping_and_conditional_aggregation():
-    """
-    Groups by category and counts views, carts, and purchases for each category.
-    """
+def grouping_conditional_aggregation():
     duckdb.sql(
         f"""
         SELECT

@@ -3,19 +3,13 @@ import utils
 
 dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
 
-def filtering_and_counting():
-    """
-    Filters for purchase events and prints the filtered DataFrame and its count
-    """
+def filtering_counting():
     df = pl.read_csv(dataset_path)
     purchases = df.filter(pl.col("event_type") == "purchase")
     print(purchases)
     print("Count:", purchases.height)
 
 def filtering_grouping_aggregation():
-    """
-    Filters for purchase events, groups by category, and sums total sales.
-    """
     df = pl.read_csv(dataset_path)
     result = (
         df.filter(pl.col("event_type") == "purchase")
@@ -24,10 +18,7 @@ def filtering_grouping_aggregation():
     )
     print(result)
 
-def grouping_and_conditional_aggregation():
-    """
-    Groups by category and counts views, carts, and purchases for each category.
-    """
+def grouping_conditional_aggregation():
     df = pl.read_csv(dataset_path)
     result = (
         df.group_by("category_code")
