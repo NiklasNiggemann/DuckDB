@@ -3,10 +3,14 @@ from typing import Callable, List, Any
 import psutil
 import time
 import os
+
+from matplotlib import pyplot as plt
+
 import duckdb_olap
 import polars_olap
 import pandas_olap
 import utils
+from memory_profiler import memory_usage
 
 def get_memory_usage_mb() -> float:
     """Return current process memory usage in MB."""
@@ -22,23 +26,24 @@ def cold_benchmark(func: Callable[[], None]) -> None:
     end = time.perf_counter()
     print(f"Memory = {mem_after - mem_before:.2f} MB, Time = {end - start:.2f} s")
 
-def hot_benchmark(func: Callable[[], None], n_runs: int = 10) -> tuple[list[Any], list[Any]]:
+def hot_benchmark(func: Callable[[], None], n_runs: int = 10) -> None:
     """Run a hot benchmark for n_runs."""
     memories, times = [], []
     for i in range(n_runs):
-        print("------------------------------------------------")
-        print(f"Run {i+1}/{n_runs}")
+        print("\n------------------------------------------------\n")
+        print(f"\n*** Run {i+1}/{n_runs} ***\n")
         start = time.perf_counter()
         mem_before = get_memory_usage_mb()
         try:
-            with utils.suppress_stdout():
-                func()
+            func()
         except Exception as e:
             print(f"Error in run {i + 1}: {e}", flush=True)
             break
         mem_after = get_memory_usage_mb()
         end = time.perf_counter()
         print(f"Memory = {mem_after - mem_before:.2f} MB, Time = {end - start:.2f} s")
+        print(f"Memory Profiler for Run {i + 1}/{n_runs}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Run a benchmark on a selected tool and function.")

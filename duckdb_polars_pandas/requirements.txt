@@ -1,3 +1,4 @@
+memory-profiler
 matplotlib
 seaborn
 duckdb~=1.4.1

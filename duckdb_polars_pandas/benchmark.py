@@ -66,16 +66,17 @@ def run_benchmark(
         if mode == "cold":
             # Run n times, each as a separate process
             for i in range(n_runs):
-                print("------------------------------------------------")
-                print(f"Run {i + 1}/{n_runs}")
+                print("\n------------------------------------------------\n")
+                print(f"\n*** Run {i + 1}/{n_runs} ***\n")
                 result = subprocess.check_output(args, stderr=subprocess.STDOUT)
                 run_output = result.decode().strip()
+                print(run_output)
+                print(f"Results for Run {i+ 1} / {n_runs}")
                 parsed = parse_output(run_output)
                 if parsed:
                     mem, t = parsed[0]
                     memories.append(mem)
                     times.append(t)
-                    print(f"Memory = {mem:.2f} MB, Time = {t:.2f} s")
                 else:
                     print("Warning: Could not parse output!")
         else:
