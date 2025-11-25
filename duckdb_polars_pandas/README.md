@@ -271,9 +271,10 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_cold.png?ref_type=heads)
 
-#### Warm Mode 
+#### Hot Mode 
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_bar.png?ref_type=heads) 
+![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_cold_bar.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_hot.png?ref_type=heads)
 
@@ -285,9 +286,10 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_cold.png?ref_type=heads)
 
-#### Warm Mode 
+#### Hot Mode 
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_bar.png?ref_type=heads)
+![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_cold_bar.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_hot.png?ref_type=heads)
 
@@ -299,9 +301,10 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_cold.png?ref_type=heads)
 
-#### Warm Mode 
+#### Hot Mode 
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_bar.png?ref_type=heads)
+![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_cold_bar.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot.png?ref_type=heads)
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_hot.png?ref_type=heads)
 
