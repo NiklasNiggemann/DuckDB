@@ -56,6 +56,44 @@ def barcharts(csv_files, save_fig=False, fig_name="benchmark_barcharts.png"):
 
     plt.show()
 
+def barcharts_hot_vs_cold(csv_files, save_fig=False, fig_name="benchmark_hot_vs_cold_barcharts.png"):
+    """
+    Plot grouped barcharts comparing hot and cold runs for each tool.
+    """
+    import re
+    df = _load_and_concat_csvs(csv_files, add_source=True)
+    _check_required_columns(df, {'tool', 'function', 'run', 'time_s', 'memory_mb', 'source'})
+
+    df['mode'] = df['source'].apply(lambda x: re.search(r'_(cold|hot)', x).group(1) if re.search(r'_(cold|hot)', x) else 'unknown')
+
+    tools = ['duckdb', 'polars', 'pandas']
+    modes = ['cold', 'hot']
+    palette = sns.color_palette("husl", len(tools))
+
+    avg_times = df.groupby(['tool', 'mode'])['time_s'].mean().unstack().reindex(tools).fillna(0)
+    avg_memory = df.groupby(['tool', 'mode'])['memory_mb'].mean().unstack().reindex(tools).fillna(0)
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    avg_times.plot(kind='bar', ax=axes[0], color=['#1f77b4', '#ff7f0e'])
+    axes[0].set_ylabel('Average Time (s)')
+    axes[0].set_title('Average Execution Time by Tool (Hot vs Cold)')
+    axes[0].legend(title='Mode')
+    axes[0].set_ylim(bottom=0)
+
+    avg_memory.plot(kind='bar', ax=axes[1], color=['#1f77b4', '#ff7f0e'])
+    axes[1].set_ylabel('Average Memory (MB)')
+    axes[1].set_title('Average Memory Usage by Tool (Hot vs Cold)')
+    axes[1].legend(title='Mode')
+    axes[1].set_ylim(bottom=0)
+
+    plt.tight_layout()
+    if save_fig:
+        fig.savefig(fig_name, dpi=150, bbox_inches='tight')
+        print(f"Figure saved as {fig_name}")
+
+    plt.show()
+
 def _plot_lines(df, label_col, legend_title, save_fig=False, fig_name="benchmark_lines_stats.png"):
     """
     Generalized line plot for time and memory metrics.

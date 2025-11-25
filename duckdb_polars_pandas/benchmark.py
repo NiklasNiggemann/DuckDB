@@ -108,39 +108,64 @@ def plot_multi(tools: List[str], function: str, mode: str) -> None:
 
 def main():
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing tools.")
-    parser.add_argument("--comparison", choices=["full", "duckdb_polars"], default=None)
-    parser.add_argument("--tool", choices=["duckdb", "polars", "pandas"])
+    parser.add_argument("--tool", choices=["all", "duckdb_polars", "duckdb", "polars", "pandas"])
     parser.add_argument("--function", choices=[
         "filtering_counting",
         "filtering_grouping_aggregation",
         "grouping_conditional_aggregation"
     ], required=True)
-    parser.add_argument("--mode", choices=["cold", "hot"], default="cold")
+    parser.add_argument("--mode", choices=["all", "cold", "hot"], default="cold")
     parser.add_argument("--runs", type=int, default=10)
     args = parser.parse_args()
 
-    comparison_map = {
-        "full": ["pandas", "duckdb", "polars"],
-        "duckdb_polars": ["duckdb", "polars"]
+    tool_map = {
+        "all": ["pandas", "duckdb", "polars"],
+        "duckdb_polars": ["duckdb", "polars"],
+        "duckdb": ["duckdb"],
+        "polars": ["polars"],
+        "pandas": ["pandas"],
     }
 
-    if args.comparison:
-        tools = comparison_map[args.comparison]
+    tools = tool_map[args.tool]
+
+    if args.mode == "all":
         for tool in tools:
-            run_benchmark(args.runs, tool, args.function, args.mode)
+            run_benchmark(args.runs, tool, args.function, "cold")
         print(
-            f"\nBenchmark-Comparison for {args.function} with {', '.join([b.capitalize() for b in tools])} in {args.mode} mode with {args.runs} runs finished.\n")
-        plot_multi(tools, args.function, args.mode)
-        if args.comparison == "full":
+            f"\nBenchmark-Comparison for {args.function} with {', '.join([b.capitalize() for b in tools])} in cold mode with {args.runs} runs finished.\n")
+        plot_multi(tools, args.function, "cold")
+        if args.tool == "all":
             plotter.barcharts(
-                (f"results/{b}_{args.function}_{args.mode}.csv" for b in tools),
+                (f"results/{b}_{args.function}_cold.csv" for b in tools),
                 True,
-                f"results/{'_'.join(tools)}_{args.function}_{args.mode}_bar.png"
+                f"results/{'_'.join(tools)}_{args.function}_{"cold"}_bar.png"
             )
-            plot_multi(["duckdb", "polars"], args.function, args.mode)
+            plot_multi(["duckdb", "polars"], args.function, "cold")
+        for tool in tools:
+            run_benchmark(args.runs, tool, args.function, "hot")
+        print(
+            f"\nBenchmark-Comparison for {args.function} with {', '.join([b.capitalize() for b in tools])} in hot mode with {args.runs} runs finished.\n")
+        plot_multi(tools, args.function, "hot")
+        if args.tool == "all":
+            plotter.barcharts(
+                (f"results/{b}_{args.function}_hot.csv" for b in tools),
+                True,
+                f"results/{'_'.join(tools)}_{args.function}_hot_bar.png"
+            )
+            plot_multi(["duckdb", "polars"], args.function, "hot")
+        hot_cold_csvs = [
+                            f"results/{tool}_{args.function}_cold.csv"
+                            for tool in tools
+                        ] + [
+                            f"results/{tool}_{args.function}_hot.csv"
+                            for tool in tools
+                        ]
+        plotter.barcharts_hot_vs_cold(
+            hot_cold_csvs,
+            True,
+            f"results/{'_'.join(tools)}_{args.function}_hot_cold_bar.png"
+        )
     else:
-        if not args.tool:
-            parser.error("--tool is required if --comparison is not set")
         run_benchmark(args.runs, args.tool, args.function, args.mode)
         plotter.plot_results(
             f"results/{args.tool}_{args.function}_{args.mode}.csv",
