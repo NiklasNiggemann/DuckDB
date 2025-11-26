@@ -8,7 +8,6 @@ dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
 def filtering_counting():
     df = pd.read_csv(dataset_path)
     purchases = df[df["event_type"] == "purchase"]
-    print(purchases)
     print("Count:", len(purchases))
 
 @profile

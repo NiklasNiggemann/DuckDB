@@ -2,10 +2,32 @@ import csv
 import subprocess
 import statistics
 import re
-import sys
 import argparse
 from typing import Optional, Tuple, List
 import plotter
+import sys
+import os
+
+LOG_DIR = "results"
+LOG_FILE = os.path.join(LOG_DIR, "benchmark_log.txt")
+
+# Ensure log directory exists
+os.makedirs(LOG_DIR, exist_ok=True)
+
+class Logger(object):
+    def __init__(self, filename):
+        self.terminal = sys.stdout
+        self.log = open(filename, "w", encoding="utf-8")
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+
+sys.stdout = Logger(LOG_FILE)
+sys.stderr = sys.stdout  # Optional: also log errors
+
 
 def export_results_csv(
     filename: str,

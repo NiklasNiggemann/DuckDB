@@ -6,10 +6,9 @@ dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
 
 @profile
 def filtering_counting():
-    df = pl.read_csv(dataset_path)
-    purchases = df.filter(pl.col("event_type") == "purchase")
-    print(purchases)
-    print("Count:", purchases.height)
+    lf = pl.scan_csv(dataset_path)
+    result = lf.filter(pl.col("event_type") == "purchase").count().collect()
+    print(result)
 
 @profile
 def filtering_grouping_aggregation():

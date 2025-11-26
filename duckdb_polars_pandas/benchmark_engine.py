@@ -2,15 +2,32 @@ import argparse
 from typing import Callable, List, Any
 import psutil
 import time
-import os
-
-from matplotlib import pyplot as plt
-
 import duckdb_olap
 import polars_olap
 import pandas_olap
-import utils
-from memory_profiler import memory_usage
+import sys
+import os
+
+LOG_DIR = "results"
+LOG_FILE = os.path.join(LOG_DIR, "benchmark_log.txt")
+
+# Ensure log directory exists
+os.makedirs(LOG_DIR, exist_ok=True)
+
+class Logger(object):
+    def __init__(self, filename):
+        self.terminal = sys.stdout
+        self.log = open(filename, "w", encoding="utf-8")
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+
+sys.stdout = Logger(LOG_FILE)
+sys.stderr = sys.stdout  # Optional: also log errors
+
 
 def get_memory_usage_mb() -> float:
     """Return current process memory usage in MB."""
