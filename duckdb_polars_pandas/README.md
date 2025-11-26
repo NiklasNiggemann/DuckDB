@@ -267,46 +267,55 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 
 #### Cold Mode
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold_bar.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_cold.png?ref_type=heads)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold_bar.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_cold.png)
 
 #### Hot Mode 
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_bar.png?ref_type=heads) 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_cold_bar.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_hot.png?ref_type=heads)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_bar.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_hot.png)
+
+#### Comparison 
+
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_cold_bar.png)
 
 ### Filtering, Grouping & Aggregation 
 
-#### Cold Mode 
+#### Cold Mode
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold_bar.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_cold.png?ref_type=heads)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold_bar.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_cold.png)
 
 #### Hot Mode 
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_bar.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_cold_bar.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_hot.png?ref_type=heads)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_bar.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_hot.png)
+
+#### Comparison 
+
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_cold_bar.png)
 
 ### Grouping & Conditional Aggregation 
 
 #### Cold Mode
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold_bar.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_cold.png?ref_type=heads)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold_bar.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_cold.png)
 
 #### Hot Mode 
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_bar.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_cold_bar.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot.png?ref_type=heads)
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_hot.png?ref_type=heads)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_bar.png)
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_hot.png)
+
+#### Comparison 
+
+![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_cold_bar.png)
 
 ---
 
