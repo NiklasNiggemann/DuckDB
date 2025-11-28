@@ -76,184 +76,13 @@ The dataset `.csv` file should be placed in a separate directory. This setup all
 
 The benchmarking framework is fully parameterized via the command line. You can select the backend, operation, mode, and number of runs without editing any code.
 
-### Example CLI Usage
-
-```sh
-# Cold run, 10 times, DuckDB, filtering_and_counting
-python benchmark.py --backend duckdb --function filtering_counting --mode cold --runs 10
-
-# Warm run, 10 times with 5 warmups, Polars, filtering_grouping_aggregation
-python benchmark.py --backend polars --function filtering_grouping_aggregation --mode warm 
-
-```
-
-**Available options:**
-- `--backend`: `duckdb`, `polars`, or `pandas`
-- `--function`:  
-    - `filtering_counting`  
-    - `filtering_grouping_aggregation`  
-    - `grouping_conditional_aggregation`
-- `--mode`: `cold` or `warm`
-- `--runs`: Number of measured runs (default: 10)
-
-Additionally, you can run comparative benchmarks across multiple backends:
-
-- `--comparison`: `full`, `duckdb_polars`
-
-  - `full`: Runs the selected function and mode on all backends sequentially.
-  - `duckdb_polars`: Runs only DuckDB and Polars.
-
-```sh
-# Cold run, 10 times, comparing DuckDB, Polars, and Pandas
-python benchmark.py --comparison full --function filtering_counting --mode cold --runs 10
-
-# Warm run, 10 times with 5 warmups, comparing DuckDB and Polars
-python benchmark.py --comparison duckdb_polars --function filtering_grouping_aggregation --mode warm --runs 10
-```
-
 ---
 
 ## Code Explanation
 
-The main module of this project is `benchmark.py`. This script orchestrates the benchmarking of different data processing tools (DuckDB, Polars, Pandas) via a command-line interface (CLI).
 
-### Argument Parsing
 
-First, we define the CLI arguments using Python’s `argparse` module:
-
-```python
-parser = argparse.ArgumentParser(description="Benchmark runner for data processing backends.")
-parser.add_argument("--comparison", choices=["full", "duckdb_polars", None], default=None)
-parser.add_argument("--tool", choices=["duckdb", "polars", "pandas"])
-parser.add_argument("--function", choices=[
-   "filtering_counting",
-   "filtering_grouping_aggregation",
-   "grouping_conditional_aggregation"
-], required=True)
-parser.add_argument("--mode", choices=["cold", "hot"], default="cold")
-parser.add_argument("--runs", type=int, default=10)
-```
-
-### Benchmark Execution Logic
-
-XXX 
-
----
-
-## OLAP Implementation
-
-The project uses a shared dataset, accessed via a helper function in `utils.py`:
-
-```python
-def get_dataset_dir():
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    datasets = os.path.join(current_dir, '..', 'datasets')
-    return os.path.normpath(datasets)
-```
-
-The dataset path is then used in each backend’s OLAP implementation:
-
-```python
-dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
-```
-
-### DuckDB
-
-```python
-def filtering_counting():
-    duckdb.sql(
-        f"SELECT * FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'"
-    ).show()
-    duckdb.sql(
-        f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'"
-    ).show()
-
-def filtering_grouping_aggregation():
-    duckdb.sql(
-        f"""
-        SELECT category_code, SUM(price) AS total_sales
-        FROM read_csv_auto('{dataset_path}')
-        WHERE event_type = 'purchase'
-        GROUP BY category_code
-        """
-    ).show()
-
-def grouping_conditional_aggregation():
-    duckdb.sql(
-        f"""
-        SELECT
-            category_code,
-            SUM(CASE WHEN event_type = 'view' THEN 1 ELSE 0 END) AS views,
-            SUM(CASE WHEN event_type = 'cart' THEN 1 ELSE 0 END) AS carts,
-            SUM(CASE WHEN event_type = 'purchase' THEN 1 ELSE 0 END) AS purchases
-        FROM read_csv_auto('{dataset_path}')
-        GROUP BY category_code
-        """
-    ).show()
-```
-
-### Polars
-
-```python
-def filtering_counting():
-    df = pl.read_csv(dataset_path)
-    purchases = df.filter(pl.col("event_type") == "purchase")
-    print(purchases)
-    print("Count:", purchases.height)
-
-def filtering_grouping_aggregation():
-    df = pl.read_csv(dataset_path)
-    result = (
-        df.filter(pl.col("event_type") == "purchase")
-        .group_by("category_code")
-        .agg(pl.col("price").sum().alias("total_sales"))
-    )
-    print(result)
-
-def grouping_conditional_aggregation():
-    df = pl.read_csv(dataset_path)
-    result = (
-        df.group_by("category_code")
-        .agg([
-            (pl.col("event_type") == "view").sum().alias("views"),
-            (pl.col("event_type") == "cart").sum().alias("carts"),
-            (pl.col("event_type") == "purchase").sum().alias("purchases"),
-        ])
-    )
-    print(result)
-```
-
-### Pandas
-
-```python
-def filtering_counting():
-    df = pd.read_csv(dataset_path)
-    purchases = df[df["event_type"] == "purchase"]
-    print(purchases)
-    print("Count:", len(purchases))
-
-def filtering_grouping_aggregation():
-    df = pd.read_csv(dataset_path)
-    result = (
-        df[df["event_type"] == "purchase"]
-        .groupby("category_code")["price"]
-        .sum()
-        .reset_index(name="total_sales")
-    )
-    print(result)
-
-def grouping_conditional_aggregation():
-    df = pd.read_csv(dataset_path)
-    result = (
-        df.groupby("category_code")["event_type"]
-        .value_counts()
-        .unstack(fill_value=0)
-        .reset_index()
-    )
-    print(result)
-```
-
----
+--- 
 
 ## Visualization
 
@@ -269,13 +98,11 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold.png)
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold_bar.png)
-![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_cold.png)
 
 #### Hot Mode 
 
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot.png)
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_bar.png)
-![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_filtering_counting_hot.png)
 
 #### Comparison 
 
@@ -287,13 +114,11 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold.png)
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold_bar.png)
-![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_cold.png)
 
 #### Hot Mode 
 
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot.png)
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_bar.png)
-![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_filtering_grouping_aggregation_hot.png)
 
 #### Comparison 
 
@@ -305,13 +130,11 @@ After benchmarking, results are exported as CSV files and visualized. Plots can 
 
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold.png)
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold_bar.png)
-![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_cold.png)
 
 #### Hot Mode 
 
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot.png)
 ![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_bar.png)
-![](https://github.com/NiklasNiggemann/DuckDB/blob/main/duckdb_polars_pandas/results/duckdb_polars_grouping_conditional_aggregation_hot.png)
 
 #### Comparison 
 
