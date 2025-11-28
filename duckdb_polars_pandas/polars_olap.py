@@ -7,7 +7,7 @@ dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
 @profile
 def filtering_counting():
     lf = pl.scan_csv(dataset_path)
-    result = lf.filter(pl.col("event_type") == "purchase").count().collect()
+    result = lf.filter(pl.col("event_type") == "purchase").count().collect(streaming=True)
     print(result)
 
 @profile
