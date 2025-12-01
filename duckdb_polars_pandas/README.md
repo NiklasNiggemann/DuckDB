@@ -16,8 +16,8 @@ A Python benchmarking tool for comparing memory usage and execution time across 
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/benchmark-runner.git
-    cd benchmark-runner
+    git clone https://github.com/yourusername/duckdb_polars_pandas.git
+    cd duckdb_polars_pandas
     ```
 
 2. **Install dependencies**:
