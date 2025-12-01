@@ -65,6 +65,47 @@ Plots are generated automatically after benchmarks:
 
 All output (including errors) is logged to `results/benchmark_log.txt` for reproducibility.
 
+## Results 
+
+### Filtering & Counting 
+
+#### Cold 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold_bar.png
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_cold.png
+
+#### Hot 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_bar.png 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot.png 
+
+#### Comparison 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_cold_bar.png 
+
+### Filtering, Grouping & Aggregation 
+
+#### Cold 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold_bar.png
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold.png
+
+#### Hot 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_bar.png 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot.png 
+
+#### Comparison
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_cold_bar.png 
+
+### Grouping & Conditional Aggregation 
+
+#### Cold 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold_bar.png
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_bar.png 
+
+#### Hot 
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold.png
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot.png 
+
+#### Comparison
+https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_cold_bar.png 
+
 ## Contributing
 
 Pull requests and issues are welcome!
