@@ -1,14 +1,18 @@
 import os
+import shutil
 import sys
 import csv
 import re
 import subprocess
 import statistics
 import argparse
-from typing import Optional, Tuple, List, Dict, Union
-import plotter
+from typing import List, Tuple
+from pathlib import Path
+import duckdb
+import plotter  # Your refactored plotter module
 import contextlib
 import matplotlib.pyplot as plt
+import polars as pl
 
 LOG_DIR = "results"
 LOG_FILE = os.path.join(LOG_DIR, "benchmark_log.txt")
@@ -52,28 +56,13 @@ class Logger:
 sys.stdout = Logger(LOG_FILE)
 sys.stderr = sys.stdout  # Also log errors
 
-def export_results_csv(
-    filename: str,
-    tool: str,
-    function: str,
-    mode: str,
-    memories: List[float],
-    times: List[float]
-) -> None:
-    """Export benchmark results to a CSV file."""
-    with open(filename, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["tool", "function", "mode", "run", "memory_mb", "time_s"])
-        for i, (mem, t) in enumerate(zip(memories, times), 1):
-            writer.writerow([tool, function, mode, i, mem, t])
-
 def parse_output(output: str) -> List[Tuple[float, float]]:
     """Parse output lines of the form 'Memory = X MB, Time = Y s'."""
+    import re
     pattern = re.compile(r"Memory\s*=\s*(-?[0-9.]+)\s*MB.*?Time\s*=\s*([0-9.]+)\s*s")
     return [(float(m), float(t)) for m, t in pattern.findall(output)]
 
 def summarize(label: str, values: List[float]) -> None:
-    """Print summary statistics for a list of values."""
     print(f"\n--- {label} ---")
     if not values:
         print("No data.")
@@ -88,48 +77,31 @@ def summarize(label: str, values: List[float]) -> None:
     print(f"Max:    {max(values):.2f}")
     print(f"Span:   {max(values) - min(values):.2f}")
 
-def run_benchmark(
-    n_runs: int,
-    tool: str,
-    function: str,
-    mode: str
-) -> Tuple[List[float], List[float]]:
-    """Run the benchmark in either cold or hot mode."""
-    memories, times = [], []
-    args = [
-        sys.executable, 'benchmark_engine.py',
-        '--tool', tool,
-        '--function', function,
-        '--mode', mode
-    ]
-    if mode == "hot":
-        args += ['--runs', str(n_runs)]
+def export_results_csv(filename: str, tool: str, scale_factors: List[int], memories: List[float], times: List[float], sizes_mb: List[float], row_counts: List[int]) -> None:
+    """Export benchmark results to CSV, including dataset size in MB and row count."""
+    with open(filename, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["tool", "scale_factor", "memory_mb", "time_s", "dataset_size_mb", "row_count"])
+        for sf, mem, t, sz, rc in zip(scale_factors, memories, times, sizes_mb, row_counts):
+            writer.writerow([tool, sf, mem, t, sz, rc])
 
+def run_benchmark(tool: str, scale_range: int) -> Tuple[List[int], List[float], List[float], List[float], List[int]]:
+    scale_factors, memories, times, sizes_mb, row_counts = [], [], [], [], []
     try:
-        if mode == "cold":
-            # Run n times, each as a separate process
-            for i in range(n_runs):
-                print("\n------------------------------------------------")
-                print(f"\n*** Run {i + 1}/{n_runs} ***\n")
-                result = subprocess.check_output(args, stderr=subprocess.STDOUT)
-                run_output = result.decode().strip()
-                print(run_output)
-                parsed = parse_output(run_output)
-                if parsed:
-                    mem, t = parsed[0]
-                    memories.append(mem)
-                    times.append(t)
-                else:
-                    print("Warning: Could not parse output!")
-        else:
-            # Hot mode: one process, multiple runs
+        for scale_factor in range(10, scale_range + 1, 10):
+            print("\n------------------------------------------------\n")
+            args = [sys.executable, 'benchmark_engine.py', '--tool', tool, '--scale_factor', str(scale_factor)]
             result = subprocess.check_output(args, stderr=subprocess.STDOUT)
             run_output = result.decode().strip()
             print(run_output)
             parsed = parse_output(run_output)
             if parsed:
-                memories, times = zip(*parsed)
-                memories, times = list(memories), list(times)
+                mem, t = parsed[0]
+                scale_factors.append(scale_factor)
+                memories.append(mem)
+                times.append(t)
+                # sizes_mb.append(dataset_size_mb)
+                # row_counts.append(row_count)
             else:
                 print("Warning: Could not parse output!")
     except subprocess.CalledProcessError as e:
@@ -138,26 +110,14 @@ def run_benchmark(
         print("Run timed out!")
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
-    export_results_csv(f"results/{tool}_{function}_{mode}.csv", tool, function, mode, memories, times)
-    return memories, times
-
-def plot_multi(tools: List[str], function: str, mode: str) -> None:
-    """Plot results for multiple tools."""
-    files = [f"results/{b}_{function}_{mode}.csv" for b in tools]
-    out_png = f"results/{'_'.join(tools)}_{function}_{mode}.png"
-    plotter.plot_results_multi(files, True, out_png)
+    export_results_csv(f"results/{tool}_scale-range_{scale_range}.csv", tool, scale_factors, memories, times, sizes_mb, row_counts)
+    return scale_factors, memories, times, sizes_mb, row_counts
 
 def main():
+
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing tools.")
-    parser.add_argument("--tool", choices=["all", "duckdb_polars", "duckdb", "polars", "pandas"], required=True)
-    parser.add_argument("--function", choices=[
-        "filtering_counting",
-        "filtering_grouping_aggregation",
-        "grouping_conditional_aggregation",
-        "all"
-    ], required=True)
-    parser.add_argument("--mode", choices=["all", "cold", "hot"], default="cold")
-    parser.add_argument("--runs", type=int, default=10)
+    parser.add_argument("--tool", choices=["all", "duckdb_polars", "duckdb", "polars", "pandas"], default="all")
+    parser.add_argument("--scale_range", type=int, default=1)
     args = parser.parse_args()
 
     tool_map = {
@@ -168,86 +128,28 @@ def main():
         "pandas": ["pandas"],
     }
 
-    func_map = {
-        "all": ["filtering_counting", "filtering_grouping_aggregation", "grouping_conditional_aggregation"],
-        "filtering_counting": ["filtering_counting"],
-        "filtering_grouping_aggregation": ["filtering_grouping_aggregation"],
-        "grouping_conditional_aggregation": ["grouping_conditional_aggregation"],
-    }
-
-    mode_map = {
-        "all": ["cold", "hot"],
-        "cold": ["cold"],
-        "hot": ["hot"],
-    }
-
+    scale_range = args.scale_range
     tools = tool_map[args.tool]
-    funcs = func_map[args.function]
-    modes = mode_map[args.mode]
 
-    generated_csvs = []  # list of (tool, func, mode, path)
+    generated_csvs = []  # list of (tool, scale_range, path)
     print("\n=== Phase 1: Running benchmarks ===")
-    for func in funcs:
-        for mode in modes:
-            for tool in tools:
-                print(f"\n[RUN] {func} | {mode} | {tool}")
-                run_benchmark(args.runs, tool, func, mode)
-                csv_path = f"results/{tool}_{func}_{mode}.csv"
-                generated_csvs.append((tool, func, mode, csv_path))
+    for tool in tools:
+        print(f"\n[START] {tool}")
+        run_benchmark(tool, scale_range)
+        csv_path = f"results/{tool}_{scale_range}.csv"
+        generated_csvs.append((tool, scale_range, csv_path))
 
-    print("\n=== Phase 2: Plotting figures (saving to disk, no pop-ups) ===")
+    print("\n=== Phase 2: Plotting figures (saving to disk) ===")
     with suppress_matplotlib_show():
-        # Per-file line plots
-        for tool, func, mode, csv_path in generated_csvs:
-            if csv_has_data(csv_path):
-                out_png = f"results/{tool}_{func}_{mode}.png"
-                print(f"[PLOT] Line: {func} | {mode} | {tool} -> {out_png}")
-                plotter.plot_results(
-                    csv_path,
-                    save_fig=True,
-                    fig_name=out_png
-                    # You can pass readability options if you adopted the improved plotter:
-                    # smoothing_window=3, annotate_points=False, show_std_band=True, show_mean_line=True
-                )
-            else:
-                print(f"[SKIP] No data in {csv_path} (line plot)")
-
-        # Grouped bar charts (only if multiple tools)
-        if len(tools) > 1:
-            for func in funcs:
-                for mode in modes:
-                    csv_files = [f"results/{tool}_{func}_{mode}.csv" for tool in tools]
-                    existing = [p for p in csv_files if csv_has_data(p)]
-                    if existing:
-                        out_png = f"results/{'_'.join(tools)}_{func}_{mode}_bar.png"
-                        print(f"[PLOT] Bars: {func} | {mode} -> {out_png}")
-                        plotter.barcharts(existing, save_fig=True, fig_name=out_png, tools=tools)
-                    else:
-                        print(f"[SKIP] No data for bars: {func} | {mode}")
-
-        # Hot vs Cold comparison (if both modes requested)
-        if "cold" in modes and "hot" in modes:
-            for func in funcs:
-                hot_cold_csvs = (
-                        [f"results/{tool}_{func}_cold.csv" for tool in tools] +
-                        [f"results/{tool}_{func}_hot.csv" for tool in tools]
-                )
-                existing = [p for p in hot_cold_csvs if csv_has_data(p)]
-                if existing:
-                    out_png = f"results/{'_'.join(tools)}_{func}_hot_cold_bar.png"
-                    print(f"[PLOT] Hot vs Cold: {func} -> {out_png}")
-                    plotter.barcharts_hot_vs_cold(existing, save_fig=True, fig_name=out_png, tools=tools)
-                else:
-                    print(f"[SKIP] No data for hot vs cold: {func}")
-
-        # Multi-tool line graphs (only if multiple tools)
-        if len(tools) > 1:
-            for func in funcs:
-                for mode in modes:
-                    out_png = f"results/{'_'.join(tools)}_{func}_{mode}.png"
-                    print(f"[PLOT] Multi-line: {func} | {mode} -> {out_png}")
-                    plot_multi(tools, func, mode)
+        csv_files = [f"results/{tool}_scale-range_{scale_range}.csv" for tool in tools]
+        existing = [p for p in csv_files if csv_has_data(p)]
+        if existing:
+            out_png = f"results/{'_'.join(tools)}_scale-range_{scale_range}.png"
+            print(f"[PLOT] Memory vs Dataset Size: {scale_range} -> {out_png}")
+            df = plotter.load_and_concat_csvs(existing)
+            plotter.plot_memory_and_time_vs_dataset_size(df, tools=tools, save_fig=True, fig_name=out_png)
+        else:
+            print(f"[SKIP] No data")
 
 if __name__ == "__main__":
     main()
-

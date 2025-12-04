@@ -2,33 +2,37 @@ import duckdb
 import utils
 from memory_profiler import profile
 
-dataset_path = f"{utils.get_dataset_dir()}/eCommerce.csv"
+parquet_path = 'tpc/lineitem.parquet'
 
 @profile
-def filtering_counting():
-    duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
-
-@profile
-def filtering_grouping_aggregation():
-    duckdb.sql(
-        f"""
-        SELECT category_code, SUM(price) AS total_sales
-        FROM read_csv_auto('{dataset_path}')
-        WHERE event_type = 'purchase'
-        GROUP BY category_code
-        """
-    ).show()
-
-@profile
-def grouping_conditional_aggregation():
-    duckdb.sql(
-        f"""
+def total_sales_per_region():
+    con = duckdb.connect()
+    result = con.execute(f"""
         SELECT
-            category_code,
-            SUM(CASE WHEN event_type = 'view' THEN 1 ELSE 0 END) AS views,
-            SUM(CASE WHEN event_type = 'cart' THEN 1 ELSE 0 END) AS carts,
-            SUM(CASE WHEN event_type = 'purchase' THEN 1 ELSE 0 END) AS purchases
-        FROM read_csv_auto('{dataset_path}')
-        GROUP BY category_code
-        """
-    ).show()
+            l_returnflag,
+            l_linestatus,
+            SUM(l_quantity) AS sum_qty,
+            SUM(l_extendedprice) AS sum_base_price,
+            SUM(l_extendedprice * (1 - l_discount)) AS sum_disc_price,
+            SUM(l_extendedprice * (1 - l_discount) * (1 + l_tax)) AS sum_charge,
+            AVG(l_quantity) AS avg_qty,
+            AVG(l_extendedprice) AS avg_price,
+            AVG(l_discount) AS avg_disc,
+            COUNT(*) AS count_order
+        FROM
+            read_parquet('{parquet_path}')
+        WHERE
+            l_shipdate <= DATE '1998-12-01' - INTERVAL '90' DAY
+        GROUP BY
+            l_returnflag,
+            l_linestatus
+        ORDER BY
+            l_returnflag,
+            l_linestatus;
+    """).fetchall()
+
+    for row in result:
+        print(row)
+    con.close()
+
+
