@@ -1,2 +1,5 @@
 *.csv
+*.dbb
+*.parquet
+*.sql
 .DS_Store
