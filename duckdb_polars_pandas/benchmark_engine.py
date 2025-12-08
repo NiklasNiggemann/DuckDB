@@ -63,13 +63,8 @@ def hot_benchmark(func: Callable[[], None], n_runs: int = 10) -> None:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run a benchmark on a selected tool and function.")
+    parser = argparse.ArgumentParser(description="Run a benchmark on a selected tool.")
     parser.add_argument("--tool", choices=["duckdb", "polars", "pandas"], required=True)
-    parser.add_argument("--function", choices=[
-        "filtering_counting",
-        "filtering_grouping_aggregation",
-        "grouping_conditional_aggregation"
-    ], required=True)
     parser.add_argument("--mode", choices=["hot", "cold"], required=True)
     parser.add_argument("--runs", type=int, default=10)
     args = parser.parse_args()
@@ -80,7 +75,7 @@ def main():
         "pandas": pandas_olap
     }
     module = tool_map[args.tool]
-    func = getattr(module, args.function)
+    func = getattr(module, "filtering_counting")
 
     if args.mode == "cold":
         cold_benchmark(func)

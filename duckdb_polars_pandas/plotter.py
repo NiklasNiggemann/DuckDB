@@ -242,9 +242,9 @@ def plot_results(
     if not os.path.isfile(output_file):
         raise FileNotFoundError(f"File not found: {output_file}")
     df = pd.read_csv(output_file)
-    check_required_columns(df, {'tool', 'function', 'run', 'time_s', 'memory_mb'})
-    df['label'] = df['tool'].astype(str) + ' | ' + df['function'].astype(str)
-    plot_lines(df, 'label', 'Tool | Function', save_fig, fig_name, **plot_kwargs)
+    check_required_columns(df, {'tool', 'run', 'time_s', 'memory_mb'})
+    df['label'] = df['tool'].astype(str)
+    plot_lines(df, 'label', 'Tool', save_fig, fig_name, **plot_kwargs)
 
 def plot_results_multi(
     csv_files: List[str],
@@ -254,9 +254,9 @@ def plot_results_multi(
 ) -> None:
     """Plot time and memory usage per run for multiple CSV files."""
     df = load_and_concat_csvs(csv_files, add_source=True)
-    check_required_columns(df, {'tool', 'function', 'run', 'time_s', 'memory_mb', 'source'})
-    df['label'] = df['tool'].astype(str) + ' | ' + df['function'].astype(str)
-    plot_lines(df, 'label', 'Tool | Function', save_fig, fig_name, **plot_kwargs)
+    check_required_columns(df, {'tool', 'run', 'time_s', 'memory_mb', 'source'})
+    df['label'] = df['tool'].astype(str)
+    plot_lines(df, 'label', 'Tool', save_fig, fig_name, **plot_kwargs)
 
 def load_and_concat_csvs(csv_files: List[str], add_source: bool = False) -> pd.DataFrame:
     """Load multiple CSV files and concatenate into a single DataFrame."""
@@ -284,7 +284,7 @@ def barcharts(
 ) -> None:
     """Plot average time and memory usage bar charts for each tool."""
     df = load_and_concat_csvs(csv_files, add_source=True)
-    check_required_columns(df, {'tool', 'function', 'run', 'time_s', 'memory_mb', 'source'})
+    check_required_columns(df, {'tool', 'run', 'time_s', 'memory_mb', 'source'})
 
     bar_colors = [COLOR_DICT.get(tool, "#333333") for tool in tools]
     avg_times = df.groupby('tool')['time_s'].mean().reindex(tools).fillna(0)
@@ -326,7 +326,7 @@ def barcharts_hot_vs_cold(
 ) -> None:
     """Plot grouped bar charts comparing hot and cold runs for each tool, using tool colors."""
     df = load_and_concat_csvs(csv_files, add_source=True)
-    check_required_columns(df, {'tool', 'function', 'run', 'time_s', 'memory_mb', 'source'})
+    check_required_columns(df, {'tool', 'run', 'time_s', 'memory_mb', 'source'})
 
     # Derive mode from filename and normalize missing
     mode_re = re.compile(r'_(cold|hot)\b')

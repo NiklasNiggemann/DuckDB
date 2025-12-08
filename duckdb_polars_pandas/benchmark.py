@@ -55,7 +55,6 @@ sys.stderr = sys.stdout  # Also log errors
 def export_results_csv(
     filename: str,
     tool: str,
-    function: str,
     mode: str,
     memories: List[float],
     times: List[float]
@@ -63,9 +62,9 @@ def export_results_csv(
     """Export benchmark results to a CSV file."""
     with open(filename, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["tool", "function", "mode", "run", "memory_mb", "time_s"])
+        writer.writerow(["tool", "mode", "run", "memory_mb", "time_s"])
         for i, (mem, t) in enumerate(zip(memories, times), 1):
-            writer.writerow([tool, function, mode, i, mem, t])
+            writer.writerow([tool, mode, i, mem, t])
 
 def parse_output(output: str) -> List[Tuple[float, float]]:
     """Parse output lines of the form 'Memory = X MB, Time = Y s'."""
@@ -91,7 +90,6 @@ def summarize(label: str, values: List[float]) -> None:
 def run_benchmark(
     n_runs: int,
     tool: str,
-    function: str,
     mode: str
 ) -> Tuple[List[float], List[float]]:
     """Run the benchmark in either cold or hot mode."""
@@ -99,7 +97,6 @@ def run_benchmark(
     args = [
         sys.executable, 'benchmark_engine.py',
         '--tool', tool,
-        '--function', function,
         '--mode', mode
     ]
     if mode == "hot":
@@ -138,24 +135,18 @@ def run_benchmark(
         print("Run timed out!")
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
-    export_results_csv(f"results/{tool}_{function}_{mode}.csv", tool, function, mode, memories, times)
+    export_results_csv(f"results/{tool}_{mode}.csv", tool, mode, memories, times)
     return memories, times
 
-def plot_multi(tools: List[str], function: str, mode: str) -> None:
+def plot_multi(tools: List[str], mode: str) -> None:
     """Plot results for multiple tools."""
-    files = [f"results/{b}_{function}_{mode}.csv" for b in tools]
-    out_png = f"results/{'_'.join(tools)}_{function}_{mode}.png"
+    files = [f"results/{b}_{mode}.csv" for b in tools]
+    out_png = f"results/{'_'.join(tools)}_{mode}.png"
     plotter.plot_results_multi(files, True, out_png)
 
 def main():
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing tools.")
     parser.add_argument("--tool", choices=["all", "duckdb_polars", "duckdb", "polars", "pandas"], required=True)
-    parser.add_argument("--function", choices=[
-        "filtering_counting",
-        "filtering_grouping_aggregation",
-        "grouping_conditional_aggregation",
-        "all"
-    ], required=True)
     parser.add_argument("--mode", choices=["all", "cold", "hot"], default="cold")
     parser.add_argument("--runs", type=int, default=10)
     args = parser.parse_args()
@@ -168,13 +159,6 @@ def main():
         "pandas": ["pandas"],
     }
 
-    func_map = {
-        "all": ["filtering_counting", "filtering_grouping_aggregation", "grouping_conditional_aggregation"],
-        "filtering_counting": ["filtering_counting"],
-        "filtering_grouping_aggregation": ["filtering_grouping_aggregation"],
-        "grouping_conditional_aggregation": ["grouping_conditional_aggregation"],
-    }
-
     mode_map = {
         "all": ["cold", "hot"],
         "cold": ["cold"],
@@ -182,26 +166,24 @@ def main():
     }
 
     tools = tool_map[args.tool]
-    funcs = func_map[args.function]
     modes = mode_map[args.mode]
 
-    generated_csvs = []  # list of (tool, func, mode, path)
+    generated_csvs = []  # list of (tool, mode, path)
     print("\n=== Phase 1: Running benchmarks ===")
-    for func in funcs:
-        for mode in modes:
-            for tool in tools:
-                print(f"\n[RUN] {func} | {mode} | {tool}")
-                run_benchmark(args.runs, tool, func, mode)
-                csv_path = f"results/{tool}_{func}_{mode}.csv"
-                generated_csvs.append((tool, func, mode, csv_path))
+    for mode in modes:
+        for tool in tools:
+            print(f"\n[RUN] {mode} | {tool}")
+            run_benchmark(args.runs, tool, mode)
+            csv_path = f"results/{tool}_{mode}.csv"
+            generated_csvs.append((tool, mode, csv_path))
 
     print("\n=== Phase 2: Plotting figures (saving to disk, no pop-ups) ===")
     with suppress_matplotlib_show():
         # Per-file line plots
-        for tool, func, mode, csv_path in generated_csvs:
+        for tool, mode, csv_path in generated_csvs:
             if csv_has_data(csv_path):
-                out_png = f"results/{tool}_{func}_{mode}.png"
-                print(f"[PLOT] Line: {func} | {mode} | {tool} -> {out_png}")
+                out_png = f"results/{tool}_{mode}.png"
+                print(f"[PLOT] Line: {mode} | {tool} -> {out_png}")
                 plotter.plot_results(
                     csv_path,
                     save_fig=True,
@@ -214,39 +196,36 @@ def main():
 
         # Grouped bar charts (only if multiple tools)
         if len(tools) > 1:
-            for func in funcs:
-                for mode in modes:
-                    csv_files = [f"results/{tool}_{func}_{mode}.csv" for tool in tools]
-                    existing = [p for p in csv_files if csv_has_data(p)]
-                    if existing:
-                        out_png = f"results/{'_'.join(tools)}_{func}_{mode}_bar.png"
-                        print(f"[PLOT] Bars: {func} | {mode} -> {out_png}")
-                        plotter.barcharts(existing, save_fig=True, fig_name=out_png, tools=tools)
-                    else:
-                        print(f"[SKIP] No data for bars: {func} | {mode}")
+            for mode in modes:
+                csv_files = [f"results/{tool}_{mode}.csv" for tool in tools]
+                existing = [p for p in csv_files if csv_has_data(p)]
+                if existing:
+                    out_png = f"results/{'_'.join(tools)}_{mode}_bar.png"
+                    print(f"[PLOT] Bars: {mode} -> {out_png}")
+                    plotter.barcharts(existing, save_fig=True, fig_name=out_png, tools=tools)
+                else:
+                    print(f"[SKIP] No data for bars: {mode}")
 
         # Hot vs Cold comparison (if both modes requested)
         if "cold" in modes and "hot" in modes:
-            for func in funcs:
-                hot_cold_csvs = (
-                        [f"results/{tool}_{func}_cold.csv" for tool in tools] +
-                        [f"results/{tool}_{func}_hot.csv" for tool in tools]
-                )
-                existing = [p for p in hot_cold_csvs if csv_has_data(p)]
-                if existing:
-                    out_png = f"results/{'_'.join(tools)}_{func}_hot_cold_bar.png"
-                    print(f"[PLOT] Hot vs Cold: {func} -> {out_png}")
-                    plotter.barcharts_hot_vs_cold(existing, save_fig=True, fig_name=out_png, tools=tools)
-                else:
-                    print(f"[SKIP] No data for hot vs cold: {func}")
+            hot_cold_csvs = (
+                    [f"results/{tool}_cold.csv" for tool in tools] +
+                    [f"results/{tool}_hot.csv" for tool in tools]
+            )
+            existing = [p for p in hot_cold_csvs if csv_has_data(p)]
+            if existing:
+                out_png = f"results/{'_'.join(tools)}_hot_cold_bar.png"
+                print(f"[PLOT] Hot vs Cold -> {out_png}")
+                plotter.barcharts_hot_vs_cold(existing, save_fig=True, fig_name=out_png, tools=tools)
+            else:
+                print(f"[SKIP] No data for hot vs cold")
 
         # Multi-tool line graphs (only if multiple tools)
         if len(tools) > 1:
-            for func in funcs:
-                for mode in modes:
-                    out_png = f"results/{'_'.join(tools)}_{func}_{mode}.png"
-                    print(f"[PLOT] Multi-line: {func} | {mode} -> {out_png}")
-                    plot_multi(tools, func, mode)
+            for mode in modes:
+                out_png = f"results/{'_'.join(tools)}_{mode}.png"
+                print(f"[PLOT] Multi-line: {mode} -> {out_png}")
+                plot_multi(tools, mode)
 
 if __name__ == "__main__":
     main()

@@ -31,10 +31,10 @@ def get_memory_usage_mb() -> float:
     process = psutil.Process(os.getpid())
     return process.memory_info().rss / (1024 * 1024)
 
-def cold_benchmark(module) -> None:
+def benchmark(module, scale_factor) -> None:
     start = time.perf_counter()
     mem_before = get_memory_usage_mb()
-    module.total_sales_per_region()
+    module.pricing_summary_report(scale_factor)
     mem_after = get_memory_usage_mb()
     end = time.perf_counter()
     print(f"Memory = {mem_after - mem_before:.2f} MB, Time = {end - start:.2f} s")
@@ -51,7 +51,7 @@ def main():
         "pandas": pandas_olap
     }
     module = tool_map[args.tool]
-    cold_benchmark(module)
+    benchmark(module, args.scale_factor)
 
 if __name__ == "__main__":
     main()

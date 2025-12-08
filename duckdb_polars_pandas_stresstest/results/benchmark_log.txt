@@ -1,0 +1,552 @@
+
+=== Phase 1: Running benchmarks ===
+
+[START] duckdb
+
+------------------------------------------------
+
+shape: (4, 10)
+┌───────────┬───────────┬───────────┬───────────┬───┬───────────┬───────────┬──────────┬───────────┐
+│ l_returnf ┆ l_linesta ┆ sum_qty   ┆ sum_base_ ┆ … ┆ avg_qty   ┆ avg_price ┆ avg_disc ┆ count_ord │
+│ lag       ┆ tus       ┆ ---       ┆ price     ┆   ┆ ---       ┆ ---       ┆ ---      ┆ er        │
+│ ---       ┆ ---       ┆ decimal[3 ┆ ---       ┆   ┆ f64       ┆ f64       ┆ f64      ┆ ---       │
+│ str       ┆ str       ┆ 8,2]      ┆ decimal[3 ┆   ┆           ┆           ┆          ┆ i64       │
+│           ┆           ┆           ┆ 8,2]      ┆   ┆           ┆           ┆          ┆           │
+╞═══════════╪═══════════╪═══════════╪═══════════╪═══╪═══════════╪═══════════╪══════════╪═══════════╡
+│ A         ┆ F         ┆ 377518399 ┆ 566065727 ┆ … ┆ 25.500975 ┆ 38237.151 ┆ 0.050007 ┆ 14804077  │
+│           ┆           ┆ .00       ┆ 797.25    ┆   ┆           ┆ 009       ┆          ┆           │
+│ N         ┆ F         ┆ 9851614.0 ┆ 147674383 ┆ … ┆ 25.522448 ┆ 38257.810 ┆ 0.049973 ┆ 385998    │
+│           ┆           ┆ 0         ┆ 99.17     ┆   ┆           ┆ 66        ┆          ┆           │
+│ N         ┆ O         ┆ 743124873 ┆ 111430228 ┆ … ┆ 25.498076 ┆ 38233.902 ┆ 0.050001 ┆ 29144351  │
+│           ┆           ┆ .00       ┆ 6901.88   ┆   ┆           ┆ 923       ┆          ┆           │
+│ R         ┆ F         ┆ 377732830 ┆ 566431054 ┆ … ┆ 25.508385 ┆ 38251.219 ┆ 0.049997 ┆ 14808183  │
+│           ┆           ┆ .00       ┆ 976.00    ┆   ┆           ┆ 274       ┆          ┆           │
+└───────────┴───────────┴───────────┴───────────┴───┴───────────┴───────────┴──────────┴───────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     4    142.8 MiB    142.8 MiB           1   @profile
+     5                                         def pricing_summary_report(scale_factor: int):
+     6    142.8 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     7    145.6 MiB      2.8 MiB           1       con = duckdb.connect()
+     8    145.6 MiB      0.0 MiB           2       query = f"""
+     9                                             select
+    10                                                 l_returnflag,
+    11                                                 l_linestatus,
+    12                                                 sum(l_quantity) as sum_qty,
+    13                                                 sum(l_extendedprice) as sum_base_price,
+    14                                                 sum(l_extendedprice * (1 - l_discount)) as sum_disc_price,
+    15                                                 sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge,
+    16                                                 avg(l_quantity) as avg_qty,
+    17                                                 avg(l_extendedprice) as avg_price,
+    18                                                 avg(l_discount) as avg_disc,
+    19                                                 count(*) as count_order
+    20                                             from
+    21    145.6 MiB      0.0 MiB           1           read_parquet('{parquet_path}')
+    22                                             where
+    23                                                 l_shipdate <= '1998-09-02'
+    24                                             group by
+    25                                                 l_returnflag,
+    26                                                 l_linestatus
+    27                                             order by
+    28                                                 l_returnflag,
+    29                                                 l_linestatus
+    30                                             """
+    31                                         
+    32    240.2 MiB     94.6 MiB           1       pl_df = con.execute(query).pl()
+    33    240.7 MiB      0.4 MiB           1       print(pl_df)
+    34    240.5 MiB     -0.1 MiB           1       con.close()
+
+
+Memory = 98.03 MB, Time = 0.44 s
+
+------------------------------------------------
+
+shape: (4, 10)
+┌───────────┬───────────┬───────────┬───────────┬───┬───────────┬───────────┬──────────┬───────────┐
+│ l_returnf ┆ l_linesta ┆ sum_qty   ┆ sum_base_ ┆ … ┆ avg_qty   ┆ avg_price ┆ avg_disc ┆ count_ord │
+│ lag       ┆ tus       ┆ ---       ┆ price     ┆   ┆ ---       ┆ ---       ┆ ---      ┆ er        │
+│ ---       ┆ ---       ┆ decimal[3 ┆ ---       ┆   ┆ f64       ┆ f64       ┆ f64      ┆ ---       │
+│ str       ┆ str       ┆ 8,2]      ┆ decimal[3 ┆   ┆           ┆           ┆          ┆ i64       │
+│           ┆           ┆           ┆ 8,2]      ┆   ┆           ┆           ┆          ┆           │
+╞═══════════╪═══════════╪═══════════╪═══════════╪═══╪═══════════╪═══════════╪══════════╪═══════════╡
+│ A         ┆ F         ┆ 755169104 ┆ 113239355 ┆ … ┆ 25.500835 ┆ 38239.092 ┆ 0.050006 ┆ 29613505  │
+│           ┆           ┆ .00       ┆ 1078.85   ┆   ┆           ┆ 302       ┆          ┆           │
+│ N         ┆ F         ┆ 19739848. ┆ 295829010 ┆ … ┆ 25.531421 ┆ 38262.376 ┆ 0.049961 ┆ 773159    │
+│           ┆           ┆ 00        ┆ 58.72     ┆   ┆           ┆ 896       ┆          ┆           │
+│ N         ┆ O         ┆ 148677187 ┆ 222941340 ┆ … ┆ 25.498757 ┆ 38235.368 ┆ 0.049997 ┆ 58307621  │
+│           ┆           ┆ 1.00      ┆ 2673.42   ┆   ┆           ┆ 97        ┆          ┆           │
+│ R         ┆ F         ┆ 755284493 ┆ 113255654 ┆ … ┆ 25.506203 ┆ 38246.802 ┆ 0.050001 ┆ 29611797  │
+│           ┆           ┆ .00       ┆ 0140.25   ┆   ┆           ┆ 115       ┆          ┆           │
+└───────────┴───────────┴───────────┴───────────┴───┴───────────┴───────────┴──────────┴───────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     4    143.2 MiB    143.2 MiB           1   @profile
+     5                                         def pricing_summary_report(scale_factor: int):
+     6    143.2 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     7    145.8 MiB      2.6 MiB           1       con = duckdb.connect()
+     8    145.8 MiB      0.0 MiB           2       query = f"""
+     9                                             select
+    10                                                 l_returnflag,
+    11                                                 l_linestatus,
+    12                                                 sum(l_quantity) as sum_qty,
+    13                                                 sum(l_extendedprice) as sum_base_price,
+    14                                                 sum(l_extendedprice * (1 - l_discount)) as sum_disc_price,
+    15                                                 sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge,
+    16                                                 avg(l_quantity) as avg_qty,
+    17                                                 avg(l_extendedprice) as avg_price,
+    18                                                 avg(l_discount) as avg_disc,
+    19                                                 count(*) as count_order
+    20                                             from
+    21    145.8 MiB      0.0 MiB           1           read_parquet('{parquet_path}')
+    22                                             where
+    23                                                 l_shipdate <= '1998-09-02'
+    24                                             group by
+    25                                                 l_returnflag,
+    26                                                 l_linestatus
+    27                                             order by
+    28                                                 l_returnflag,
+    29                                                 l_linestatus
+    30                                             """
+    31                                         
+    32    286.4 MiB    140.6 MiB           1       pl_df = con.execute(query).pl()
+    33    286.9 MiB      0.4 MiB           1       print(pl_df)
+    34    286.8 MiB     -0.1 MiB           1       con.close()
+
+
+Memory = 143.81 MB, Time = 0.82 s
+
+------------------------------------------------
+
+shape: (4, 10)
+┌───────────┬───────────┬───────────┬───────────┬───┬───────────┬───────────┬──────────┬───────────┐
+│ l_returnf ┆ l_linesta ┆ sum_qty   ┆ sum_base_ ┆ … ┆ avg_qty   ┆ avg_price ┆ avg_disc ┆ count_ord │
+│ lag       ┆ tus       ┆ ---       ┆ price     ┆   ┆ ---       ┆ ---       ┆ ---      ┆ er        │
+│ ---       ┆ ---       ┆ decimal[3 ┆ ---       ┆   ┆ f64       ┆ f64       ┆ f64      ┆ ---       │
+│ str       ┆ str       ┆ 8,2]      ┆ decimal[3 ┆   ┆           ┆           ┆          ┆ i64       │
+│           ┆           ┆           ┆ 8,2]      ┆   ┆           ┆           ┆          ┆           │
+╞═══════════╪═══════════╪═══════════╪═══════════╪═══╪═══════════╪═══════════╪══════════╪═══════════╡
+│ A         ┆ F         ┆ 151030402 ┆ 226467222 ┆ … ┆ 25.499836 ┆ 38236.520 ┆ 0.050001 ┆ 59227989  │
+│           ┆           ┆ 5.00      ┆ 0095.48   ┆   ┆           ┆ 576       ┆          ┆           │
+│ N         ┆ F         ┆ 39417425. ┆ 590942483 ┆ … ┆ 25.516844 ┆ 38254.622 ┆ 0.049974 ┆ 1544761   │
+│           ┆           ┆ 00        ┆ 60.95     ┆   ┆           ┆ 146       ┆          ┆           │
+│ N         ┆ O         ┆ 297417934 ┆ 445982499 ┆ … ┆ 25.49869  ┆ 38235.654 ┆ 0.049997 ┆ 116640476 │
+│           ┆           ┆ 4.00      ┆ 4592.06   ┆   ┆           ┆ 959       ┆          ┆           │
+│ R         ┆ F         ┆ 151033065 ┆ 226478911 ┆ … ┆ 25.502959 ┆ 38242.501 ┆ 0.050001 ┆ 59221782  │
+│           ┆           ┆ 2.00      ┆ 1552.10   ┆   ┆           ┆ 915       ┆          ┆           │
+└───────────┴───────────┴───────────┴───────────┴───┴───────────┴───────────┴──────────┴───────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     4    143.0 MiB    143.0 MiB           1   @profile
+     5                                         def pricing_summary_report(scale_factor: int):
+     6    143.0 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     7    145.6 MiB      2.7 MiB           1       con = duckdb.connect()
+     8    145.6 MiB      0.0 MiB           2       query = f"""
+     9                                             select
+    10                                                 l_returnflag,
+    11                                                 l_linestatus,
+    12                                                 sum(l_quantity) as sum_qty,
+    13                                                 sum(l_extendedprice) as sum_base_price,
+    14                                                 sum(l_extendedprice * (1 - l_discount)) as sum_disc_price,
+    15                                                 sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge,
+    16                                                 avg(l_quantity) as avg_qty,
+    17                                                 avg(l_extendedprice) as avg_price,
+    18                                                 avg(l_discount) as avg_disc,
+    19                                                 count(*) as count_order
+    20                                             from
+    21    145.6 MiB      0.0 MiB           1           read_parquet('{parquet_path}')
+    22                                             where
+    23                                                 l_shipdate <= '1998-09-02'
+    24                                             group by
+    25                                                 l_returnflag,
+    26                                                 l_linestatus
+    27                                             order by
+    28                                                 l_returnflag,
+    29                                                 l_linestatus
+    30                                             """
+    31                                         
+    32    362.4 MiB    216.8 MiB           1       pl_df = con.execute(query).pl()
+    33    362.9 MiB      0.4 MiB           1       print(pl_df)
+    34    362.8 MiB     -0.1 MiB           1       con.close()
+
+
+Memory = 220.12 MB, Time = 1.70 s
+
+------------------------------------------------
+
+shape: (4, 10)
+┌───────────┬───────────┬───────────┬───────────┬───┬───────────┬───────────┬──────────┬───────────┐
+│ l_returnf ┆ l_linesta ┆ sum_qty   ┆ sum_base_ ┆ … ┆ avg_qty   ┆ avg_price ┆ avg_disc ┆ count_ord │
+│ lag       ┆ tus       ┆ ---       ┆ price     ┆   ┆ ---       ┆ ---       ┆ ---      ┆ er        │
+│ ---       ┆ ---       ┆ decimal[3 ┆ ---       ┆   ┆ f64       ┆ f64       ┆ f64      ┆ ---       │
+│ str       ┆ str       ┆ 8,2]      ┆ decimal[3 ┆   ┆           ┆           ┆          ┆ i64       │
+│           ┆           ┆           ┆ 8,2]      ┆   ┆           ┆           ┆          ┆           │
+╞═══════════╪═══════════╪═══════════╪═══════════╪═══╪═══════════╪═══════════╪══════════╪═══════════╡
+│ A         ┆ F         ┆ 302013581 ┆ 452864194 ┆ … ┆ 25.499686 ┆ 38236.341 ┆ 0.050003 ┆ 118438159 │
+│           ┆           ┆ 9.00      ┆ 1877.19   ┆   ┆           ┆ 903       ┆          ┆           │
+│ N         ┆ F         ┆ 78816705. ┆ 118169279 ┆ … ┆ 25.504705 ┆ 38239.007 ┆ 0.049979 ┆ 3090281   │
+│           ┆           ┆ 00        ┆ 538.13    ┆   ┆           ┆ 889       ┆          ┆           │
+│ N         ┆ O         ┆ 594888708 ┆ 892033180 ┆ … ┆ 25.500013 ┆ 38237.165 ┆ 0.049998 ┆ 233289566 │
+│           ┆           ┆ 1.00      ┆ 8072.95   ┆   ┆           ┆ 772       ┆          ┆           │
+│ R         ┆ F         ┆ 302068511 ┆ 452952597 ┆ … ┆ 25.500902 ┆ 38238.675 ┆ 0.050001 ┆ 118454051 │
+│           ┆           ┆ 0.00      ┆ 5031.82   ┆   ┆           ┆ 139       ┆          ┆           │
+└───────────┴───────────┴───────────┴───────────┴───┴───────────┴───────────┴──────────┴───────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     4    142.0 MiB    142.0 MiB           1   @profile
+     5                                         def pricing_summary_report(scale_factor: int):
+     6    142.0 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     7    144.6 MiB      2.5 MiB           1       con = duckdb.connect()
+     8    144.6 MiB      0.0 MiB           2       query = f"""
+     9                                             select
+    10                                                 l_returnflag,
+    11                                                 l_linestatus,
+    12                                                 sum(l_quantity) as sum_qty,
+    13                                                 sum(l_extendedprice) as sum_base_price,
+    14                                                 sum(l_extendedprice * (1 - l_discount)) as sum_disc_price,
+    15                                                 sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge,
+    16                                                 avg(l_quantity) as avg_qty,
+    17                                                 avg(l_extendedprice) as avg_price,
+    18                                                 avg(l_discount) as avg_disc,
+    19                                                 count(*) as count_order
+    20                                             from
+    21    144.6 MiB      0.0 MiB           1           read_parquet('{parquet_path}')
+    22                                             where
+    23                                                 l_shipdate <= '1998-09-02'
+    24                                             group by
+    25                                                 l_returnflag,
+    26                                                 l_linestatus
+    27                                             order by
+    28                                                 l_returnflag,
+    29                                                 l_linestatus
+    30                                             """
+    31                                         
+    32    524.0 MiB    379.4 MiB           1       pl_df = con.execute(query).pl()
+    33    524.4 MiB      0.4 MiB           1       print(pl_df)
+    34    524.4 MiB     -0.0 MiB           1       con.close()
+
+
+Memory = 382.62 MB, Time = 4.09 s
+
+------------------------------------------------
+
+shape: (4, 10)
+┌───────────┬───────────┬───────────┬───────────┬───┬───────────┬───────────┬──────────┬───────────┐
+│ l_returnf ┆ l_linesta ┆ sum_qty   ┆ sum_base_ ┆ … ┆ avg_qty   ┆ avg_price ┆ avg_disc ┆ count_ord │
+│ lag       ┆ tus       ┆ ---       ┆ price     ┆   ┆ ---       ┆ ---       ┆ ---      ┆ er        │
+│ ---       ┆ ---       ┆ decimal[3 ┆ ---       ┆   ┆ f64       ┆ f64       ┆ f64      ┆ ---       │
+│ str       ┆ str       ┆ 8,2]      ┆ decimal[3 ┆   ┆           ┆           ┆          ┆ i64       │
+│           ┆           ┆           ┆ 8,2]      ┆   ┆           ┆           ┆          ┆           │
+╞═══════════╪═══════════╪═══════════╪═══════════╪═══╪═══════════╪═══════════╪══════════╪═══════════╡
+│ A         ┆ F         ┆ 377512775 ┆ 566077609 ┆ … ┆ 25.49937  ┆ 38236.116 ┆ 0.050002 ┆ 148047881 │
+│           ┆           ┆ 8.00      ┆ 7194.45   ┆   ┆           ┆ 984       ┆          ┆           │
+│ N         ┆ F         ┆ 98553062. ┆ 147771098 ┆ … ┆ 25.501557 ┆ 38237.199 ┆ 0.049985 ┆ 3864590   │
+│           ┆           ┆ 00        ┆ 385.98    ┆   ┆           ┆ 389       ┆          ┆           │
+│ N         ┆ O         ┆ 743630297 ┆ 111507256 ┆ … ┆ 25.500009 ┆ 38237.227 ┆ 0.049998 ┆ 291619617 │
+│           ┆           ┆ 6.00      ┆ 81373.59  ┆   ┆           ┆ 646       ┆          ┆           │
+│ R         ┆ F         ┆ 377572497 ┆ 566160303 ┆ … ┆ 25.500066 ┆ 38236.697 ┆ 0.050001 ┆ 148067261 │
+│           ┆           ┆ 0.00      ┆ 2745.34   ┆   ┆           ┆ 258       ┆          ┆           │
+└───────────┴───────────┴───────────┴───────────┴───┴───────────┴───────────┴──────────┴───────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     4    142.9 MiB    142.9 MiB           1   @profile
+     5                                         def pricing_summary_report(scale_factor: int):
+     6    142.9 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     7    145.5 MiB      2.6 MiB           1       con = duckdb.connect()
+     8    145.5 MiB      0.0 MiB           2       query = f"""
+     9                                             select
+    10                                                 l_returnflag,
+    11                                                 l_linestatus,
+    12                                                 sum(l_quantity) as sum_qty,
+    13                                                 sum(l_extendedprice) as sum_base_price,
+    14                                                 sum(l_extendedprice * (1 - l_discount)) as sum_disc_price,
+    15                                                 sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge,
+    16                                                 avg(l_quantity) as avg_qty,
+    17                                                 avg(l_extendedprice) as avg_price,
+    18                                                 avg(l_discount) as avg_disc,
+    19                                                 count(*) as count_order
+    20                                             from
+    21    145.5 MiB      0.0 MiB           1           read_parquet('{parquet_path}')
+    22                                             where
+    23                                                 l_shipdate <= '1998-09-02'
+    24                                             group by
+    25                                                 l_returnflag,
+    26                                                 l_linestatus
+    27                                             order by
+    28                                                 l_returnflag,
+    29                                                 l_linestatus
+    30                                             """
+    31                                         
+    32    581.3 MiB    435.8 MiB           1       pl_df = con.execute(query).pl()
+    33    581.8 MiB      0.4 MiB           1       print(pl_df)
+    34    581.8 MiB     -0.0 MiB           1       con.close()
+
+
+Memory = 439.19 MB, Time = 3.92 s
+
+--- Elapsed Time (s) ---
+Mean:   2.19
+Std:    1.72
+CV:     78.2%
+Min:    0.44
+Max:    4.09
+Span:   3.65
+
+--- Memory Used (MB) ---
+Mean:   256.75
+Std:    148.67
+CV:     57.9%
+Min:    98.03
+Max:    439.19
+Span:   341.16
+
+[START] polars
+
+------------------------------------------------
+
+naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
+
+Parquet SCAN [tpc/lineitem_10.parquet]
+PROJECT */16 COLUMNS
+ESTIMATED ROWS: 59986052
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     5    143.1 MiB    143.1 MiB           1   @profile
+     6                                         def pricing_summary_report(scale_factor: int):
+     7    143.1 MiB      0.0 MiB           1       var1 = date(1998, 9, 2)
+     8    143.1 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     9    143.3 MiB      0.3 MiB           1       lineitem = pl.scan_parquet(parquet_path)
+    10    143.7 MiB      0.4 MiB           1       ((((lineitem.filter(pl.col("l_shipdate") <= var1)
+    11    143.8 MiB      0.1 MiB           1       .group_by("l_returnflag", "l_linestatus"))
+    12    143.8 MiB      0.0 MiB           2       .agg(
+    13    143.8 MiB      0.0 MiB           1           pl.sum("l_quantity").alias("sum_qty"),
+    14    143.8 MiB      0.0 MiB           1           pl.sum("l_extendedprice").alias("sum_base_price"),
+    15    143.8 MiB      0.0 MiB           1           (pl.col("l_extendedprice") * (1.0 - pl.col("l_discount")))
+    16    143.8 MiB      0.0 MiB           1           .sum()
+    17    143.8 MiB      0.0 MiB           1           .alias("sum_disc_price"),
+    18                                                 (
+    19    143.8 MiB      0.0 MiB           3               pl.col("l_extendedprice")
+    20    143.8 MiB      0.0 MiB           1               * (1.0 - pl.col("l_discount"))
+    21    143.8 MiB      0.0 MiB           1               * (1.0 + pl.col("l_tax"))
+    22                                                 )
+    23    143.8 MiB      0.0 MiB           1           .sum()
+    24    143.8 MiB      0.0 MiB           1           .alias("sum_charge"),
+    25    143.8 MiB      0.0 MiB           1           pl.mean("l_quantity").alias("avg_qty"),
+    26    143.8 MiB      0.0 MiB           1           pl.mean("l_extendedprice").alias("avg_price"),
+    27    143.8 MiB      0.0 MiB           1           pl.mean("l_discount").alias("avg_disc"),
+    28    143.8 MiB      0.0 MiB           1           pl.len().alias("count_order"),
+    29                                             ))
+    30    143.8 MiB      0.0 MiB           1       .sort("l_returnflag", "l_linestatus"))
+    31   2056.8 MiB   1912.9 MiB           1       .collect(streaming=True))
+    32                                         
+    33   2056.8 MiB      0.0 MiB           1       print(lineitem)
+
+
+Memory = 1913.95 MB, Time = 0.86 s
+
+------------------------------------------------
+
+naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
+
+Parquet SCAN [tpc/lineitem_20.parquet]
+PROJECT */16 COLUMNS
+ESTIMATED ROWS: 119994608
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     5    142.5 MiB    142.5 MiB           1   @profile
+     6                                         def pricing_summary_report(scale_factor: int):
+     7    142.5 MiB      0.0 MiB           1       var1 = date(1998, 9, 2)
+     8    142.5 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     9    142.8 MiB      0.3 MiB           1       lineitem = pl.scan_parquet(parquet_path)
+    10    143.2 MiB      0.4 MiB           1       ((((lineitem.filter(pl.col("l_shipdate") <= var1)
+    11    143.2 MiB      0.1 MiB           1       .group_by("l_returnflag", "l_linestatus"))
+    12    143.2 MiB      0.0 MiB           2       .agg(
+    13    143.2 MiB      0.0 MiB           1           pl.sum("l_quantity").alias("sum_qty"),
+    14    143.2 MiB      0.0 MiB           1           pl.sum("l_extendedprice").alias("sum_base_price"),
+    15    143.2 MiB      0.0 MiB           1           (pl.col("l_extendedprice") * (1.0 - pl.col("l_discount")))
+    16    143.2 MiB      0.0 MiB           1           .sum()
+    17    143.2 MiB      0.0 MiB           1           .alias("sum_disc_price"),
+    18                                                 (
+    19    143.2 MiB      0.0 MiB           3               pl.col("l_extendedprice")
+    20    143.2 MiB      0.0 MiB           1               * (1.0 - pl.col("l_discount"))
+    21    143.2 MiB      0.0 MiB           1               * (1.0 + pl.col("l_tax"))
+    22                                                 )
+    23    143.2 MiB      0.0 MiB           1           .sum()
+    24    143.2 MiB      0.0 MiB           1           .alias("sum_charge"),
+    25    143.2 MiB      0.0 MiB           1           pl.mean("l_quantity").alias("avg_qty"),
+    26    143.2 MiB      0.0 MiB           1           pl.mean("l_extendedprice").alias("avg_price"),
+    27    143.2 MiB      0.0 MiB           1           pl.mean("l_discount").alias("avg_disc"),
+    28    143.2 MiB      0.0 MiB           1           pl.len().alias("count_order"),
+    29                                             ))
+    30    143.3 MiB      0.0 MiB           1       .sort("l_returnflag", "l_linestatus"))
+    31   2176.0 MiB   2032.7 MiB           1       .collect(streaming=True))
+    32                                         
+    33   2176.3 MiB      0.3 MiB           1       print(lineitem)
+
+
+Memory = 2036.03 MB, Time = 1.65 s
+
+------------------------------------------------
+
+naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
+
+Parquet SCAN [tpc/lineitem_40.parquet]
+PROJECT */16 COLUMNS
+ESTIMATED ROWS: 240012290
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     5    141.3 MiB    141.3 MiB           1   @profile
+     6                                         def pricing_summary_report(scale_factor: int):
+     7    141.3 MiB      0.0 MiB           1       var1 = date(1998, 9, 2)
+     8    141.3 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     9    141.6 MiB      0.3 MiB           1       lineitem = pl.scan_parquet(parquet_path)
+    10    141.9 MiB      0.4 MiB           1       ((((lineitem.filter(pl.col("l_shipdate") <= var1)
+    11    142.0 MiB      0.1 MiB           1       .group_by("l_returnflag", "l_linestatus"))
+    12    142.0 MiB      0.0 MiB           2       .agg(
+    13    142.0 MiB      0.0 MiB           1           pl.sum("l_quantity").alias("sum_qty"),
+    14    142.0 MiB      0.0 MiB           1           pl.sum("l_extendedprice").alias("sum_base_price"),
+    15    142.0 MiB      0.0 MiB           1           (pl.col("l_extendedprice") * (1.0 - pl.col("l_discount")))
+    16    142.0 MiB      0.0 MiB           1           .sum()
+    17    142.0 MiB      0.0 MiB           1           .alias("sum_disc_price"),
+    18                                                 (
+    19    142.0 MiB      0.0 MiB           3               pl.col("l_extendedprice")
+    20    142.0 MiB      0.0 MiB           1               * (1.0 - pl.col("l_discount"))
+    21    142.0 MiB      0.0 MiB           1               * (1.0 + pl.col("l_tax"))
+    22                                                 )
+    23    142.0 MiB      0.0 MiB           1           .sum()
+    24    142.0 MiB      0.0 MiB           1           .alias("sum_charge"),
+    25    142.0 MiB      0.0 MiB           1           pl.mean("l_quantity").alias("avg_qty"),
+    26    142.0 MiB      0.0 MiB           1           pl.mean("l_extendedprice").alias("avg_price"),
+    27    142.0 MiB      0.0 MiB           1           pl.mean("l_discount").alias("avg_disc"),
+    28    142.0 MiB      0.0 MiB           1           pl.len().alias("count_order"),
+    29                                             ))
+    30    142.1 MiB      0.0 MiB           1       .sort("l_returnflag", "l_linestatus"))
+    31   2130.5 MiB   1988.4 MiB           1       .collect(streaming=True))
+    32                                         
+    33   2130.8 MiB      0.3 MiB           1       print(lineitem)
+
+
+Memory = 1992.03 MB, Time = 2.99 s
+
+------------------------------------------------
+
+naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
+
+Parquet SCAN [tpc/lineitem_80.parquet]
+PROJECT */16 COLUMNS
+ESTIMATED ROWS: 480025129
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     5    141.7 MiB    141.7 MiB           1   @profile
+     6                                         def pricing_summary_report(scale_factor: int):
+     7    141.7 MiB      0.0 MiB           1       var1 = date(1998, 9, 2)
+     8    141.7 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     9    142.0 MiB      0.3 MiB           1       lineitem = pl.scan_parquet(parquet_path)
+    10    142.3 MiB      0.4 MiB           1       ((((lineitem.filter(pl.col("l_shipdate") <= var1)
+    11    142.4 MiB      0.1 MiB           1       .group_by("l_returnflag", "l_linestatus"))
+    12    142.4 MiB      0.0 MiB           2       .agg(
+    13    142.4 MiB      0.0 MiB           1           pl.sum("l_quantity").alias("sum_qty"),
+    14    142.4 MiB      0.0 MiB           1           pl.sum("l_extendedprice").alias("sum_base_price"),
+    15    142.4 MiB      0.0 MiB           1           (pl.col("l_extendedprice") * (1.0 - pl.col("l_discount")))
+    16    142.4 MiB      0.0 MiB           1           .sum()
+    17    142.4 MiB      0.0 MiB           1           .alias("sum_disc_price"),
+    18                                                 (
+    19    142.4 MiB      0.0 MiB           3               pl.col("l_extendedprice")
+    20    142.4 MiB      0.0 MiB           1               * (1.0 - pl.col("l_discount"))
+    21    142.4 MiB      0.0 MiB           1               * (1.0 + pl.col("l_tax"))
+    22                                                 )
+    23    142.4 MiB      0.0 MiB           1           .sum()
+    24    142.4 MiB      0.0 MiB           1           .alias("sum_charge"),
+    25    142.4 MiB      0.0 MiB           1           pl.mean("l_quantity").alias("avg_qty"),
+    26    142.4 MiB      0.0 MiB           1           pl.mean("l_extendedprice").alias("avg_price"),
+    27    142.4 MiB      0.0 MiB           1           pl.mean("l_discount").alias("avg_disc"),
+    28    142.4 MiB      0.0 MiB           1           pl.len().alias("count_order"),
+    29                                             ))
+    30    142.5 MiB      0.0 MiB           1       .sort("l_returnflag", "l_linestatus"))
+    31   2360.6 MiB   2218.1 MiB           1       .collect(streaming=True))
+    32                                         
+    33   2360.8 MiB      0.2 MiB           1       print(lineitem)
+
+
+Memory = 2229.59 MB, Time = 5.53 s
+
+------------------------------------------------
+
+naive plan: (run LazyFrame.explain(optimized=True) to see the optimized plan)
+
+Parquet SCAN [tpc/lineitem_100.parquet]
+PROJECT */16 COLUMNS
+ESTIMATED ROWS: 600037902
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     5    143.0 MiB    143.0 MiB           1   @profile
+     6                                         def pricing_summary_report(scale_factor: int):
+     7    143.0 MiB      0.0 MiB           1       var1 = date(1998, 9, 2)
+     8    143.0 MiB      0.0 MiB           1       parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+     9    143.3 MiB      0.3 MiB           1       lineitem = pl.scan_parquet(parquet_path)
+    10    143.7 MiB      0.4 MiB           1       ((((lineitem.filter(pl.col("l_shipdate") <= var1)
+    11    143.7 MiB      0.1 MiB           1       .group_by("l_returnflag", "l_linestatus"))
+    12    143.7 MiB      0.0 MiB           2       .agg(
+    13    143.7 MiB      0.0 MiB           1           pl.sum("l_quantity").alias("sum_qty"),
+    14    143.7 MiB      0.0 MiB           1           pl.sum("l_extendedprice").alias("sum_base_price"),
+    15    143.7 MiB      0.0 MiB           1           (pl.col("l_extendedprice") * (1.0 - pl.col("l_discount")))
+    16    143.7 MiB      0.0 MiB           1           .sum()
+    17    143.7 MiB      0.0 MiB           1           .alias("sum_disc_price"),
+    18                                                 (
+    19    143.7 MiB      0.0 MiB           3               pl.col("l_extendedprice")
+    20    143.7 MiB      0.0 MiB           1               * (1.0 - pl.col("l_discount"))
+    21    143.7 MiB      0.0 MiB           1               * (1.0 + pl.col("l_tax"))
+    22                                                 )
+    23    143.7 MiB      0.0 MiB           1           .sum()
+    24    143.7 MiB      0.0 MiB           1           .alias("sum_charge"),
+    25    143.7 MiB      0.0 MiB           1           pl.mean("l_quantity").alias("avg_qty"),
+    26    143.7 MiB      0.0 MiB           1           pl.mean("l_extendedprice").alias("avg_price"),
+    27    143.7 MiB      0.0 MiB           1           pl.mean("l_discount").alias("avg_disc"),
+    28    143.7 MiB      0.0 MiB           1           pl.len().alias("count_order"),
+    29                                             ))
+    30    143.8 MiB      0.0 MiB           1       .sort("l_returnflag", "l_linestatus"))
+    31   2651.7 MiB   2507.9 MiB           1       .collect(streaming=True))
+    32                                         
+    33   2651.7 MiB      0.0 MiB           1       print(lineitem)
+
+
+Memory = 2508.97 MB, Time = 6.63 s
+
+--- Elapsed Time (s) ---
+Mean:   3.53
+Std:    2.48
+CV:     70.2%
+Min:    0.86
+Max:    6.63
+Span:   5.77
+
+--- Memory Used (MB) ---
+Mean:   2136.11
+Std:    238.69
+CV:     11.2%
+Min:    1913.95
+Max:    2508.97
+Span:   595.02
+
+=== Phase 2: Plotting figures (saving to disk) ===
+[PLOT] Memory vs Dataset Size: (10, 20, 40, 80, 100) -> results/duckdb_polars_scale-range_(10, 20, 40, 80, 100).png
+Figure saved as results/duckdb_polars_scale-range_(10, 20, 40, 80, 100).png

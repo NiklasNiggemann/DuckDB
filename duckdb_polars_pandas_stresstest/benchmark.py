@@ -18,6 +18,8 @@ LOG_DIR = "results"
 LOG_FILE = os.path.join(LOG_DIR, "benchmark_log.txt")
 os.makedirs(LOG_DIR, exist_ok=True)
 
+scale_range = (10, 20, 40, 80, 100)
+
 @contextlib.contextmanager
 def suppress_matplotlib_show():
     """Temporarily suppress plt.show() so figures are saved but not displayed."""
@@ -77,22 +79,23 @@ def summarize(label: str, values: List[float]) -> None:
     print(f"Max:    {max(values):.2f}")
     print(f"Span:   {max(values) - min(values):.2f}")
 
-def export_results_csv(filename: str, tool: str, scale_factors: List[int], memories: List[float], times: List[float], sizes_mb: List[float], row_counts: List[int]) -> None:
+def export_results_csv(filename: str, tool: str, memories: List[float], times: List[float], sizes_mb: List[float], row_counts: List[int]) -> None:
     """Export benchmark results to CSV, including dataset size in MB and row count."""
     with open(filename, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["tool", "scale_factor", "memory_mb", "time_s", "dataset_size_mb", "row_count"])
-        for sf, mem, t, sz, rc in zip(scale_factors, memories, times, sizes_mb, row_counts):
+        for sf, mem, t, sz, rc in zip(scale_range, memories, times, sizes_mb, row_counts):
             writer.writerow([tool, sf, mem, t, sz, rc])
 
-def run_benchmark(tool: str, scale_range: int) -> Tuple[List[int], List[float], List[float], List[float], List[int]]:
+def run_benchmark(tool: str) -> Tuple[List[int], List[float], List[float], List[float], List[int]]:
     scale_factors, memories, times, sizes_mb, row_counts = [], [], [], [], []
     try:
-        for scale_factor in range(10, scale_range + 1, 10):
+        for scale_factor in scale_range:
             print("\n------------------------------------------------\n")
             args = [sys.executable, 'benchmark_engine.py', '--tool', tool, '--scale_factor', str(scale_factor)]
             result = subprocess.check_output(args, stderr=subprocess.STDOUT)
             run_output = result.decode().strip()
+            parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
             print(run_output)
             parsed = parse_output(run_output)
             if parsed:
@@ -100,8 +103,8 @@ def run_benchmark(tool: str, scale_range: int) -> Tuple[List[int], List[float], 
                 scale_factors.append(scale_factor)
                 memories.append(mem)
                 times.append(t)
-                # sizes_mb.append(dataset_size_mb)
-                # row_counts.append(row_count)
+                sizes_mb.append(Path(parquet_path).stat().st_size / (1024 ** 2))
+                row_counts.append(pl.scan_parquet(parquet_path).collect().height)
             else:
                 print("Warning: Could not parse output!")
     except subprocess.CalledProcessError as e:
@@ -110,14 +113,13 @@ def run_benchmark(tool: str, scale_range: int) -> Tuple[List[int], List[float], 
         print("Run timed out!")
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
-    export_results_csv(f"results/{tool}_scale-range_{scale_range}.csv", tool, scale_factors, memories, times, sizes_mb, row_counts)
+    export_results_csv(f"results/{tool}_scale-range_{scale_range}.csv", tool, memories, times, sizes_mb, row_counts)
     return scale_factors, memories, times, sizes_mb, row_counts
 
 def main():
 
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing tools.")
     parser.add_argument("--tool", choices=["all", "duckdb_polars", "duckdb", "polars", "pandas"], default="all")
-    parser.add_argument("--scale_range", type=int, default=1)
     args = parser.parse_args()
 
     tool_map = {
@@ -128,14 +130,13 @@ def main():
         "pandas": ["pandas"],
     }
 
-    scale_range = args.scale_range
     tools = tool_map[args.tool]
 
     generated_csvs = []  # list of (tool, scale_range, path)
     print("\n=== Phase 1: Running benchmarks ===")
     for tool in tools:
         print(f"\n[START] {tool}")
-        run_benchmark(tool, scale_range)
+        run_benchmark(tool)
         csv_path = f"results/{tool}_{scale_range}.csv"
         generated_csvs.append((tool, scale_range, csv_path))
 

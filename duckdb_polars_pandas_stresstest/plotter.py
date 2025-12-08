@@ -27,7 +27,7 @@ def plot_memory_and_time_vs_dataset_size(
     df: pd.DataFrame,
     tools: List[str] = TOOLS,
     save_fig: bool = False,
-    fig_name: str = "memory_and_time_vs_dataset_size.png",
+    fig_name: str = "memory_time.png",
     x_axis: str = "dataset_size_mb"  # or "row_count"
 ):
     if x_axis not in df.columns or 'time_s' not in df.columns:
@@ -57,7 +57,7 @@ def plot_memory_and_time_vs_dataset_size(
                 clip_on=True
             )
     ax.set_ylabel("Memory Usage (MB)")
-    ax.set_title(f"Memory Usage vs {x_axis.replace('_', ' ').title()}")
+    ax.set_title(f"Memory Usage")
     ax.legend(title="Tool")
     ax.grid(True, linestyle='--', alpha=0.3)
 
@@ -81,7 +81,7 @@ def plot_memory_and_time_vs_dataset_size(
             )
     ax.set_xlabel(x_axis.replace('_', ' ').title())
     ax.set_ylabel("Execution Time (s)")
-    ax.set_title(f"Execution Time vs {x_axis.replace('_', ' ').title()}")
+    ax.set_title(f"Execution Time")
     ax.legend(title="Tool")
     ax.grid(True, linestyle='--', alpha=0.3)
 

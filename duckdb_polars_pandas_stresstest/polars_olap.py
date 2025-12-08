@@ -1,33 +1,34 @@
-from datetime import datetime, timedelta
-
 import polars as pl
-import utils
+from datetime import date
 from memory_profiler import profile
 
-parquet_path = 'tpc/lineitem.parquet'
-
 @profile
-def total_sales_per_region(base_path: str = "tpc") -> pl.DataFrame:
-    cutoff_date = datetime(1998, 12, 1) - timedelta(days=90)
+def pricing_summary_report(scale_factor: int):
 
-    df = pl.read_parquet(parquet_path)
+    var1 = date(1998, 9, 2)
+    parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+    lineitem = pl.scan_parquet(parquet_path)
+    ((((lineitem.filter(pl.col("l_shipdate") <= var1)
+    .group_by("l_returnflag", "l_linestatus"))
+    .agg(
+        pl.sum("l_quantity").alias("sum_qty"),
+        pl.sum("l_extendedprice").alias("sum_base_price"),
+        (pl.col("l_extendedprice") * (1.0 - pl.col("l_discount")))
+        .sum()
+        .alias("sum_disc_price"),
+        (
+            pl.col("l_extendedprice")
+            * (1.0 - pl.col("l_discount"))
+            * (1.0 + pl.col("l_tax"))
+        )
+        .sum()
+        .alias("sum_charge"),
+        pl.mean("l_quantity").alias("avg_qty"),
+        pl.mean("l_extendedprice").alias("avg_price"),
+        pl.mean("l_discount").alias("avg_disc"),
+        pl.len().alias("count_order"),
+    ))
+    .sort("l_returnflag", "l_linestatus"))
+    .collect(streaming=True))
 
-    result = (
-        df
-        .filter(pl.col("l_shipdate") <= pl.lit(cutoff_date))
-        .groupby(["l_returnflag", "l_linestatus"])
-        .agg([
-            pl.col("l_quantity").sum().alias("sum_qty"),
-            pl.col("l_extendedprice").sum().alias("sum_base_price"),
-            (pl.col("l_extendedprice") * (1 - pl.col("l_discount"))).sum().alias("sum_disc_price"),
-            (pl.col("l_extendedprice") * (1 - pl.col("l_discount")) * (1 + pl.col("l_tax"))).sum().alias("sum_charge"),
-            pl.col("l_quantity").mean().alias("avg_qty"),
-            pl.col("l_extendedprice").mean().alias("avg_price"),
-            pl.col("l_discount").mean().alias("avg_disc"),
-            pl.count().alias("count_order"),
-        ])
-        .sort(["l_returnflag", "l_linestatus"])
-    )
-
-    print(result)
-
+    print(lineitem)
