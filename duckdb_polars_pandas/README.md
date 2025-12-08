@@ -5,7 +5,7 @@ A Python benchmarking tool for comparing memory usage and execution time across 
 ## Features
 
 - **Benchmark multiple tools**: Pandas, Polars, DuckDB
-- **Functions tested**: Filtering, grouping, aggregation
+- **Functions tested**: Filtering & Counting 
 - **Modes**: Cold (fresh process per run) and Hot (multiple runs in one process)
 - **Automatic CSV export** of results
 - **Summary statistics** (mean, std, CV, min, max, span)
@@ -38,14 +38,13 @@ python benchmark_runner.py --tool all --function all --mode all --runs 10
 | Argument      | Choices                                                                 | Description                                 |
 |---------------|------------------------------------------------------------------------|---------------------------------------------|
 | `--tool`      | `all`, `duckdb_polars`, `duckdb`, `polars`, `pandas`                   | Which tools to benchmark                    |
-| `--function`  | `all`, `filtering_counting`, `filtering_grouping_aggregation`, `grouping_conditional_aggregation` | Which function(s) to test                   |
 | `--mode`      | `all`, `cold`, `hot`                                                   | Benchmark mode                              |
 | `--runs`      | Integer                                                                | Number of runs per benchmark                |
 
 ### Example: Benchmark Pandas only
 
 ```bash
-python benchmark_runner.py --tool pandas --function filtering_counting --mode cold --runs 5
+python benchmark_runner.py --tool pandas --mode cold --runs 5
 ```
 
 ## Output
@@ -79,32 +78,6 @@ All output (including errors) is logged to `results/benchmark_log.txt` for repro
 
 #### Comparison 
 ![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_counting_hot_cold_bar.png)
-
-### Filtering, Grouping & Aggregation 
-
-#### Cold 
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold_bar.png)
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_cold.png)
-
-#### Hot 
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_bar.png)
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot.png)
-
-#### Comparison
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_filtering_grouping_aggregation_hot_cold_bar.png)
-
-### Grouping & Conditional Aggregation 
-
-#### Cold 
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold_bar.png)
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_bar.png)
-
-#### Hot 
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_cold.png)
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot.png)
-
-#### Comparison
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas/results/pandas_duckdb_polars_grouping_conditional_aggregation_hot_cold_bar.png)
 
 ## Contributing
 
