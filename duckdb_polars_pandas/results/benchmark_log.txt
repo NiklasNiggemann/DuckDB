@@ -1,0 +1,1507 @@
+
+=== Phase 1: Running benchmarks ===
+
+[RUN] cold | pandas
+
+------------------------------------------------
+
+*** Run 1/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.2 MiB    142.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  13112.7 MiB  12970.5 MiB           1       df = pd.read_csv(dataset_path)
+    10  14491.0 MiB   1378.3 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  14491.1 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 13535.86 MB, Time = 60.98 s
+
+------------------------------------------------
+
+*** Run 2/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.1 MiB    142.1 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  11689.7 MiB  11547.6 MiB           1       df = pd.read_csv(dataset_path)
+    10  11931.6 MiB    241.9 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11931.8 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10961.42 MB, Time = 59.17 s
+
+------------------------------------------------
+
+*** Run 3/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.2 MiB    142.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9   9197.6 MiB   9055.3 MiB           1       df = pd.read_csv(dataset_path)
+    10  11296.0 MiB   2098.4 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11296.1 MiB      0.2 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10299.50 MB, Time = 62.23 s
+
+------------------------------------------------
+
+*** Run 4/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.4 MiB    142.4 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10805.0 MiB  10662.5 MiB           1       df = pd.read_csv(dataset_path)
+    10  11641.2 MiB    836.3 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11641.4 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10632.47 MB, Time = 62.05 s
+
+------------------------------------------------
+
+*** Run 5/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.0 MiB    142.0 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10747.6 MiB  10605.7 MiB           1       df = pd.read_csv(dataset_path)
+    10  11616.3 MiB    868.7 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11616.5 MiB      0.2 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10632.91 MB, Time = 59.90 s
+
+------------------------------------------------
+
+*** Run 6/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.1 MiB    142.1 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10260.2 MiB  10118.1 MiB           1       df = pd.read_csv(dataset_path)
+    10  11591.6 MiB   1331.4 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11591.7 MiB      0.2 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10620.30 MB, Time = 60.56 s
+
+------------------------------------------------
+
+*** Run 7/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.4 MiB    142.4 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10755.8 MiB  10613.3 MiB           1       df = pd.read_csv(dataset_path)
+    10  11803.3 MiB   1047.6 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11803.5 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10758.55 MB, Time = 60.01 s
+
+------------------------------------------------
+
+*** Run 8/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.2 MiB    142.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9   9897.4 MiB   9755.2 MiB           1       df = pd.read_csv(dataset_path)
+    10  11422.5 MiB   1525.1 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11422.6 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10423.38 MB, Time = 60.37 s
+
+------------------------------------------------
+
+*** Run 9/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.1 MiB    142.1 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10673.9 MiB  10531.8 MiB           1       df = pd.read_csv(dataset_path)
+    10  11718.4 MiB   1044.5 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11718.5 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10662.94 MB, Time = 60.19 s
+
+------------------------------------------------
+
+*** Run 10/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.4 MiB    142.4 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10375.2 MiB  10232.8 MiB           1       df = pd.read_csv(dataset_path)
+    10  11236.5 MiB    861.2 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11236.6 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 10391.42 MB, Time = 59.97 s
+
+--- Elapsed Time (s) ---
+Mean:   60.54
+Std:    0.96
+CV:     1.6%
+Min:    59.17
+Max:    62.23
+Span:   3.06
+
+--- Memory Used (MB) ---
+Mean:   10891.88
+Std:    948.37
+CV:     8.7%
+Min:    10299.50
+Max:    13535.86
+Span:   3236.36
+
+[RUN] cold | duckdb
+
+------------------------------------------------
+
+*** Run 1/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.2 MiB    142.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    428.3 MiB    286.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 286.38 MB, Time = 2.23 s
+
+------------------------------------------------
+
+*** Run 2/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.6 MiB    142.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    520.2 MiB    377.7 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 377.91 MB, Time = 2.26 s
+
+------------------------------------------------
+
+*** Run 3/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.2 MiB    142.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    489.3 MiB    347.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 347.30 MB, Time = 2.30 s
+
+------------------------------------------------
+
+*** Run 4/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.5 MiB    142.5 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    337.6 MiB    195.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 195.36 MB, Time = 2.28 s
+
+------------------------------------------------
+
+*** Run 5/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    141.9 MiB    141.9 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    337.3 MiB    195.4 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 195.64 MB, Time = 2.16 s
+
+------------------------------------------------
+
+*** Run 6/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.4 MiB    142.4 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    399.1 MiB    256.8 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 256.97 MB, Time = 2.21 s
+
+------------------------------------------------
+
+*** Run 7/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    141.8 MiB    141.8 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    370.2 MiB    228.4 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 228.58 MB, Time = 2.22 s
+
+------------------------------------------------
+
+*** Run 8/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.3 MiB    142.3 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    367.3 MiB    225.0 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 225.22 MB, Time = 2.22 s
+
+------------------------------------------------
+
+*** Run 9/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.2 MiB    142.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    428.0 MiB    285.9 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 286.09 MB, Time = 2.37 s
+
+------------------------------------------------
+
+*** Run 10/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.2 MiB    142.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    523.2 MiB    381.0 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 381.20 MB, Time = 2.25 s
+
+--- Elapsed Time (s) ---
+Mean:   2.25
+Std:    0.06
+CV:     2.6%
+Min:    2.16
+Max:    2.37
+Span:   0.21
+
+--- Memory Used (MB) ---
+Mean:   278.06
+Std:    70.60
+CV:     25.4%
+Min:    195.36
+Max:    381.20
+Span:   185.84
+
+[RUN] cold | polars
+
+------------------------------------------------
+
+*** Run 1/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.1 MiB    142.1 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    142.5 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    592.7 MiB    450.3 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    593.0 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 451.14 MB, Time = 2.72 s
+
+------------------------------------------------
+
+*** Run 2/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.5 MiB    142.5 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    142.9 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    578.2 MiB    435.3 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    578.4 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 436.16 MB, Time = 2.84 s
+
+------------------------------------------------
+
+*** Run 3/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.6 MiB    142.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    143.0 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    604.3 MiB    461.3 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    604.5 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 462.14 MB, Time = 2.75 s
+
+------------------------------------------------
+
+*** Run 4/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    143.9 MiB    143.9 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    144.3 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    583.8 MiB    439.5 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    584.0 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 440.30 MB, Time = 2.87 s
+
+------------------------------------------------
+
+*** Run 5/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.1 MiB    142.1 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    142.5 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    572.9 MiB    430.4 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    573.1 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 431.23 MB, Time = 2.93 s
+
+------------------------------------------------
+
+*** Run 6/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.6 MiB    142.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    143.0 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    595.4 MiB    452.5 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    595.7 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 453.30 MB, Time = 2.86 s
+
+------------------------------------------------
+
+*** Run 7/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.6 MiB    142.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    143.0 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    584.0 MiB    441.0 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    584.2 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 441.84 MB, Time = 2.87 s
+
+------------------------------------------------
+
+*** Run 8/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.9 MiB    142.9 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    143.3 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    588.4 MiB    445.1 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    588.6 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 445.92 MB, Time = 2.76 s
+
+------------------------------------------------
+
+*** Run 9/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.7 MiB    142.7 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    143.0 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    586.4 MiB    443.3 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    586.6 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 444.16 MB, Time = 2.79 s
+
+------------------------------------------------
+
+*** Run 10/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.3 MiB    142.3 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    142.7 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    582.2 MiB    439.5 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    582.4 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 440.30 MB, Time = 2.76 s
+
+--- Elapsed Time (s) ---
+Mean:   2.81
+Std:    0.07
+CV:     2.4%
+Min:    2.72
+Max:    2.93
+Span:   0.21
+
+--- Memory Used (MB) ---
+Mean:   444.65
+Std:    8.96
+CV:     2.0%
+Min:    431.23
+Max:    462.14
+Span:   30.91
+
+[RUN] hot | pandas
+------------------------------------------------
+
+
+*** Run 1/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.3 MiB    142.3 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  13706.6 MiB  13564.3 MiB           1       df = pd.read_csv(dataset_path)
+    10  14375.7 MiB    669.1 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  14375.8 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 13245.33 MB, Time = 59.86 s
+Memory Profiler for Run 1/10
+
+------------------------------------------------
+
+
+*** Run 2/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7  13384.2 MiB  13384.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10372.7 MiB  -3011.5 MiB           1       df = pd.read_csv(dataset_path)
+    10  11681.9 MiB   1309.2 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11682.0 MiB      0.2 MiB           1       print("Count:", len(purchases))
+
+
+Memory = -5335.38 MB, Time = 60.86 s
+Memory Profiler for Run 2/10
+
+------------------------------------------------
+
+
+*** Run 3/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   8051.9 MiB   8051.9 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10028.6 MiB   1976.7 MiB           1       df = pd.read_csv(dataset_path)
+    10  11381.0 MiB   1352.4 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11381.2 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 624.95 MB, Time = 60.56 s
+Memory Profiler for Run 3/10
+
+------------------------------------------------
+
+
+*** Run 4/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   8678.0 MiB   8678.0 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10419.5 MiB   1741.5 MiB           1       df = pd.read_csv(dataset_path)
+    10  11374.9 MiB    955.4 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  11375.1 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 1095.59 MB, Time = 60.09 s
+Memory Profiler for Run 4/10
+
+------------------------------------------------
+
+
+*** Run 5/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   9773.6 MiB   9773.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9   9136.0 MiB   -637.7 MiB           1       df = pd.read_csv(dataset_path)
+    10   9912.6 MiB    776.6 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11   9912.7 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = -199.27 MB, Time = 60.96 s
+Memory Profiler for Run 5/10
+
+------------------------------------------------
+
+
+*** Run 6/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   9574.5 MiB   9574.5 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10473.1 MiB    898.6 MiB           1       df = pd.read_csv(dataset_path)
+    10  10684.4 MiB    211.3 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  10684.6 MiB      0.2 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 575.20 MB, Time = 60.59 s
+Memory Profiler for Run 6/10
+
+------------------------------------------------
+
+
+*** Run 7/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7  10148.8 MiB  10148.8 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  11794.9 MiB   1646.1 MiB           1       df = pd.read_csv(dataset_path)
+    10  12243.7 MiB    448.9 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  12243.9 MiB      0.2 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 1401.70 MB, Time = 59.55 s
+Memory Profiler for Run 7/10
+
+------------------------------------------------
+
+
+*** Run 8/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7  11549.6 MiB  11549.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10163.6 MiB  -1386.0 MiB           1       df = pd.read_csv(dataset_path)
+    10  10192.2 MiB     28.6 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  10192.3 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = -1700.67 MB, Time = 60.16 s
+Memory Profiler for Run 8/10
+
+------------------------------------------------
+
+
+*** Run 9/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   9851.1 MiB   9851.1 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10230.9 MiB    379.7 MiB           1       df = pd.read_csv(dataset_path)
+    10  12852.3 MiB   2621.5 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  12852.5 MiB      0.2 MiB           1       print("Count:", len(purchases))
+
+
+Memory = 2454.27 MB, Time = 60.80 s
+Memory Profiler for Run 9/10
+
+------------------------------------------------
+
+
+*** Run 10/10 ***
+
+Count: 916939
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/pandas_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7  12304.4 MiB  12304.4 MiB           1   @profile
+     8                                         def filtering_counting():
+     9  10506.4 MiB  -1798.0 MiB           1       df = pd.read_csv(dataset_path)
+    10  12653.2 MiB   2146.8 MiB           1       purchases = df[df["event_type"] == "purchase"]
+    11  12653.4 MiB      0.1 MiB           1       print("Count:", len(purchases))
+
+
+Memory = -175.94 MB, Time = 60.59 s
+Memory Profiler for Run 10/10
+
+--- Elapsed Time (s) ---
+Mean:   60.40
+Std:    0.47
+CV:     0.8%
+Min:    59.55
+Max:    60.96
+Span:   1.41
+
+--- Memory Used (MB) ---
+Mean:   1198.58
+Std:    4742.39
+CV:     395.7%
+Min:    -5335.38
+Max:    13245.33
+Span:   18580.71
+
+[RUN] hot | duckdb
+------------------------------------------------
+
+
+*** Run 1/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.0 MiB    142.0 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    489.3 MiB    347.2 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 347.47 MB, Time = 2.26 s
+Memory Profiler for Run 1/10
+
+------------------------------------------------
+
+
+*** Run 2/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    489.3 MiB    489.3 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    489.5 MiB      0.3 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 0.27 MB, Time = 2.22 s
+Memory Profiler for Run 2/10
+
+------------------------------------------------
+
+
+*** Run 3/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    489.5 MiB    489.5 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    642.3 MiB    152.8 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 152.78 MB, Time = 2.29 s
+Memory Profiler for Run 3/10
+
+------------------------------------------------
+
+
+*** Run 4/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    642.3 MiB    642.3 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    642.4 MiB      0.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 0.08 MB, Time = 2.30 s
+Memory Profiler for Run 4/10
+
+------------------------------------------------
+
+
+*** Run 5/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    642.4 MiB    642.4 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    642.5 MiB      0.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 0.12 MB, Time = 2.30 s
+Memory Profiler for Run 5/10
+
+------------------------------------------------
+
+
+*** Run 6/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    642.5 MiB    642.5 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    642.6 MiB      0.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 0.09 MB, Time = 2.32 s
+Memory Profiler for Run 6/10
+
+------------------------------------------------
+
+
+*** Run 7/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    642.6 MiB    642.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    642.7 MiB      0.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 0.08 MB, Time = 2.29 s
+Memory Profiler for Run 7/10
+
+------------------------------------------------
+
+
+*** Run 8/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    642.7 MiB    642.7 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    642.8 MiB      0.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 0.08 MB, Time = 2.25 s
+Memory Profiler for Run 8/10
+
+------------------------------------------------
+
+
+*** Run 9/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    642.8 MiB    642.8 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    704.0 MiB     61.2 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 61.17 MB, Time = 2.24 s
+Memory Profiler for Run 9/10
+
+------------------------------------------------
+
+
+*** Run 10/10 ***
+
+┌────────────────┐
+│ purchase_count │
+│     int64      │
+├────────────────┤
+│         916939 │
+└────────────────┘
+
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    704.0 MiB    704.0 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    704.0 MiB      0.1 MiB           1       duckdb.sql(f"SELECT COUNT(*) AS purchase_count FROM read_csv_auto('{dataset_path}') WHERE event_type = 'purchase'").show()
+
+
+Memory = 0.08 MB, Time = 2.28 s
+Memory Profiler for Run 10/10
+
+--- Elapsed Time (s) ---
+Mean:   2.27
+Std:    0.03
+CV:     1.4%
+Min:    2.22
+Max:    2.32
+Span:   0.10
+
+--- Memory Used (MB) ---
+Mean:   56.22
+Std:    113.63
+CV:     202.1%
+Min:    0.08
+Max:    347.47
+Span:   347.39
+
+[RUN] hot | polars
+------------------------------------------------
+
+
+*** Run 1/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    142.9 MiB    142.9 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    143.3 MiB      0.4 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    571.0 MiB    427.7 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    571.2 MiB      0.2 MiB           1       print(result)
+
+
+Memory = 428.56 MB, Time = 2.82 s
+Memory Profiler for Run 1/10
+
+------------------------------------------------
+
+
+*** Run 2/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    571.2 MiB    571.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    571.2 MiB      0.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    616.4 MiB     45.2 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    616.4 MiB      0.0 MiB           1       print(result)
+
+
+Memory = 45.17 MB, Time = 2.69 s
+Memory Profiler for Run 2/10
+
+------------------------------------------------
+
+
+*** Run 3/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    616.4 MiB    616.4 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    616.4 MiB      0.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    633.2 MiB     16.8 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    633.2 MiB      0.0 MiB           1       print(result)
+
+
+Memory = 16.84 MB, Time = 2.67 s
+Memory Profiler for Run 3/10
+
+------------------------------------------------
+
+
+*** Run 4/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    633.2 MiB    633.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    633.2 MiB      0.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10   5336.1 MiB   4702.8 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11   5304.1 MiB    -32.0 MiB           1       print(result)
+
+
+Memory = 4622.83 MB, Time = 2.67 s
+Memory Profiler for Run 4/10
+
+------------------------------------------------
+
+
+*** Run 5/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   5144.1 MiB   5144.1 MiB           1   @profile
+     8                                         def filtering_counting():
+     9   4968.1 MiB   -176.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10   9105.6 MiB   4137.5 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11   9089.6 MiB    -16.0 MiB           1       print(result)
+
+
+Memory = 3817.55 MB, Time = 2.66 s
+Memory Profiler for Run 5/10
+
+------------------------------------------------
+
+
+*** Run 6/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   8993.6 MiB   8993.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9   8881.6 MiB   -112.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10   9019.8 MiB    138.2 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11   8987.8 MiB    -32.0 MiB           1       print(result)
+
+
+Memory = -85.83 MB, Time = 2.69 s
+Memory Profiler for Run 6/10
+
+------------------------------------------------
+
+
+*** Run 7/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   7067.8 MiB   7067.8 MiB           1   @profile
+     8                                         def filtering_counting():
+     9   6891.8 MiB   -176.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10   2807.4 MiB  -4084.4 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11   2759.4 MiB    -48.0 MiB           1       print(result)
+
+
+Memory = -6244.42 MB, Time = 2.69 s
+Memory Profiler for Run 7/10
+
+------------------------------------------------
+
+
+*** Run 8/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   2615.4 MiB   2615.4 MiB           1   @profile
+     8                                         def filtering_counting():
+     9   2407.4 MiB   -208.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10   9078.2 MiB   6670.9 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11   9046.2 MiB    -32.0 MiB           1       print(result)
+
+
+Memory = 6318.86 MB, Time = 2.71 s
+Memory Profiler for Run 8/10
+
+------------------------------------------------
+
+
+*** Run 9/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7   8966.2 MiB   8966.2 MiB           1   @profile
+     8                                         def filtering_counting():
+     9   8854.2 MiB   -112.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    689.6 MiB  -8164.7 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    689.6 MiB      0.0 MiB           1       print(result)
+
+
+Memory = -8324.62 MB, Time = 2.77 s
+Memory Profiler for Run 9/10
+
+------------------------------------------------
+
+
+*** Run 10/10 ***
+
+shape: (1, 1)
+┌────────┐
+│ len    │
+│ ---    │
+│ u32    │
+╞════════╡
+│ 916939 │
+└────────┘
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     7    689.6 MiB    689.6 MiB           1   @profile
+     8                                         def filtering_counting():
+     9    689.6 MiB      0.0 MiB           1       lf = pl.scan_csv(dataset_path)
+    10    694.6 MiB      5.0 MiB           1       result = lf.filter(pl.col("event_type") == "purchase").select(pl.len()).collect(streaming=True)
+    11    694.6 MiB      0.0 MiB           1       print(result)
+
+
+Memory = 4.98 MB, Time = 2.72 s
+Memory Profiler for Run 10/10
+
+--- Elapsed Time (s) ---
+Mean:   2.71
+Std:    0.05
+CV:     1.9%
+Min:    2.66
+Max:    2.82
+Span:   0.16
+
+--- Memory Used (MB) ---
+Mean:   59.99
+Std:    4525.50
+CV:     7543.5%
+Min:    -8324.62
+Max:    6318.86
+Span:   14643.48
+
+=== Phase 2: Plotting figures (saving to disk, no pop-ups) ===
+[PLOT] Line: cold | pandas -> results/pandas_cold.png
+/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/plotter.py:229: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Figure saved as results/pandas_cold.png
+[PLOT] Line: cold | duckdb -> results/duckdb_cold.png
+/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/plotter.py:229: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Figure saved as results/duckdb_cold.png
+[PLOT] Line: cold | polars -> results/polars_cold.png
+/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/plotter.py:229: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Figure saved as results/polars_cold.png
+[PLOT] Line: hot | pandas -> results/pandas_hot.png
+/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/plotter.py:229: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Figure saved as results/pandas_hot.png
+[PLOT] Line: hot | duckdb -> results/duckdb_hot.png
+/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/plotter.py:229: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Figure saved as results/duckdb_hot.png
+[PLOT] Line: hot | polars -> results/polars_hot.png
+/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/plotter.py:229: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Figure saved as results/polars_hot.png
+[PLOT] Bars: cold -> results/pandas_duckdb_polars_cold_bar.png
+Figure saved as results/pandas_duckdb_polars_cold_bar.png
+[PLOT] Bars: hot -> results/pandas_duckdb_polars_hot_bar.png
+Figure saved as results/pandas_duckdb_polars_hot_bar.png
+[PLOT] Hot vs Cold -> results/pandas_duckdb_polars_hot_cold_bar.png
+Figure saved as results/pandas_duckdb_polars_hot_cold_bar.png
+[PLOT] Multi-line: cold -> results/pandas_duckdb_polars_cold.png
+/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/plotter.py:229: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Figure saved as results/pandas_duckdb_polars_cold.png
+[PLOT] Multi-line: hot -> results/pandas_duckdb_polars_hot.png
+/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas/plotter.py:229: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+Figure saved as results/pandas_duckdb_polars_hot.png
