@@ -4,7 +4,7 @@ from pathlib import Path
 import polars as pl
 import duckdb
 
-def generate_dataset(scale_factor: int) -> tuple[float, int]:
+def generate_dataset(scale_factor: int):
     tpc_dir = "tpc"
     parquet_path = f"{tpc_dir}/lineitem_{scale_factor}.parquet"
 
@@ -20,8 +20,6 @@ def generate_dataset(scale_factor: int) -> tuple[float, int]:
 
     # Generate data with DuckDB
     con = duckdb.connect(f"{tpc_dir}/tpc.dbb")
-    con.sql("SET temp_directory = '/tmp/duckdb_swap';")
-    con.sql("SET max_temp_directory_size = '600GB';")
     con.sql(f"CALL dbgen(sf={scale_factor})")
     con.sql(f"COPY lineitem TO '{parquet_path}' (FORMAT 'parquet');")
     con.close()
@@ -35,18 +33,11 @@ def generate_dataset(scale_factor: int) -> tuple[float, int]:
     else:
         os.makedirs(tpc_dir)
 
-    total_bytes = Path(parquet_path).stat().st_size
-    total_mb = total_bytes / (1024 ** 2)
-    total_gb = total_bytes / (1024 ** 3)
-    row_count = pl.scan_parquet(parquet_path).collect().height
-
-    print(f"\nDataset with {row_count:,} rows and {total_gb:.2f} GB (Scale Factor: {scale_factor}) generated!\n")
-
-    return total_mb, row_count
+    print(f"\nDataset with Scale Factor: {scale_factor} generated!\n")
 
 def main():
-    # for scale_factor in [1] + list(range(10, 100, 10)):
-    #     generate_dataset(scale_factor)
-    generate_dataset(160)
+    for scale_factor in (10, 20, 40, 80, 160, 320, 640):
+        generate_dataset(scale_factor)
+    # generate_dataset(1280)
 
 main()

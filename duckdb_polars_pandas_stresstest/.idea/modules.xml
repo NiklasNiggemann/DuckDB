@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/duckdb_polars_pandas.iml" filepath="$PROJECT_DIR$/.idea/duckdb_polars_pandas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/duckdb_polars_pandas_stresstest.iml" filepath="$PROJECT_DIR$/.idea/duckdb_polars_pandas_stresstest.iml" />
     </modules>
   </component>
 </project>

@@ -1,34 +1,35 @@
+from typing import List
+
 from memory_profiler import profile
 import duckdb
 
 @profile
-def pricing_summary_report(scale_factor: int):
-    parquet_path = f'tpc/lineitem_{scale_factor}.parquet'
+def normal_test(scale_factor: int):
     con = duckdb.connect()
+    parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
     query = f"""
-    select
-        l_returnflag,
-        l_linestatus,
-        sum(l_quantity) as sum_qty,
-        sum(l_extendedprice) as sum_base_price,
-        sum(l_extendedprice * (1 - l_discount)) as sum_disc_price,
-        sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge,
-        avg(l_quantity) as avg_qty,
-        avg(l_extendedprice) as avg_price,
-        avg(l_discount) as avg_disc,
-        count(*) as count_order
-    from
-        read_parquet('{parquet_path}')
-    where
-        l_shipdate <= '1998-09-02'
-    group by
-        l_returnflag,
-        l_linestatus
-    order by
-        l_returnflag,
-        l_linestatus
+    SELECT COUNT(*) AS cnt
+    FROM '{parquet_path}'
+    WHERE l_shipdate >= DATE '1994-01-01'
+      AND l_shipdate <  DATE '1995-01-01'
+      AND l_discount BETWEEN 0.05 AND 0.07
+      AND l_quantity < 24;
     """
+    print(con.sql(query).pl())
 
-    pl_df = con.execute(query).pl()
-    print(pl_df)
-    con.close()
+@profile
+def stress_test(scale_factors: List[int]):
+    con = duckdb.connect()
+    union_query = " UNION ALL ".join([
+        f"SELECT * FROM 'tpc/lineitem_{sf}.parquet'" for sf in scale_factors
+    ])
+    query = f"""
+    SELECT COUNT(*) AS cnt
+    FROM ({union_query}) AS all_lineitems
+    WHERE l_shipdate >= DATE '1994-01-01'
+      AND l_shipdate <  DATE '1995-01-01'
+      AND l_discount BETWEEN 0.05 AND 0.07
+      AND l_quantity < 24;
+    """
+    print(con.sql(query).pl())
+

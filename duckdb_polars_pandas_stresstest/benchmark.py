@@ -1,28 +1,24 @@
 import os
-import shutil
 import sys
 import csv
-import re
 import subprocess
 import statistics
 import argparse
-from typing import List, Tuple
-from pathlib import Path
+from logging import exception
+from typing import List, Tuple, Optional, Any
 import duckdb
-import plotter  # Your refactored plotter module
+import plotter
 import contextlib
 import matplotlib.pyplot as plt
-import polars as pl
 
 LOG_DIR = "results"
 LOG_FILE = os.path.join(LOG_DIR, "benchmark_log.txt")
 os.makedirs(LOG_DIR, exist_ok=True)
 
-scale_range = (10, 20, 40, 80, 100)
-
+# === Utility Context Managers ===
 @contextlib.contextmanager
 def suppress_matplotlib_show():
-    """Temporarily suppress plt.show() so figures are saved but not displayed."""
+    """Suppress plt.show() during plotting."""
     original_show = plt.show
     plt.show = lambda *args, **kwargs: None
     try:
@@ -31,40 +27,23 @@ def suppress_matplotlib_show():
         plt.show = original_show
 
 def csv_has_data(path: str) -> bool:
-    """Check if CSV has at least one data row beyond header."""
+    """Check if a CSV file exists and has at least one data row."""
     try:
         with open(path, newline="") as f:
             reader = csv.reader(f)
-            header = next(reader, None)
-            first_row = next(reader, None)
-            return first_row is not None
+            next(reader, None)  # Skip header
+            return next(reader, None) is not None
     except FileNotFoundError:
         return False
 
-class Logger:
-    """Logger that writes to both terminal and a file."""
-    def __init__(self, filename: str):
-        self.terminal = sys.stdout
-        self.log = open(filename, "w", encoding="utf-8")
-    def write(self, message: str):
-        self.terminal.write(message)
-        self.log.write(message)
-    def flush(self):
-        self.terminal.flush()
-        self.log.flush()
-    def close(self):
-        self.log.close()
-
-sys.stdout = Logger(LOG_FILE)
-sys.stderr = sys.stdout  # Also log errors
-
 def parse_output(output: str) -> List[Tuple[float, float]]:
-    """Parse output lines of the form 'Memory = X MB, Time = Y s'."""
+    """Extract memory and time from benchmark output."""
     import re
     pattern = re.compile(r"Memory\s*=\s*(-?[0-9.]+)\s*MB.*?Time\s*=\s*([0-9.]+)\s*s")
     return [(float(m), float(t)) for m, t in pattern.findall(output)]
 
 def summarize(label: str, values: List[float]) -> None:
+    """Print summary statistics for a list of values."""
     print(f"\n--- {label} ---")
     if not values:
         print("No data.")
@@ -79,76 +58,136 @@ def summarize(label: str, values: List[float]) -> None:
     print(f"Max:    {max(values):.2f}")
     print(f"Span:   {max(values) - min(values):.2f}")
 
-def export_results_csv(filename: str, tool: str, memories: List[float], times: List[float], sizes_mb: List[float], row_counts: List[int]) -> None:
-    """Export benchmark results to CSV, including dataset size in MB and row count."""
+def export_results_csv(filename: str, tool: str, scale_factors: List[int], memories: List[float], times: List[float], row_counts: List[int], sizes: List[float], tables: int = 1) -> None:
     with open(filename, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["tool", "scale_factor", "memory_mb", "time_s", "dataset_size_mb", "row_count"])
-        for sf, mem, t, sz, rc in zip(scale_range, memories, times, sizes_mb, row_counts):
-            writer.writerow([tool, sf, mem, t, sz, rc])
+        writer.writerow(["tool", "scale_factor", "memory_mb", "time_s", "row_count", "dataset_size_mb"])
+        for scale, mem, t, rc, sz in zip(scale_factors, memories, times, row_counts, sizes):
+            writer.writerow([tool, scale, mem, t, rc, sz])
 
-def run_benchmark(tool: str) -> Tuple[List[int], List[float], List[float], List[float], List[int]]:
-    scale_factors, memories, times, sizes_mb, row_counts = [], [], [], [], []
+def get_row_count_and_size(parquet_path: str) -> Tuple[int, float]:
     try:
-        for scale_factor in scale_range:
-            print("\n------------------------------------------------\n")
-            args = [sys.executable, 'benchmark_engine.py', '--tool', tool, '--scale_factor', str(scale_factor)]
-            result = subprocess.check_output(args, stderr=subprocess.STDOUT)
-            run_output = result.decode().strip()
-            parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
-            print(run_output)
-            parsed = parse_output(run_output)
-            if parsed:
-                mem, t = parsed[0]
-                scale_factors.append(scale_factor)
-                memories.append(mem)
-                times.append(t)
-                sizes_mb.append(Path(parquet_path).stat().st_size / (1024 ** 2))
-                row_counts.append(pl.scan_parquet(parquet_path).collect().height)
-            else:
-                print("Warning: Could not parse output!")
+        rc = duckdb.sql(f"SELECT COUNT(*) FROM '{parquet_path}'").fetchone()[0]
+        sz = os.path.getsize(parquet_path) / (1024 * 1024)  # MB
+        return rc, sz
+    except Exception as e:
+        print(f"Error reading {parquet_path}: {e}")
+        return 0, 0.0
+
+# === Logger ===
+class Logger:
+    """Logger that writes to both stdout and a file."""
+    def __init__(self, filename: str):
+        self.terminal = sys.stdout
+        self.log = open(filename, "w", encoding="utf-8")
+    def write(self, message: str):
+        self.terminal.write(message)
+        self.log.write(message)
+    def flush(self):
+        self.terminal.flush()
+        self.log.flush()
+    def close(self):
+        self.log.close()
+
+sys.stdout = Logger(LOG_FILE)
+sys.stderr = sys.stdout
+
+def benchmark(tool: str, test: str, factor: Any) -> Optional[Tuple[float, float, int, float, Any]]:
+    print("\n------------------------------------------------\n")
+    args = [
+        sys.executable, 'benchmark_engine.py',
+        '--tool', tool,
+        '--test', test,
+    ]
+    if test == "stress" and isinstance(factor, list):
+        args += ['--factors'] + [str(f) for f in factor]
+    else:
+        args += ['--factor', str(factor)]
+    try:
+        result = subprocess.check_output(args, stderr=subprocess.STDOUT)
+        run_output = result.decode().strip()
+        print(run_output)
+        parsed = parse_output(run_output)
+        if parsed:
+            mem, t = parsed[0]
+            parquet_path = f"tpc/lineitem_{factor if not isinstance(factor, list) else factor[0]}.parquet"
+            rc, sz = get_row_count_and_size(parquet_path)
+            return mem, t, rc, sz, factor
+        else:
+            print("Warning: Could not parse output!")
     except subprocess.CalledProcessError as e:
         print(f"Run failed: {e.output.decode()}")
     except subprocess.TimeoutExpired:
         print("Run timed out!")
+    return None
+
+def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
+    memories, times, row_counts, sizes, scales = [], [], [], [], []
+    if test == "normal":
+        scale_factors = [10, 20, 40, 80, 160, 320, 640]
+        for factor in scale_factors:
+            print("\n------------------------------------------------\n")
+            print(f"[NORMAL] Reading a table with factor {factor} for this run...")
+            result = benchmark(tool, test, factor)
+            if result:
+                mem, t, rc, sz, scale = result
+                memories.append(mem)
+                times.append(t)
+                row_counts.append(rc)
+                sizes.append(sz)
+                scales.append(scale)
+    else:
+        factor = 640
+        memories, times, row_counts, sizes, scales = [], [], [], [], []
+        for num_tables in range(1, 3):
+            factors = [factor] * num_tables
+            print("\n------------------------------------------------\n")
+            print(f"[STRESS] Reading {num_tables} tables for this run...")
+            result = benchmark(tool, test, factors)
+            if result:
+                mem, t, rc, sz, scale = result
+                total_rows = rc * num_tables
+                total_size = sz * num_tables
+                memories.append(mem)
+                times.append(t)
+                row_counts.append(total_rows)
+                sizes.append(total_size)
+                scales.append(num_tables)
+            else:
+                print("Warning: Could not parse output!")
+                break
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
-    export_results_csv(f"results/{tool}_scale-range_{scale_range}.csv", tool, memories, times, sizes_mb, row_counts)
-    return scale_factors, memories, times, sizes_mb, row_counts
+    export_results_csv(f"results/{tool}_{test}.csv", tool, scales, memories, times, row_counts, sizes)
+    return memories, times
 
 def main():
-
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing tools.")
-    parser.add_argument("--tool", choices=["all", "duckdb_polars", "duckdb", "polars", "pandas"], default="all")
+    parser.add_argument("--tool", choices=["all", "duckdb", "polars"], default="all")
+    parser.add_argument("--test", choices=["normal", "stress"], default="normal")
     args = parser.parse_args()
 
     tool_map = {
-        "all": ["pandas", "duckdb", "polars"],
-        "duckdb_polars": ["duckdb", "polars"],
+        "all": ["duckdb", "polars"],
         "duckdb": ["duckdb"],
         "polars": ["polars"],
-        "pandas": ["pandas"],
     }
-
     tools = tool_map[args.tool]
 
-    generated_csvs = []  # list of (tool, scale_range, path)
     print("\n=== Phase 1: Running benchmarks ===")
     for tool in tools:
         print(f"\n[START] {tool}")
-        run_benchmark(tool)
-        csv_path = f"results/{tool}_{scale_range}.csv"
-        generated_csvs.append((tool, scale_range, csv_path))
+        run_benchmark(tool, args.test)
 
     print("\n=== Phase 2: Plotting figures (saving to disk) ===")
     with suppress_matplotlib_show():
-        csv_files = [f"results/{tool}_scale-range_{scale_range}.csv" for tool in tools]
+        csv_files = [f"results/{tool}_{args.test}.csv" for tool in tools]
         existing = [p for p in csv_files if csv_has_data(p)]
         if existing:
-            out_png = f"results/{'_'.join(tools)}_scale-range_{scale_range}.png"
-            print(f"[PLOT] Memory vs Dataset Size: {scale_range} -> {out_png}")
+            print(f"[PLOT] Unified scatter plots for memory and time")
             df = plotter.load_and_concat_csvs(existing)
-            plotter.plot_memory_and_time_vs_dataset_size(df, tools=tools, save_fig=True, fig_name=out_png)
+            plotter.plot_scatter_with_trend(df, y_axis="memory_mb", save_path=f"results/{'_'.join(tools)}_{args.test}_memory.png")
+            plotter.plot_scatter_with_trend(df, y_axis="time_s", save_path=f"results/{'_'.join(tools)}_{args.test}_time.png")
         else:
             print(f"[SKIP] No data")
 
