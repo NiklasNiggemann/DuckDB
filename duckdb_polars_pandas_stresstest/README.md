@@ -13,12 +13,12 @@ The benchmark is designed to reveal differences in I/O throughput, memory manage
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_normal_memory.png?ref_type=heads) 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_normal_time.png?ref_type=heads) 
 
-### Stress-Test (10 to 100 140 GB Tables) 
+### Stress-Test (10x to 100x 140 GB Tables) 
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_memory.png?ref_type=heads) 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_time.png?ref_type=heads) 
 
-###  Stress-Test (100 to 1000 2 GB Tables) 
+###  Stress-Test (100x to 1000x 2 GB Tables) 
 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_memory.png?ref_type=heads) 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_time.png?ref_type=heads) 
