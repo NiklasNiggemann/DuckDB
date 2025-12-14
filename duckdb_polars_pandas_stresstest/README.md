@@ -23,6 +23,8 @@ The benchmark is designed to reveal differences in I/O throughput, memory manage
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_memory.png?ref_type=heads) 
 ![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_time.png?ref_type=heads) 
 
+`pyo3_runtime.PanicException: Polars' maximum length reached. Consider installing 'polars[rt64]'.: TryFromIntError(())`
+
 ## Contributing
 
 Pull requests and issues are welcome!
