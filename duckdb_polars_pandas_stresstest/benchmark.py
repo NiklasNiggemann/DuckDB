@@ -57,6 +57,7 @@ def summarize(label: str, values: List[float]) -> None:
     print(f"Min:    {min(values):.2f}")
     print(f"Max:    {max(values):.2f}")
     print(f"Span:   {max(values) - min(values):.2f}")
+    print("\n------------------------------------------------")
 
 def export_results_csv(filename: str, tool: str, scale_factors: List[int], memories: List[float], times: List[float], row_counts: List[int], sizes: List[float], tables: int = 1) -> None:
     with open(filename, "w", newline="") as csvfile:
@@ -99,7 +100,9 @@ def benchmark(tool: str, test: str, factor: Any) -> Optional[Tuple[float, float,
         '--tool', tool,
         '--test', test,
     ]
-    if test == "stress" and isinstance(factor, list):
+    if test == "stress-big" and isinstance(factor, list):
+        args += ['--factors'] + [str(f) for f in factor]
+    elif test == "stress-small" and isinstance(factor, list):
         args += ['--factors'] + [str(f) for f in factor]
     else:
         args += ['--factor', str(factor)]
@@ -136,13 +139,33 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
                 row_counts.append(rc)
                 sizes.append(sz)
                 scales.append(scale)
-    else:
+    elif test == "stress-big":
         factor = 640
         memories, times, row_counts, sizes, scales = [], [], [], [], []
-        for num_tables in range(1, 3):
+        for num_tables in range(10, 100, 10):
             factors = [factor] * num_tables
             print("\n------------------------------------------------\n")
-            print(f"[STRESS] Reading {num_tables} tables for this run...")
+            print(f"[STRESS-BIG] Reading {num_tables} tables for this run...")
+            result = benchmark(tool, test, factors)
+            if result:
+                mem, t, rc, sz, scale = result
+                total_rows = rc * num_tables
+                total_size = sz * num_tables
+                memories.append(mem)
+                times.append(t)
+                row_counts.append(total_rows)
+                sizes.append(total_size)
+                scales.append(num_tables)
+            else:
+                print("Warning: Could not parse output!")
+                break
+    else:
+        factor = 10
+        memories, times, row_counts, sizes, scales = [], [], [], [], []
+        for num_tables in range(100, 900, 100):
+            factors = [factor] * num_tables
+            print("\n------------------------------------------------\n")
+            print(f"[STRESS-SMALL] Reading {num_tables} tables for this run...")
             result = benchmark(tool, test, factors)
             if result:
                 mem, t, rc, sz, scale = result
@@ -164,11 +187,11 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
 def main():
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing tools.")
     parser.add_argument("--tool", choices=["all", "duckdb", "polars"], default="all")
-    parser.add_argument("--test", choices=["normal", "stress"], default="normal")
+    parser.add_argument("--test", choices=["normal", "stress-big", "stress-small"], default="normal")
     args = parser.parse_args()
 
     tool_map = {
-        "all": ["duckdb", "polars"],
+        "all": ["polars", "duckdb"],
         "duckdb": ["duckdb"],
         "polars": ["polars"],
     }
@@ -184,7 +207,6 @@ def main():
         csv_files = [f"results/{tool}_{args.test}.csv" for tool in tools]
         existing = [p for p in csv_files if csv_has_data(p)]
         if existing:
-            print(f"[PLOT] Unified scatter plots for memory and time")
             df = plotter.load_and_concat_csvs(existing)
             plotter.plot_scatter_with_trend(df, y_axis="memory_mb", save_path=f"results/{'_'.join(tools)}_{args.test}_memory.png")
             plotter.plot_scatter_with_trend(df, y_axis="time_s", save_path=f"results/{'_'.join(tools)}_{args.test}_time.png")

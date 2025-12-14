@@ -1,312 +1,128 @@
 shape: (1, 1)
-┌─────────┐
-│ cnt     │
-│ ---     │
-│ i64     │
-╞═════════╡
-│ 1139264 │
-└─────────┘
-Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
-
-Line #    Mem usage    Increment  Occurrences   Line Contents
-=============================================================
-     6     71.2 MiB     71.2 MiB           1   @profile
-     7                                         def normal_test(scale_factor: int):
-     8     74.1 MiB      2.9 MiB           1       con = duckdb.connect()
-     9     74.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
-    10     74.1 MiB      0.0 MiB           2       query = f"""
-    11                                             SELECT COUNT(*) AS cnt
-    12     74.1 MiB      0.0 MiB           1       FROM '{parquet_path}'
-    13                                             WHERE l_shipdate >= DATE '1994-01-01'
-    14                                               AND l_shipdate <  DATE '1995-01-01'
-    15                                               AND l_discount BETWEEN 0.05 AND 0.07
-    16                                               AND l_quantity < 24;
-    17                                             """
-    18    131.1 MiB     57.0 MiB           1       print(con.sql(query).pl())
-
-
-Memory = 59.89 MB, Time = 0.39 s
-shape: (1, 1)
-┌─────────┐
-│ cnt     │
-│ ---     │
-│ i64     │
-╞═════════╡
-│ 2281119 │
-└─────────┘
-Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
-
-Line #    Mem usage    Increment  Occurrences   Line Contents
-=============================================================
-     6     71.3 MiB     71.3 MiB           1   @profile
-     7                                         def normal_test(scale_factor: int):
-     8     74.2 MiB      2.8 MiB           1       con = duckdb.connect()
-     9     74.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
-    10     74.2 MiB      0.0 MiB           2       query = f"""
-    11                                             SELECT COUNT(*) AS cnt
-    12     74.2 MiB      0.0 MiB           1       FROM '{parquet_path}'
-    13                                             WHERE l_shipdate >= DATE '1994-01-01'
-    14                                               AND l_shipdate <  DATE '1995-01-01'
-    15                                               AND l_discount BETWEEN 0.05 AND 0.07
-    16                                               AND l_quantity < 24;
-    17                                             """
-    18    152.8 MiB     78.6 MiB           1       print(con.sql(query).pl())
-
-
-Memory = 81.44 MB, Time = 0.52 s
-shape: (1, 1)
-┌─────────┐
-│ cnt     │
-│ ---     │
-│ i64     │
-╞═════════╡
-│ 4565749 │
-└─────────┘
-Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
-
-Line #    Mem usage    Increment  Occurrences   Line Contents
-=============================================================
-     6     72.1 MiB     72.1 MiB           1   @profile
-     7                                         def normal_test(scale_factor: int):
-     8     74.9 MiB      2.8 MiB           1       con = duckdb.connect()
-     9     74.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
-    10     74.9 MiB      0.0 MiB           2       query = f"""
-    11                                             SELECT COUNT(*) AS cnt
-    12     74.9 MiB      0.0 MiB           1       FROM '{parquet_path}'
-    13                                             WHERE l_shipdate >= DATE '1994-01-01'
-    14                                               AND l_shipdate <  DATE '1995-01-01'
-    15                                               AND l_discount BETWEEN 0.05 AND 0.07
-    16                                               AND l_quantity < 24;
-    17                                             """
-    18    195.1 MiB    120.2 MiB           1       print(con.sql(query).pl())
-
-
-Memory = 123.09 MB, Time = 0.74 s
-shape: (1, 1)
-┌─────────┐
-│ cnt     │
-│ ---     │
-│ i64     │
-╞═════════╡
-│ 9135381 │
-└─────────┘
-Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
-
-Line #    Mem usage    Increment  Occurrences   Line Contents
-=============================================================
-     6     71.3 MiB     71.3 MiB           1   @profile
-     7                                         def normal_test(scale_factor: int):
-     8     74.1 MiB      2.8 MiB           1       con = duckdb.connect()
-     9     74.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
-    10     74.1 MiB      0.0 MiB           2       query = f"""
-    11                                             SELECT COUNT(*) AS cnt
-    12     74.1 MiB      0.0 MiB           1       FROM '{parquet_path}'
-    13                                             WHERE l_shipdate >= DATE '1994-01-01'
-    14                                               AND l_shipdate <  DATE '1995-01-01'
-    15                                               AND l_discount BETWEEN 0.05 AND 0.07
-    16                                               AND l_quantity < 24;
-    17                                             """
-    18    277.0 MiB    202.9 MiB           1       print(con.sql(query).pl())
-
-
-Memory = 199.59 MB, Time = 1.27 s
-shape: (1, 1)
-┌──────────┐
-│ cnt      │
-│ ---      │
-│ i64      │
-╞══════════╡
-│ 18269118 │
-└──────────┘
-Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
-
-Line #    Mem usage    Increment  Occurrences   Line Contents
-=============================================================
-     6     71.7 MiB     71.7 MiB           1   @profile
-     7                                         def normal_test(scale_factor: int):
-     8     74.5 MiB      2.8 MiB           1       con = duckdb.connect()
-     9     74.5 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
-    10     74.5 MiB      0.0 MiB           2       query = f"""
-    11                                             SELECT COUNT(*) AS cnt
-    12     74.5 MiB      0.0 MiB           1       FROM '{parquet_path}'
-    13                                             WHERE l_shipdate >= DATE '1994-01-01'
-    14                                               AND l_shipdate <  DATE '1995-01-01'
-    15                                               AND l_discount BETWEEN 0.05 AND 0.07
-    16                                               AND l_quantity < 24;
-    17                                             """
-    18    437.9 MiB    363.4 MiB           1       print(con.sql(query).pl())
-
-
-Memory = 354.02 MB, Time = 2.15 s
-shape: (1, 1)
-┌──────────┐
-│ cnt      │
-│ ---      │
-│ i64      │
-╞══════════╡
-│ 36542597 │
-└──────────┘
-Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
-
-Line #    Mem usage    Increment  Occurrences   Line Contents
-=============================================================
-     6     71.5 MiB     71.5 MiB           1   @profile
-     7                                         def normal_test(scale_factor: int):
-     8     74.2 MiB      2.7 MiB           1       con = duckdb.connect()
-     9     74.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
-    10     74.2 MiB      0.0 MiB           2       query = f"""
-    11                                             SELECT COUNT(*) AS cnt
-    12     74.2 MiB      0.0 MiB           1       FROM '{parquet_path}'
-    13                                             WHERE l_shipdate >= DATE '1994-01-01'
-    14                                               AND l_shipdate <  DATE '1995-01-01'
-    15                                               AND l_discount BETWEEN 0.05 AND 0.07
-    16                                               AND l_quantity < 24;
-    17                                             """
-    18    763.2 MiB    688.9 MiB           1       print(con.sql(query).pl())
-
-
-Memory = 691.80 MB, Time = 3.91 s
-shape: (1, 1)
-┌──────────┐
-│ cnt      │
-│ ---      │
-│ i64      │
-╞══════════╡
-│ 73100039 │
-└──────────┘
-Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/duckdb_olap.py
-
-Line #    Mem usage    Increment  Occurrences   Line Contents
-=============================================================
-     6     71.6 MiB     71.6 MiB           1   @profile
-     7                                         def normal_test(scale_factor: int):
-     8     74.3 MiB      2.7 MiB           1       con = duckdb.connect()
-     9     74.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
-    10     74.3 MiB      0.0 MiB           2       query = f"""
-    11                                             SELECT COUNT(*) AS cnt
-    12     74.3 MiB      0.0 MiB           1       FROM '{parquet_path}'
-    13                                             WHERE l_shipdate >= DATE '1994-01-01'
-    14                                               AND l_shipdate <  DATE '1995-01-01'
-    15                                               AND l_discount BETWEEN 0.05 AND 0.07
-    16                                               AND l_quantity < 24;
-    17                                             """
-    18   1417.2 MiB   1342.9 MiB           1       print(con.sql(query).pl())
-
-
-Memory = 1343.08 MB, Time = 5.67 s
-shape: (1, 1)
-┌─────────┐
-│ count   │
-│ ---     │
-│ u32     │
-╞═════════╡
-│ 1139264 │
-└─────────┘
+┌───────────┐
+│ cnt       │
+│ ---       │
+│ u32       │
+╞═══════════╡
+│ 731000390 │
+└───────────┘
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
-     5     71.6 MiB     71.6 MiB           1   @profile
-     6                                         def normal_test(scale_factor: int):
-     7    272.9 MiB     13.3 MiB           3       df = pl.SQLContext().execute(
-     8     71.7 MiB      0.0 MiB           2           f"""
-     9                                                 SELECT COUNT(*) AS count
-    10     71.6 MiB      0.0 MiB           1           FROM read_parquet('tpc/lineitem_{scale_factor}.parquet')
-    11                                                 WHERE l_shipdate >= '1994-01-01'
-    12                                                   AND l_shipdate <  '1995-01-01'
-    13                                                   AND l_discount BETWEEN 0.05 AND 0.07
-    14                                                   AND l_quantity < 24
-    15                                                 """,
-    16     71.7 MiB      0.0 MiB           1           eager=False
-    17    272.9 MiB    188.0 MiB           1       ).collect(engine="streaming")
-    18    273.1 MiB      0.2 MiB           1       print(df)
+    22     71.0 MiB     71.0 MiB           1   @profile
+    23                                         def stress_test(scale_factors: List[int]):
+    24     71.0 MiB      0.0 MiB           3       union_query = " UNION ALL ".join([
+    25     71.0 MiB      0.0 MiB          12           f"SELECT * FROM read_parquet('tpc/lineitem_{sf}.parquet')" for sf in scale_factors
+    26                                             ])
+    27   5451.5 MiB   2435.8 MiB           3       df = pl.SQLContext().execute(
+    28     71.1 MiB      0.0 MiB           2           f"""
+    29                                                 SELECT COUNT(*) AS cnt
+    30     71.1 MiB      0.0 MiB           1           FROM ({union_query}) AS all_lineitems
+    31                                                 WHERE l_shipdate >= DATE '1994-01-01'
+    32                                                   AND l_shipdate <  DATE '1995-01-01'
+    33                                                   AND l_discount BETWEEN 0.05 AND 0.07
+    34                                                   AND l_quantity < 24;
+    35                                                 """,
+    36     71.1 MiB      0.0 MiB           1           eager=False
+    37   5451.4 MiB   2944.7 MiB           1       ).collect(engine="streaming")
+    38   5452.1 MiB      0.6 MiB           1       print(df)
 
 
-Memory = 201.62 MB, Time = 0.18 s
+Memory = 5382.19 MB, Time = 85.70 s
 shape: (1, 1)
-┌─────────┐
-│ count   │
-│ ---     │
-│ u32     │
-╞═════════╡
-│ 2281119 │
-└─────────┘
+┌────────────┐
+│ cnt        │
+│ ---        │
+│ u32        │
+╞════════════╡
+│ 1462000780 │
+└────────────┘
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
-     5     71.6 MiB     71.6 MiB           1   @profile
-     6                                         def normal_test(scale_factor: int):
-     7    274.0 MiB     22.8 MiB           3       df = pl.SQLContext().execute(
-     8     71.7 MiB      0.0 MiB           2           f"""
-     9                                                 SELECT COUNT(*) AS count
-    10     71.7 MiB      0.0 MiB           1           FROM read_parquet('tpc/lineitem_{scale_factor}.parquet')
-    11                                                 WHERE l_shipdate >= '1994-01-01'
-    12                                                   AND l_shipdate <  '1995-01-01'
-    13                                                   AND l_discount BETWEEN 0.05 AND 0.07
-    14                                                   AND l_quantity < 24
-    15                                                 """,
-    16     71.7 MiB      0.0 MiB           1           eager=False
-    17    274.0 MiB    179.6 MiB           1       ).collect(engine="streaming")
-    18    274.2 MiB      0.2 MiB           1       print(df)
+    22     71.1 MiB     71.1 MiB           1   @profile
+    23                                         def stress_test(scale_factors: List[int]):
+    24     71.1 MiB      0.0 MiB           3       union_query = " UNION ALL ".join([
+    25     71.1 MiB      0.0 MiB          22           f"SELECT * FROM read_parquet('tpc/lineitem_{sf}.parquet')" for sf in scale_factors
+    26                                             ])
+    27   8837.8 MiB   3995.5 MiB           3       df = pl.SQLContext().execute(
+    28     71.1 MiB      0.0 MiB           2           f"""
+    29                                                 SELECT COUNT(*) AS cnt
+    30     71.1 MiB      0.0 MiB           1           FROM ({union_query}) AS all_lineitems
+    31                                                 WHERE l_shipdate >= DATE '1994-01-01'
+    32                                                   AND l_shipdate <  DATE '1995-01-01'
+    33                                                   AND l_discount BETWEEN 0.05 AND 0.07
+    34                                                   AND l_quantity < 24;
+    35                                                 """,
+    36     71.1 MiB      0.0 MiB           1           eager=False
+    37   8837.7 MiB   4771.3 MiB           1       ).collect(engine="streaming")
+    38   8838.6 MiB      0.8 MiB           1       print(df)
 
 
-Memory = 202.70 MB, Time = 0.31 s
+Memory = 8768.36 MB, Time = 175.57 s
 shape: (1, 1)
-┌─────────┐
-│ count   │
-│ ---     │
-│ u32     │
-╞═════════╡
-│ 4565749 │
-└─────────┘
+┌────────────┐
+│ cnt        │
+│ ---        │
+│ u32        │
+╞════════════╡
+│ 2193001170 │
+└────────────┘
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
-     5     71.8 MiB     71.8 MiB           1   @profile
-     6                                         def normal_test(scale_factor: int):
-     7    300.6 MiB     43.4 MiB           3       df = pl.SQLContext().execute(
-     8     71.9 MiB      0.0 MiB           2           f"""
-     9                                                 SELECT COUNT(*) AS count
-    10     71.9 MiB      0.0 MiB           1           FROM read_parquet('tpc/lineitem_{scale_factor}.parquet')
-    11                                                 WHERE l_shipdate >= '1994-01-01'
-    12                                                   AND l_shipdate <  '1995-01-01'
-    13                                                   AND l_discount BETWEEN 0.05 AND 0.07
-    14                                                   AND l_quantity < 24
-    15                                                 """,
-    16     71.9 MiB      0.0 MiB           1           eager=False
-    17    300.6 MiB    185.3 MiB           1       ).collect(engine="streaming")
-    18    300.8 MiB      0.2 MiB           1       print(df)
+    22     71.1 MiB     71.1 MiB           1   @profile
+    23                                         def stress_test(scale_factors: List[int]):
+    24     71.1 MiB      0.0 MiB           3       union_query = " UNION ALL ".join([
+    25     71.1 MiB      0.0 MiB          32           f"SELECT * FROM read_parquet('tpc/lineitem_{sf}.parquet')" for sf in scale_factors
+    26                                             ])
+    27  13151.0 MiB   5630.9 MiB           3       df = pl.SQLContext().execute(
+    28     71.1 MiB      0.0 MiB           2           f"""
+    29                                                 SELECT COUNT(*) AS cnt
+    30     71.1 MiB      0.0 MiB           1           FROM ({union_query}) AS all_lineitems
+    31                                                 WHERE l_shipdate >= DATE '1994-01-01'
+    32                                                   AND l_shipdate <  DATE '1995-01-01'
+    33                                                   AND l_discount BETWEEN 0.05 AND 0.07
+    34                                                   AND l_quantity < 24;
+    35                                                 """,
+    36     71.1 MiB      0.0 MiB           1           eager=False
+    37  13151.0 MiB   7449.1 MiB           1       ).collect(engine="streaming")
+    38  13151.9 MiB      0.8 MiB           1       print(df)
 
 
-Memory = 229.05 MB, Time = 0.63 s
+Memory = 13081.89 MB, Time = 504.53 s
 shape: (1, 1)
-┌─────────┐
-│ count   │
-│ ---     │
-│ u32     │
-╞═════════╡
-│ 9135381 │
-└─────────┘
+┌────────────┐
+│ cnt        │
+│ ---        │
+│ u32        │
+╞════════════╡
+│ 2924001560 │
+└────────────┘
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/polars_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
-     5     71.2 MiB     71.2 MiB           1   @profile
-     6                                         def normal_test(scale_factor: int):
-     7    371.7 MiB     83.7 MiB           3       df = pl.SQLContext().execute(
-     8     71.3 MiB      0.0 MiB           2           f"""
-     9                                                 SELECT COUNT(*) AS count
-    10     71.2 MiB      0.0 MiB           1           FROM read_parquet('tpc/lineitem_{scale_factor}.parquet')
-    11                                                 WHERE l_shipdate >= '1994-01-01'
-    12                                                   AND l_shipdate <  '1995-01-01'
-    13                                                   AND l_discount BETWEEN 0.05 AND 0.07
-    14                                                   AND l_quantity < 24
-    15                                                 """,
-    16     71.3 MiB      0.0 MiB           1           eager=False
-    17    371.7 MiB    216.7 MiB           1       ).collect(engine="streaming")
-    18    371.9 MiB      0.2 MiB           1       print(df)
+    22     71.0 MiB     71.0 MiB           1   @profile
+    23                                         def stress_test(scale_factors: List[int]):
+    24     71.0 MiB      0.0 MiB           3       union_query = " UNION ALL ".join([
+    25     71.0 MiB      0.0 MiB          42           f"SELECT * FROM read_parquet('tpc/lineitem_{sf}.parquet')" for sf in scale_factors
+    26                                             ])
+    27  15364.3 MiB  11130.7 MiB           3       df = pl.SQLContext().execute(
+    28     71.0 MiB      0.0 MiB           2           f"""
+    29                                                 SELECT COUNT(*) AS cnt
+    30     71.0 MiB      0.0 MiB           1           FROM ({union_query}) AS all_lineitems
+    31                                                 WHERE l_shipdate >= DATE '1994-01-01'
+    32                                                   AND l_shipdate <  DATE '1995-01-01'
+    33                                                   AND l_discount BETWEEN 0.05 AND 0.07
+    34                                                   AND l_quantity < 24;
+    35                                                 """,
+    36     71.0 MiB      0.0 MiB           1           eager=False
+    37  15364.2 MiB   4162.6 MiB           1       ).collect(engine="streaming")
+    38  15365.2 MiB      0.8 MiB           1       print(df)
 
 
-Memory = 300.77 MB, Time = 1.27 s
+Memory = 15295.27 MB, Time = 501.13 s

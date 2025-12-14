@@ -4,18 +4,13 @@ import time
 import sys
 import os
 from typing import Any, List
-
-from polars import String
-
 import duckdb_olap
 import polars_olap
 
-# === Constants ===
 LOG_DIR = "results"
 LOG_FILE = os.path.join(LOG_DIR, "benchmark_log.txt")
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# === Logger ===
 class Logger:
     def __init__(self, filename: str):
         self.terminal = sys.stdout
@@ -52,7 +47,7 @@ def benchmark(tool: Any, test: str, factor, factors: List[int]) -> None:
 def main():
     parser = argparse.ArgumentParser(description="Run a benchmark on a selected tool and function.")
     parser.add_argument("--tool", choices=["duckdb", "polars"], required=True)
-    parser.add_argument("--test", choices=["normal", "stress"], default="normal")
+    parser.add_argument("--test", choices=["normal", "stress-big", "stress-small"], default="normal")
     parser.add_argument("--factor", type=int)
     parser.add_argument("--factors", nargs="+", type=int)
     args = parser.parse_args()
@@ -61,9 +56,15 @@ def main():
         "duckdb": duckdb_olap,
         "polars": polars_olap,
     }
+    test_map = {
+        "normal": "normal",
+        "stress-big": "stress",
+        "stress-small": "stress"
+    }
 
     tool = tool_map[args.tool]
-    benchmark(tool, args.test, args.factor, args.factors)
+    test = test_map[args.test]
+    benchmark(tool, test, args.factor, args.factors)
 
 if __name__ == "__main__":
     main()
