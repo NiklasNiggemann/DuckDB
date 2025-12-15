@@ -142,7 +142,7 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
     elif test == "stress-big":
         factor = 640
         memories, times, row_counts, sizes, scales = [], [], [], [], []
-        for num_tables in range(10, 100, 10):
+        for num_tables in (10, 20, 40, 60):
             factors = [factor] * num_tables
             print("\n------------------------------------------------\n")
             print(f"[STRESS-BIG] Reading {num_tables} tables for this run...")
@@ -162,7 +162,7 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
     else:
         factor = 10
         memories, times, row_counts, sizes, scales = [], [], [], [], []
-        for num_tables in range(100, 900, 100):
+        for num_tables in (685, 1370, 2740, 4110):
             factors = [factor] * num_tables
             print("\n------------------------------------------------\n")
             print(f"[STRESS-SMALL] Reading {num_tables} tables for this run...")

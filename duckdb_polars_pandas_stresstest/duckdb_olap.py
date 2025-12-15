@@ -17,12 +17,27 @@ def normal_test(scale_factor: int):
     """
     print(con.sql(query).pl())
 
+def normal_test_analysis(scale_factor: int):
+    con = duckdb.connect()
+    parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    result = con.execute(f"""
+    EXPLAIN ANALYZE 
+    SELECT COUNT(*) AS cnt
+    FROM '{parquet_path}'
+    WHERE l_shipdate >= DATE '1994-01-01'
+      AND l_shipdate <  DATE '1995-01-01'
+      AND l_discount BETWEEN 0.05 AND 0.07
+      AND l_quantity < 24;
+    """).fetchall()
+
+
 @profile
 def stress_test(scale_factors: List[int]):
     con = duckdb.connect()
     union_query = " UNION ALL ".join([
         f"SELECT * FROM 'tpc/lineitem_{sf}.parquet'" for sf in scale_factors
     ])
+    con.execute(f"SET max_expression_depth TO 10000")
     query = f"""
     SELECT COUNT(*) AS cnt
     FROM ({union_query}) AS all_lineitems
@@ -33,3 +48,4 @@ def stress_test(scale_factors: List[int]):
     """
     print(con.sql(query).pl())
 
+normal_test_analysis(10)
