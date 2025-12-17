@@ -10,20 +10,24 @@ The benchmark is designed to reveal differences in I/O throughput, memory manage
 
 ### Normal-Test (2 GB to 140 GB Tables) 
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_normal_memory.png?ref_type=heads) 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_normal_time.png?ref_type=heads) 
+![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_normal_memory.png) 
+![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_normal_time.png) 
 
 ### Stress-Test (10x to 100x 140 GB Tables) 
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_memory.png?ref_type=heads) 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_time.png?ref_type=heads) 
+![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_memory.png) 
+![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_time.png) 
 
+Polars has to be re-run, because: 
 `pyo3_runtime.PanicException: Polars' maximum length reached. Consider installing 'polars[rt64]'.: TryFromIntError(())`
 
 ###  Stress-Test (100x to 1000x 2 GB Tables) 
 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_memory.png?ref_type=heads) 
-![](https://gitlab.codecentric.de/data_ml_ai/duckdb-motherduck-lab/-/raw/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_time.png?ref_type=heads) 
+Polars has to be re-run, because: 
+`pyo3_runtime.PanicException: Polars' maximum length reached. Consider installing 'polars[rt64]'.: TryFromIntError(())`
+
+![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_memory.png) 
+![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_time.png) 
 
 ## Contributing
 
