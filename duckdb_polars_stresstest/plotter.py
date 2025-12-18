@@ -199,6 +199,66 @@ def plot_scatter_with_trend(
 
     return fig, ax
 
+def plot_facet_by_test(
+    df: pd.DataFrame,
+    y_axis: str = "memory_mb",
+    save_path: Optional[str] = None,
+    marker_size: int = DEFAULT_MARKER_SIZE,
+    palette_name: str = "colorblind",
+):
+    import matplotlib.ticker as mticker
+
+    y_axis = _validate_y_axis(y_axis)
+    df = _ensure_numeric(df)
+    if "test" not in df.columns:
+        raise ValueError("Dataframe must have a 'test' column for faceting.")
+
+    tests = sorted(df["test"].unique())
+    n_tests = len(tests)
+    fig, axes = plt.subplots(1, n_tests, figsize=(7 * n_tests, 6), sharey=True)
+    if n_tests == 1:
+        axes = [axes]
+    color_map = _build_color_map(df, palette_name=palette_name)
+
+    for ax, test in zip(axes, tests):
+        subdf = df[df["test"] == test]
+        for tool in sorted(subdf["tool"].unique()):
+            tool_df = subdf[subdf["tool"] == tool].sort_values("row_count")
+            ax.scatter(
+                tool_df["row_count"],
+                tool_df[y_axis],
+                s=marker_size,
+                c=[color_map.get(tool, (0.5, 0.5, 0.5))],
+                label=tool,
+                alpha=0.7,
+                edgecolor="black",
+                linewidths=0.5,
+            )
+            ax.plot(
+                tool_df["row_count"],
+                tool_df[y_axis],
+                color=color_map.get(tool, (0.5, 0.5, 0.5)),
+                lw=2,
+                linestyle="-",
+                alpha=0.5,
+            )
+        ax.set_title(test.capitalize())
+        ax.set_xlabel("Rows")
+        ax.set_xscale("log")
+        ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{int(x):,}" if x > 0 else "0"))
+        ax.grid(True, axis="both", which="major", linestyle="--", alpha=0.3)
+        ax.legend(title="Tool", loc="best")
+
+    axes[0].set_ylabel("Memory Usage (MB)" if y_axis == "memory_mb" else "Execution Time (s)")
+    fig.suptitle("Benchmark Comparison by Test Type", fontsize=16)
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
+
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        print(f"Facet plot saved to {save_path}")
+
+    return fig, axes
+
 def plot_benchmark(csv_files: Iterable[str], y_axis: str = "memory_mb", **plot_kwargs) -> Tuple[plt.Figure, plt.Axes]:
     df = load_and_concat_csvs(csv_files)
     return plot_scatter_with_trend(df, y_axis=y_axis, **plot_kwargs)

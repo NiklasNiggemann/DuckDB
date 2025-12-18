@@ -4,7 +4,6 @@ import csv
 import subprocess
 import statistics
 import argparse
-from logging import exception
 from typing import List, Tuple, Optional, Any
 import duckdb
 import plotter
@@ -59,12 +58,12 @@ def summarize(label: str, values: List[float]) -> None:
     print(f"Span:   {max(values) - min(values):.2f}")
     print("\n------------------------------------------------")
 
-def export_results_csv(filename: str, tool: str, scale_factors: List[int], memories: List[float], times: List[float], row_counts: List[int], sizes: List[float], tables: int = 1) -> None:
+def export_results_csv(filename: str, tool: str, scale_factors: List[int], memories: List[float], times: List[float], row_counts: List[int], sizes: List[float], test: str, tables: int = 1) -> None:
     with open(filename, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["tool", "scale_factor", "memory_mb", "time_s", "row_count", "dataset_size_mb"])
+        writer.writerow(["tool", "test", "scale_factor", "memory_mb", "time_s", "row_count", "dataset_size_mb"])
         for scale, mem, t, rc, sz in zip(scale_factors, memories, times, row_counts, sizes):
-            writer.writerow([tool, scale, mem, t, rc, sz])
+            writer.writerow([tool, test, scale, mem, t, rc, sz])
 
 def get_row_count_and_size(parquet_path: str) -> Tuple[int, float]:
     try:
@@ -116,8 +115,8 @@ def benchmark(tool: str, test: str, factor: Any) -> Optional[Tuple[float, float,
             if test == "multiple":
                 parquet_path = "tpc/lineitem_10.parquet"
                 rc, sz = get_row_count_and_size(parquet_path)
-                total_rows = rc * factor
-                total_size = sz * factor
+                total_rows = rc
+                total_size = sz
                 return mem, t, total_rows, total_size, factor
             else:
                 parquet_path = f"tpc/lineitem_{factor if not isinstance(factor, list) else factor[0]}.parquet"
@@ -152,7 +151,7 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
         for num_tables in (2, 4, 6, 8):
             factors = [factor] * num_tables
             print("\n------------------------------------------------\n")
-            print(f"[STRESS] Reading {num_tables} tables (ca. {num_tables * 140} GB) as one file...")
+            print(f"[STRESS] Reading {num_tables} tables with ca. {num_tables * 140} GB ...")
             result = benchmark(tool, test, factors)
             if result:
                 mem, t, rc, sz, scale = result
@@ -186,13 +185,13 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
                 break
     summarize("Elapsed Time (s)", times)
     summarize("Memory Used (MB)", memories)
-    export_results_csv(f"results/{tool}_{test}.csv", tool, scales, memories, times, row_counts, sizes)
+    export_results_csv(f"results/{tool}_{test}.csv", tool, scales, memories, times, row_counts, sizes, test)
     return memories, times
 
 def main():
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing tools.")
     parser.add_argument("--tool", choices=["all", "duckdb", "polars"], default="all")
-    parser.add_argument("--test", choices=["all", "normal", "stress", "multiple"], default="normal")
+    parser.add_argument("--test", choices=["all", "normal", "stress", "multiple"], default="all")
     args = parser.parse_args()
 
     tool_map = {
@@ -239,11 +238,11 @@ def main():
                         all_csvs.append(csv_path)
             if all_csvs:
                 df = plotter.load_and_concat_csvs(all_csvs)
-                plotter.plot_scatter_with_trend(df, y_axis="memory_mb", save_path=f"results/all_tools_all_tests_memory.png")
-                plotter.plot_scatter_with_trend(df, y_axis="time_s", save_path=f"results/all_tools_all_tests_time.png")
+                plotter.plot_facet_by_test(df, y_axis="memory_mb",
+                                           save_path=f"results/all_tools_all_tests_memory_facet.png")
+                plotter.plot_facet_by_test(df, y_axis="time_s", save_path=f"results/all_tools_all_tests_time_facet.png")
             else:
-                print("[SKIP] No data for combined plot")
-
+                print("[SKIP] No data for combined facet plot")
 
 if __name__ == "__main__":
     main()
