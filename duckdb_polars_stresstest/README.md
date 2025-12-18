@@ -13,21 +13,15 @@ The benchmark is designed to reveal differences in I/O throughput, memory manage
 ![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_normal_memory.png) 
 ![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_normal_time.png) 
 
-### Stress-Test (10x to 100x 140 GB Tables) 
-
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_memory.png) 
-![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_time.png) 
-
-Polars has to be re-run, because: 
-`pyo3_runtime.PanicException: Polars' maximum length reached. Consider installing 'polars[rt64]'.: TryFromIntError(())`
-
-###  Stress-Test (100x to 1000x 2 GB Tables) 
-
-Polars has to be re-run, because: 
-`pyo3_runtime.PanicException: Polars' maximum length reached. Consider installing 'polars[rt64]'.: TryFromIntError(())`
+###  Stress-Test (2x, 4x, 9x, 18x, 36x, 72x 2 GB Tables) 
 
 ![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_memory.png) 
 ![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-small_time.png) 
+
+### Stress-Test (2x, 4x, 6x, 8x 140 GB tables as one file) 
+
+![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_memory.png) 
+![](https://raw.githubusercontent.com/NiklasNiggemann/DuckDB/refs/heads/main/duckdb_polars_pandas_stresstest/results/polars_duckdb_stress-big_time.png) 
 
 ## Contributing
 
