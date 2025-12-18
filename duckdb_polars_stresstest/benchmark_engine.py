@@ -29,12 +29,14 @@ def get_memory_usage_mb() -> float:
     process = psutil.Process(os.getpid())
     return process.memory_info().rss / (1024 * 1024)
 
-def benchmark(tool: Any, test: str, factor, factors: List[int]) -> None:
+def benchmark(tool: Any, test: str, factor, factors: List[int], num_files: int) -> None:
     start = time.perf_counter()
     mem_before = get_memory_usage_mb()
     try:
         if test == "stress":
             tool.stress_test(factors)
+        elif test == "multiple":
+            tool.multiple_test(num_files)
         else:
             tool.normal_test(factor)
     except Exception as e:
@@ -47,24 +49,19 @@ def benchmark(tool: Any, test: str, factor, factors: List[int]) -> None:
 def main():
     parser = argparse.ArgumentParser(description="Run a benchmark on a selected tool and function.")
     parser.add_argument("--tool", choices=["duckdb", "polars"], required=True)
-    parser.add_argument("--test", choices=["normal", "stress-big", "stress-small"], default="normal")
+    parser.add_argument("--test", choices=["normal", "stress", "multiple"], default="normal")
     parser.add_argument("--factor", type=int)
     parser.add_argument("--factors", nargs="+", type=int)
+    parser.add_argument("--num_files", type=int)
     args = parser.parse_args()
 
     tool_map = {
         "duckdb": duckdb_olap,
         "polars": polars_olap,
     }
-    test_map = {
-        "normal": "normal",
-        "stress-big": "stress",
-        "stress-small": "stress"
-    }
 
     tool = tool_map[args.tool]
-    test = test_map[args.test]
-    benchmark(tool, test, args.factor, args.factors)
+    benchmark(tool, args.test, args.factor, args.factors, args.num_files)
 
 if __name__ == "__main__":
     main()

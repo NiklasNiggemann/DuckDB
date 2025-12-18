@@ -100,10 +100,10 @@ def benchmark(tool: str, test: str, factor: Any) -> Optional[Tuple[float, float,
         '--tool', tool,
         '--test', test,
     ]
-    if test == "stress-big" and isinstance(factor, list):
+    if test == "stress":
         args += ['--factors'] + [str(f) for f in factor]
-    elif test == "stress-small" and isinstance(factor, list):
-        args += ['--factors'] + [str(f) for f in factor]
+    elif test == "multiple":
+        args += ['--num_files', str(factor)]
     else:
         args += ['--factor', str(factor)]
     try:
@@ -113,9 +113,16 @@ def benchmark(tool: str, test: str, factor: Any) -> Optional[Tuple[float, float,
         parsed = parse_output(run_output)
         if parsed:
             mem, t = parsed[0]
-            parquet_path = f"tpc/lineitem_{factor if not isinstance(factor, list) else factor[0]}.parquet"
-            rc, sz = get_row_count_and_size(parquet_path)
-            return mem, t, rc, sz, factor
+            if test == "multiple":
+                parquet_path = "tpc/lineitem_10.parquet"
+                rc, sz = get_row_count_and_size(parquet_path)
+                total_rows = rc * factor
+                total_size = sz * factor
+                return mem, t, total_rows, total_size, factor
+            else:
+                parquet_path = f"tpc/lineitem_{factor if not isinstance(factor, list) else factor[0]}.parquet"
+                rc, sz = get_row_count_and_size(parquet_path)
+                return mem, t, rc, sz, factor
         else:
             print("Warning: Could not parse output!")
     except subprocess.CalledProcessError as e:
@@ -130,7 +137,7 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
         scale_factors = [10, 20, 40, 80, 160, 320, 640]
         for factor in scale_factors:
             print("\n------------------------------------------------\n")
-            print(f"[NORMAL] Reading a table with factor {factor} for this run...")
+            print(f"[NORMAL] Reading a table with ca. {factor * 0.22} GB ...")
             result = benchmark(tool, test, factor)
             if result:
                 mem, t, rc, sz, scale = result
@@ -139,13 +146,13 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
                 row_counts.append(rc)
                 sizes.append(sz)
                 scales.append(scale)
-    elif test == "stress-big":
+    elif test == "stress":
         factor = 640
         memories, times, row_counts, sizes, scales = [], [], [], [], []
-        for num_tables in (10, 20, 40, 60):
+        for num_tables in (2, 4, 6, 8):
             factors = [factor] * num_tables
             print("\n------------------------------------------------\n")
-            print(f"[STRESS-BIG] Reading {num_tables} tables for this run...")
+            print(f"[STRESS] Reading {num_tables} tables (ca. {num_tables * 140} GB) as one file...")
             result = benchmark(tool, test, factors)
             if result:
                 mem, t, rc, sz, scale = result
@@ -160,22 +167,20 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
                 print("Warning: Could not parse output!")
                 break
     else:
-        factor = 10
         memories, times, row_counts, sizes, scales = [], [], [], [], []
-        for num_tables in (685, 1370, 2740, 4110):
-            factors = [factor] * num_tables
+        for num_files in (2, 4, 9, 18, 36, 72):
             print("\n------------------------------------------------\n")
-            print(f"[STRESS-SMALL] Reading {num_tables} tables for this run...")
-            result = benchmark(tool, test, factors)
+            print(f"[MULTIPLE] Reading {num_files} files (ca. {num_files * 2} GB total)...")
+            result = benchmark(tool, test, num_files)
             if result:
                 mem, t, rc, sz, scale = result
-                total_rows = rc * num_tables
-                total_size = sz * num_tables
+                total_rows = rc * num_files
+                total_size = sz * num_files
                 memories.append(mem)
                 times.append(t)
                 row_counts.append(total_rows)
                 sizes.append(total_size)
-                scales.append(num_tables)
+                scales.append(num_files)
             else:
                 print("Warning: Could not parse output!")
                 break
@@ -187,7 +192,7 @@ def run_benchmark(tool: str, test: str) -> Tuple[List[float], List[float]]:
 def main():
     parser = argparse.ArgumentParser(description="Benchmark runner for data processing tools.")
     parser.add_argument("--tool", choices=["all", "duckdb", "polars"], default="all")
-    parser.add_argument("--test", choices=["normal", "stress-big", "stress-small"], default="normal")
+    parser.add_argument("--test", choices=["all", "normal", "stress", "multiple"], default="normal")
     args = parser.parse_args()
 
     tool_map = {
@@ -195,23 +200,50 @@ def main():
         "duckdb": ["duckdb"],
         "polars": ["polars"],
     }
+    test_map = {
+        "all": ["normal", "stress", "multiple"],
+        "normal": ["normal"],
+        "stress": ["stress"],
+        "multiple": ["multiple"],
+    }
+
     tools = tool_map[args.tool]
+    tests = test_map[args.test]
 
     print("\n=== Phase 1: Running benchmarks ===")
     for tool in tools:
-        print(f"\n[START] {tool}")
-        run_benchmark(tool, args.test)
+        for test in tests:
+            print(f"\n[START] {tool} - {test}")
+            run_benchmark(tool, test)
 
     print("\n=== Phase 2: Plotting figures (saving to disk) ===")
     with suppress_matplotlib_show():
-        csv_files = [f"results/{tool}_{args.test}.csv" for tool in tools]
-        existing = [p for p in csv_files if csv_has_data(p)]
-        if existing:
-            df = plotter.load_and_concat_csvs(existing)
-            plotter.plot_scatter_with_trend(df, y_axis="memory_mb", save_path=f"results/{'_'.join(tools)}_{args.test}_memory.png")
-            plotter.plot_scatter_with_trend(df, y_axis="time_s", save_path=f"results/{'_'.join(tools)}_{args.test}_time.png")
-        else:
-            print(f"[SKIP] No data")
+        # Plot each test separately
+        for test in tests:
+            csv_files = [f"results/{tool}_{test}.csv" for tool in tools]
+            existing = [p for p in csv_files if csv_has_data(p)]
+            if existing:
+                df = plotter.load_and_concat_csvs(existing)
+                plotter.plot_scatter_with_trend(df, y_axis="memory_mb", save_path=f"results/{'_'.join(tools)}_{test}_memory.png")
+                plotter.plot_scatter_with_trend(df, y_axis="time_s", save_path=f"results/{'_'.join(tools)}_{test}_time.png")
+            else:
+                print(f"[SKIP] No data for test {test}")
+
+        # Plot all results together if --test all
+        if args.test == "all":
+            all_csvs = []
+            for tool in tools:
+                for test in test_map["all"]:
+                    csv_path = f"results/{tool}_{test}.csv"
+                    if csv_has_data(csv_path):
+                        all_csvs.append(csv_path)
+            if all_csvs:
+                df = plotter.load_and_concat_csvs(all_csvs)
+                plotter.plot_scatter_with_trend(df, y_axis="memory_mb", save_path=f"results/all_tools_all_tests_memory.png")
+                plotter.plot_scatter_with_trend(df, y_axis="time_s", save_path=f"results/all_tools_all_tests_time.png")
+            else:
+                print("[SKIP] No data for combined plot")
+
 
 if __name__ == "__main__":
     main()
