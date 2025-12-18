@@ -1,0 +1,33 @@
+
+=== Phase 1: Running benchmarks ===
+
+[START] duckdb
+
+------------------------------------------------
+
+[NORMAL] Reading a table with factor 10 for this run...
+
+------------------------------------------------
+
+Traceback (most recent call last):
+  File "/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/benchmark.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/benchmark.py", line 203, in main
+    run_benchmark(tool, args.test)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/benchmark.py", line 134, in run_benchmark
+    result = benchmark(tool, test, factor)
+  File "/Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_pandas_stresstest/benchmark.py", line 110, in benchmark
+    result = subprocess.check_output(args, stderr=subprocess.STDOUT)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 472, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.0_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1207, in communicate
+    stdout = self.stdout.read()
+KeyboardInterrupt

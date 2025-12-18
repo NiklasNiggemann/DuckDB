@@ -37,3 +37,4 @@ def stress_test(scale_factors: List[int]):
         .collect(engine="streaming")
     )
     print(df)
+
