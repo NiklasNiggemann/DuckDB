@@ -65,16 +65,38 @@ def _validate_y_axis(y_axis: str) -> str:
         raise ValueError(f"y_axis must be one of {valid}, got {y_axis!r}")
     return y_axis
 
+def get_unique_row_ticks(df: pd.DataFrame, n_ticks: int = 8) -> List[float]:
+    # Prefer "normal" test if available
+    if "test" in df.columns and "normal" in df["test"].unique():
+        df_for_ticks = df[df["test"] == "normal"]
+    else:
+        df_for_ticks = df
+
+    unique_rows = df_for_ticks["row_count"].drop_duplicates().sort_values().to_numpy()
+    if len(unique_rows) == 0:
+        raise ValueError("No valid row_count values to place ticks.")
+
+    step = max(1, len(unique_rows) // n_ticks)
+    tick_idx = list(range(0, len(unique_rows), step))
+    row_ticks = unique_rows[tick_idx].tolist()
+    return row_ticks
+
 def _format_rows_ticks(ax: plt.Axes, ticks: List[float]) -> None:
     ax.set_xticks(ticks)
     ax.set_xticklabels([f"{int(x):,}" for x in ticks], rotation=0, ha="center", fontsize=11)
 
 def _add_secondary_top_axis_dataset_size(ax: plt.Axes, df: pd.DataFrame, ticks: List[float]) -> None:
+    if "test" in df.columns and "normal" in df["test"].unique():
+        df_for_labels = df[df["test"] == "normal"]
+    else:
+        df_for_labels = df
+
     size_by_rows = (
-        df.groupby("row_count", as_index=True)["dataset_size_mb"]
+        df_for_labels.groupby("row_count", as_index=True)["dataset_size_mb"]
         .median()
         .sort_index()
     )
+
     top_ax = ax.secondary_xaxis("top")
     top_ax.set_xlim(ax.get_xlim())
     labels = []
@@ -113,7 +135,6 @@ def plot_scatter_with_trend(
 
     for tool in sorted(df["tool"].unique()):
         sub = df[df["tool"] == tool].sort_values("row_count")
-        # Scatter plot (all points)
         ax.scatter(
             sub["row_count"],
             sub[y_axis],
@@ -125,7 +146,6 @@ def plot_scatter_with_trend(
             linewidths=0.5,
         )
 
-        # Line connecting all points (sorted by row_count)
         ax.plot(
             sub["row_count"],
             sub[y_axis],
@@ -135,11 +155,10 @@ def plot_scatter_with_trend(
             alpha=0.5,
         )
 
-    # Optional annotations
     if annotate_points:
         for _, row in df.iterrows():
             ax.annotate(
-                f"{row[y_axis]}",  # no rounding
+                f"{row[y_axis]}",
                 (row["row_count"], row[y_axis]),
                 textcoords="offset points",
                 xytext=(0, 10),
@@ -148,7 +167,6 @@ def plot_scatter_with_trend(
                 bbox=dict(boxstyle="round,pad=0.2", fc="white", alpha=0.7, ec="none"),
             )
 
-    # X-axis label and scale
     ax.set_xlabel("Rows")
     if log_x:
         ax.set_xscale("log")
@@ -160,18 +178,14 @@ def plot_scatter_with_trend(
     ax.set_title(title or ("Memory Usage" if y_axis == "memory_mb" else "Execution Time"))
     ax.legend(title="Tool", loc="best")
 
-    # Choose representative X ticks from available row_count values
     unique_rows = df[["row_count", "dataset_size_mb"]].drop_duplicates(subset=["row_count"]).sort_values("row_count")
     row_counts = unique_rows["row_count"].to_numpy()
     if len(row_counts) == 0:
         raise ValueError("No valid row_count values to place ticks.")
 
-    step = max(1, len(row_counts) // 8)
-    tick_idx = list(range(0, len(row_counts), step))
-    row_ticks = row_counts[tick_idx].tolist()
+    row_ticks = get_unique_row_ticks(df, n_ticks=8)
     _format_rows_ticks(ax, row_ticks)
 
-    # Y ticks: only at actual data values (sampled to a reasonable max)
     y_values = sorted(df[y_axis].unique())
     if len(y_values) > max_y_ticks:
         idx = [int(i) for i in np.linspace(0, len(y_values) - 1, max_y_ticks)]
@@ -188,7 +202,6 @@ def plot_scatter_with_trend(
 
     ax.grid(True, axis="both", which="major", linestyle="--", alpha=0.3)
 
-    # Secondary top axis for dataset size (GB)
     _add_secondary_top_axis_dataset_size(ax, df, row_ticks)
 
     fig.tight_layout()
@@ -196,6 +209,132 @@ def plot_scatter_with_trend(
     if save_path:
         fig.savefig(save_path, dpi=150, bbox_inches="tight")
         print(f"Plot saved to {save_path}")
+
+    return fig, ax
+
+def plot_overlay_normal_stress(
+    df: pd.DataFrame,
+    y_axis: str = "memory_mb",
+    title: Optional[str] = None,
+    log_x: bool = True,
+    save_path: Optional[str] = None,
+    annotate_points: bool = True,
+    marker_size: int = DEFAULT_MARKER_SIZE,
+    palette_name: str = "colorblind",
+    max_y_ticks: int = 12,
+) -> Tuple[plt.Figure, plt.Axes]:
+    import matplotlib.ticker as mticker
+
+    y_axis = _validate_y_axis(y_axis)
+    df = _ensure_numeric(df)
+
+    if df.empty:
+        raise ValueError("Dataframe is empty after cleaning.")
+
+    color_map = _build_color_map(df, palette_name=palette_name)
+    linestyle_map = {
+        "normal": "-",
+        "stress-small": ":",
+    }
+
+    fig, ax = plt.subplots(figsize=(12, 8))
+
+    for tool in sorted(df["tool"].unique()):
+        for test in ["normal", "stress-small"]:
+            sub = df[(df["tool"] == tool) & (df["test"] == test)].sort_values("row_count")
+            if sub.empty:
+                continue
+            ax.scatter(
+                sub["row_count"],
+                sub[y_axis],
+                s=marker_size,
+                c=[color_map.get(tool, (0.5, 0.5, 0.5))],
+                label=f"{tool} {test}" if test == "normal" else f"{tool} {test}",
+                alpha=0.7,
+                edgecolor="black",
+                linewidths=0.5,
+                marker="o" if test == "normal" else "D",
+            )
+            ax.plot(
+                sub["row_count"],
+                sub[y_axis],
+                color=color_map.get(tool, (0.5, 0.5, 0.5)),
+                lw=2,
+                linestyle=linestyle_map.get(test, "-"),
+                alpha=0.7,
+                label=None,
+            )
+
+    if annotate_points:
+        for _, row in df.iterrows():
+            ax.annotate(
+                f"{row[y_axis]}",
+                (row["row_count"], row[y_axis]),
+                textcoords="offset points",
+                xytext=(0, 10),
+                ha="center",
+                fontsize=9,
+                bbox=dict(boxstyle="round,pad=0.2", fc="white", alpha=0.7, ec="none"),
+            )
+
+    ax.set_xlabel("Rows")
+    if log_x:
+        ax.set_xscale("log")
+        ax.xaxis.set_major_formatter(mticker.FuncFormatter(lambda x, _: f"{int(x):,}" if x > 0 else "0"))
+    else:
+        ax.xaxis.set_major_formatter(mticker.StrMethodFormatter("{x:,}"))
+
+    ax.set_ylabel("Memory Usage (MB)" if y_axis == "memory_mb" else "Execution Time (s)")
+    ax.set_title(title or ("Memory Usage" if y_axis == "memory_mb" else "Execution Time"))
+    ax.legend(title="Tool", loc="best")
+
+    if "test" in df.columns and "normal" in df["test"].unique():
+        normal_rows = (
+            df[df["test"] == "normal"][["row_count", "dataset_size_mb"]]
+            .drop_duplicates(subset=["row_count"])
+            .sort_values("row_count")
+        )
+        row_counts = normal_rows["row_count"].to_numpy()
+    else:
+        # fallback: use all
+        unique_rows = df[["row_count", "dataset_size_mb"]].drop_duplicates(subset=["row_count"]).sort_values(
+            "row_count")
+        row_counts = unique_rows["row_count"].to_numpy()
+
+    step = max(1, len(row_counts) // 8)
+    tick_idx = list(range(0, len(row_counts), step))
+    row_ticks = row_counts[tick_idx].tolist()
+    _format_rows_ticks(ax, row_ticks)
+
+    y_values = sorted(df[y_axis].unique())
+    if len(y_values) > max_y_ticks:
+        idx = [int(i) for i in np.linspace(0, len(y_values) - 1, max_y_ticks)]
+        y_ticks = [y_values[i] for i in idx]
+    else:
+        y_ticks = y_values
+
+    ax.set_yticks(y_ticks)
+    ax.yaxis.set_major_locator(mticker.MaxNLocator(nbins=max_y_ticks, integer=False, prune=None))
+    if y_axis == "memory_mb":
+        ax.yaxis.set_major_formatter(mticker.FormatStrFormatter("%.1f"))
+    else:
+        ax.yaxis.set_major_formatter(mticker.FormatStrFormatter("%.2f"))
+
+    ax.grid(True, axis="both", which="major", linestyle="--", alpha=0.3)
+
+    _add_secondary_top_axis_dataset_size(ax, df, row_ticks)
+
+    fig.tight_layout()
+
+    # Only show unique legend entries
+    handles, labels = ax.get_legend_handles_labels()
+    by_label = dict(zip(labels, handles))
+    ax.legend(by_label.values(), by_label.keys(), title="Tool/Test", loc="best")
+
+    fig.tight_layout()
+    if save_path:
+        fig.savefig(save_path, dpi=150, bbox_inches="tight")
+        print(f"Overlay plot saved to {save_path}")
 
     return fig, ax
 

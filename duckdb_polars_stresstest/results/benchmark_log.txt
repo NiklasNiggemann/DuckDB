@@ -1,72 +1,1640 @@
 
 === Phase 1: Running benchmarks ===
 
-[START] polars - stress
+[START] polars - normal
 
 ------------------------------------------------
 
-[STRESS] Reading 2 tables with ca. 280 GB ...
+[NORMAL] Reading a table with ca. 2.2 GB ...
 
 ------------------------------------------------
 
-146200078
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.3 MiB     71.3 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    190.6 MiB    119.2 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 119.34 MB, Time = 0.14 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    206.6 MiB    135.5 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 135.62 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    193.7 MiB    122.7 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 122.81 MB, Time = 0.08 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.5 MiB     71.5 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.5 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    208.4 MiB    137.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 137.06 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.8 MiB     70.8 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    201.0 MiB    130.2 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 130.36 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.7 MiB     70.7 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.7 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    199.6 MiB    128.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 128.95 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    203.5 MiB    132.4 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 132.47 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.7 MiB     70.7 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.7 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    200.7 MiB    130.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 130.11 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    206.0 MiB    134.9 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 135.00 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.6 MiB     70.6 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.6 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    196.4 MiB    125.9 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 125.98 MB, Time = 0.09 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 4.4 GB ...
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.3 MiB     71.3 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    217.6 MiB    146.3 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 146.39 MB, Time = 0.21 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    221.0 MiB    149.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 149.92 MB, Time = 0.17 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.8 MiB     70.8 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    211.3 MiB    140.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 140.67 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.9 MiB     70.9 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    224.0 MiB    153.2 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 153.27 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.8 MiB     70.8 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    227.8 MiB    157.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 157.11 MB, Time = 0.19 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.3 MiB     71.3 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    219.9 MiB    148.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 148.73 MB, Time = 0.16 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    217.9 MiB    146.9 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 147.05 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    221.8 MiB    150.7 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 150.78 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.7 MiB     70.7 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.7 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    219.3 MiB    148.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 148.77 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.8 MiB     70.8 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    215.8 MiB    145.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 145.12 MB, Time = 0.15 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 8.8 GB ...
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    245.9 MiB    174.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 174.95 MB, Time = 0.31 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    251.8 MiB    180.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 180.73 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    371.2 MiB    300.2 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 282.50 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.3 MiB     71.3 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    426.6 MiB    355.3 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 334.16 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    413.3 MiB    342.3 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 321.11 MB, Time = 0.28 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.3 MiB     71.3 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    363.1 MiB    291.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 270.88 MB, Time = 0.28 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.8 MiB     70.8 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    343.1 MiB    272.3 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 246.78 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    336.7 MiB    265.5 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 244.36 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    355.6 MiB    284.5 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 267.89 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    366.0 MiB    295.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 274.06 MB, Time = 0.29 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 17.6 GB ...
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.3 MiB     71.3 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    272.9 MiB    201.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 201.72 MB, Time = 0.91 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.9 MiB     70.9 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    937.1 MiB    866.2 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 845.42 MB, Time = 0.57 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    312.6 MiB    241.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 241.70 MB, Time = 0.57 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    305.2 MiB    234.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 234.16 MB, Time = 0.57 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    300.5 MiB    229.4 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 229.47 MB, Time = 0.56 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    945.9 MiB    874.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 849.80 MB, Time = 0.55 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    933.1 MiB    862.1 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 844.31 MB, Time = 0.56 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.9 MiB     70.9 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    295.5 MiB    224.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 224.69 MB, Time = 0.56 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    940.8 MiB    869.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 848.89 MB, Time = 0.56 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    301.5 MiB    230.4 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 230.48 MB, Time = 0.56 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 35.2 GB ...
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    358.2 MiB    287.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 287.11 MB, Time = 1.85 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   1829.4 MiB   1758.4 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1733.28 MB, Time = 1.17 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   2068.4 MiB   1997.4 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1976.66 MB, Time = 1.13 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   2034.2 MiB   1963.1 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1942.20 MB, Time = 1.12 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   2060.3 MiB   1989.3 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1968.58 MB, Time = 1.13 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.3 MiB     71.3 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   1955.2 MiB   1883.9 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1863.19 MB, Time = 1.14 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   2039.4 MiB   1968.3 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1947.45 MB, Time = 1.12 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.6 MiB     71.6 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.6 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   2007.9 MiB   1936.3 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1915.61 MB, Time = 1.17 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   1977.8 MiB   1906.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1885.73 MB, Time = 1.12 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   1956.0 MiB   1884.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 1864.06 MB, Time = 1.15 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 70.4 GB ...
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    504.2 MiB    433.2 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 433.30 MB, Time = 3.58 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   3992.8 MiB   3921.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 3896.92 MB, Time = 2.25 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.4 MiB     71.4 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.4 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4168.8 MiB   4097.4 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 4076.91 MB, Time = 2.24 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4210.1 MiB   4139.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 4108.47 MB, Time = 2.25 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4078.0 MiB   4006.9 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 3986.22 MB, Time = 2.27 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4227.9 MiB   4156.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 4136.25 MB, Time = 2.25 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.0 MiB     71.0 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4180.8 MiB   4109.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 4089.36 MB, Time = 2.23 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4133.9 MiB   4062.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 4042.14 MB, Time = 2.23 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4183.9 MiB   4112.7 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 4092.14 MB, Time = 2.24 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.9 MiB     70.9 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4169.0 MiB   4098.1 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 4079.33 MB, Time = 2.22 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 140.8 GB ...
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24    665.9 MiB    594.7 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 595.58 MB, Time = 7.95 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   4431.3 MiB   4360.0 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 4339.45 MB, Time = 4.56 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   8306.2 MiB   8235.1 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 8211.55 MB, Time = 4.48 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   7148.0 MiB   7076.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 7060.34 MB, Time = 4.53 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     70.8 MiB     70.8 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   7778.3 MiB   7707.5 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 7686.98 MB, Time = 4.48 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.2 MiB     71.2 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   7768.9 MiB   7697.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 7678.28 MB, Time = 4.46 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   8073.9 MiB   8002.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 7982.31 MB, Time = 4.49 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.1 MiB     71.1 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   8176.9 MiB   8105.8 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 8085.31 MB, Time = 4.49 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.5 MiB     71.5 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.5 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   7673.1 MiB   7601.6 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 7581.11 MB, Time = 4.53 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    21     71.3 MiB     71.3 MiB           1   @profile
+    22                                         def normal_test(scale_factor: int):
+    23     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    24   7850.0 MiB   7778.7 MiB           1       run_polars_query([parquet_path])
+
+
+Memory = 7757.92 MB, Time = 4.49 s
+
+--- Elapsed Time (s) ---
+Mean:   1.37
+Std:    1.73
+CV:     126.5%
+Min:    0.09
+Max:    4.85
+Span:   4.75
+
+------------------------------------------------
+
+--- Memory Used (MB) ---
+Mean:   1877.68
+Std:    2489.39
+CV:     132.6%
+Min:    129.77
+Max:    6697.88
+Span:   6568.11
+
+------------------------------------------------
+
+[START] polars - stress-small
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 1 files with ca. 2.06 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    186.2 MiB    115.0 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 115.09 MB, Time = 0.14 s
+Run 2 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    208.8 MiB    137.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 137.75 MB, Time = 0.09 s
+Run 3 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    201.2 MiB    130.1 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 130.25 MB, Time = 0.09 s
+Run 4 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    204.1 MiB    132.9 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 133.02 MB, Time = 0.09 s
+Run 5 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    201.3 MiB    130.2 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 130.33 MB, Time = 0.09 s
+Run 6 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    194.0 MiB    122.9 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 123.05 MB, Time = 0.09 s
+Run 7 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    201.7 MiB    130.5 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 130.67 MB, Time = 0.09 s
+Run 8 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    204.2 MiB    133.2 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 133.33 MB, Time = 0.09 s
+Run 9 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    205.1 MiB    133.9 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 134.05 MB, Time = 0.09 s
+Run 10 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.3 MiB     71.3 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.3 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    201.0 MiB    129.8 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 129.88 MB, Time = 0.09 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 2 files with ca. 4.12 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    263.7 MiB    192.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 192.73 MB, Time = 0.15 s
+Run 2 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    248.7 MiB    177.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 177.73 MB, Time = 0.15 s
+Run 3 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    258.8 MiB    187.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 187.72 MB, Time = 0.15 s
+Run 4 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    265.8 MiB    194.8 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 194.91 MB, Time = 0.15 s
+Run 5 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    255.3 MiB    184.3 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 184.39 MB, Time = 0.15 s
+Run 6 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    251.6 MiB    180.5 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 180.64 MB, Time = 0.15 s
+Run 7 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.3 MiB     71.3 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.3 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    269.5 MiB    198.2 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 198.33 MB, Time = 0.15 s
+Run 8 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    251.5 MiB    180.3 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 180.39 MB, Time = 0.15 s
+Run 9 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    259.9 MiB    188.9 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 189.00 MB, Time = 0.15 s
+Run 10 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    254.5 MiB    183.3 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 183.44 MB, Time = 0.15 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 4 files with ca. 8.24 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    379.6 MiB    308.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 308.72 MB, Time = 0.28 s
+Run 2 / 10
+
+------------------------------------------------
+
+4557056
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
     26     71.4 MiB     71.4 MiB           1   @profile
     27                                         def stress_test(scale_factors: List[int]):
-    28     71.4 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
-    29   1307.9 MiB   1236.5 MiB           1       run_polars_query(parquet_files)
+    28     71.4 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    376.5 MiB    305.1 MiB           1       run_polars_query(parquet_files)
 
 
-Memory = 1237.39 MB, Time = 13.39 s
-
-------------------------------------------------
-
-[STRESS] Reading 4 tables with ca. 560 GB ...
+Memory = 305.19 MB, Time = 0.28 s
+Run 3 / 10
 
 ------------------------------------------------
 
-292400156
+4557056
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
-    26     70.6 MiB     70.6 MiB           1   @profile
+    26     71.4 MiB     71.4 MiB           1   @profile
     27                                         def stress_test(scale_factors: List[int]):
-    28     70.6 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
-    29   2301.2 MiB   2230.6 MiB           1       run_polars_query(parquet_files)
+    28     71.4 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    378.6 MiB    307.2 MiB           1       run_polars_query(parquet_files)
 
 
-Memory = 2231.55 MB, Time = 23.17 s
-
-------------------------------------------------
-
-[STRESS] Reading 6 tables with ca. 840 GB ...
+Memory = 307.38 MB, Time = 0.28 s
+Run 4 / 10
 
 ------------------------------------------------
 
-438600234
+4557056
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
-    26     70.9 MiB     70.9 MiB           1   @profile
+    26     71.0 MiB     71.0 MiB           1   @profile
     27                                         def stress_test(scale_factors: List[int]):
-    28     70.9 MiB      0.0 MiB           7       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
-    29   2712.0 MiB   2641.1 MiB           1       run_polars_query(parquet_files)
+    28     71.0 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    386.9 MiB    315.9 MiB           1       run_polars_query(parquet_files)
 
 
-Memory = 2642.02 MB, Time = 31.59 s
-
-------------------------------------------------
-
-[STRESS] Reading 8 tables with ca. 1120 GB ...
+Memory = 316.03 MB, Time = 0.28 s
+Run 5 / 10
 
 ------------------------------------------------
 
-584800312
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    379.8 MiB    308.7 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 308.83 MB, Time = 0.28 s
+Run 6 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     70.7 MiB     70.7 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     70.7 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    378.3 MiB    307.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 307.70 MB, Time = 0.28 s
+Run 7 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    386.4 MiB    315.2 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 315.38 MB, Time = 0.29 s
+Run 8 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    382.8 MiB    311.5 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 311.67 MB, Time = 0.28 s
+Run 9 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    376.3 MiB    305.3 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 305.42 MB, Time = 0.28 s
+Run 10 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    376.3 MiB    305.2 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 305.39 MB, Time = 0.29 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 8 files with ca. 16.48 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    615.2 MiB    544.1 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 544.27 MB, Time = 0.56 s
+Run 2 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    591.8 MiB    520.7 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 520.84 MB, Time = 0.57 s
+Run 3 / 10
+
+------------------------------------------------
+
+9114112
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
@@ -74,40 +1642,1941 @@ Line #    Mem usage    Increment  Occurrences   Line Contents
     26     71.2 MiB     71.2 MiB           1   @profile
     27                                         def stress_test(scale_factors: List[int]):
     28     71.2 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
-    29   2797.7 MiB   2726.5 MiB           1       run_polars_query(parquet_files)
+    29    611.9 MiB    540.7 MiB           1       run_polars_query(parquet_files)
 
 
-Memory = 2727.45 MB, Time = 42.67 s
+Memory = 540.83 MB, Time = 0.55 s
+Run 4 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    602.6 MiB    531.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 531.73 MB, Time = 0.56 s
+Run 5 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     70.9 MiB     70.9 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     70.9 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    604.6 MiB    533.7 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 533.84 MB, Time = 0.55 s
+Run 6 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    599.1 MiB    528.0 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 528.11 MB, Time = 0.54 s
+Run 7 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    603.4 MiB    532.4 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 532.55 MB, Time = 0.54 s
+Run 8 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    612.4 MiB    541.4 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 541.50 MB, Time = 0.56 s
+Run 9 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    624.1 MiB    552.8 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 552.97 MB, Time = 0.54 s
+Run 10 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    594.7 MiB    523.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 523.72 MB, Time = 0.55 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 18 files with ca. 37.08 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    861.9 MiB    790.9 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 791.00 MB, Time = 1.26 s
+Run 2 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    853.7 MiB    782.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 782.66 MB, Time = 1.20 s
+Run 3 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     70.8 MiB     70.8 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     70.8 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    862.2 MiB    791.4 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 791.48 MB, Time = 1.22 s
+Run 4 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    861.8 MiB    790.8 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 790.91 MB, Time = 1.23 s
+Run 5 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    848.9 MiB    777.9 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 777.97 MB, Time = 1.21 s
+Run 6 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    880.9 MiB    809.8 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 809.92 MB, Time = 1.23 s
+Run 7 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    859.1 MiB    788.0 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 788.08 MB, Time = 1.21 s
+Run 8 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    846.7 MiB    775.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 775.75 MB, Time = 1.21 s
+Run 9 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     70.7 MiB     70.7 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     70.7 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    863.4 MiB    792.7 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 792.83 MB, Time = 1.22 s
+Run 10 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     70.9 MiB     70.9 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     70.9 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    840.2 MiB    769.3 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 769.41 MB, Time = 1.19 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 36 files with ca. 74.16 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    956.1 MiB    885.0 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 885.19 MB, Time = 2.35 s
+Run 2 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    978.5 MiB    907.3 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 907.47 MB, Time = 2.38 s
+Run 3 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     70.8 MiB     70.8 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     70.8 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    963.8 MiB    893.0 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 893.16 MB, Time = 2.39 s
+Run 4 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     70.9 MiB     70.9 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     70.9 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    971.0 MiB    900.1 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 900.27 MB, Time = 2.36 s
+Run 5 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    952.7 MiB    881.7 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 881.86 MB, Time = 2.34 s
+Run 6 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.3 MiB     71.3 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.3 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    979.6 MiB    908.4 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 908.48 MB, Time = 2.38 s
+Run 7 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    972.5 MiB    901.4 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 901.53 MB, Time = 2.35 s
+Run 8 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    943.6 MiB    872.4 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 872.56 MB, Time = 2.34 s
+Run 9 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    986.5 MiB    915.4 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 915.52 MB, Time = 2.41 s
+Run 10 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29    968.5 MiB    897.5 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 897.61 MB, Time = 2.38 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 72 files with ca. 148.32 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1090.0 MiB   1018.8 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 1018.88 MB, Time = 4.71 s
+Run 2 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.3 MiB     71.3 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.3 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1021.4 MiB    950.2 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 950.28 MB, Time = 4.64 s
+Run 3 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1048.8 MiB    977.7 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 977.80 MB, Time = 4.85 s
+Run 4 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.3 MiB     71.3 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.3 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1039.5 MiB    968.2 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 968.39 MB, Time = 4.65 s
+Run 5 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1048.2 MiB    977.0 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 977.19 MB, Time = 4.66 s
+Run 6 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1070.0 MiB    998.8 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 999.00 MB, Time = 4.71 s
+Run 7 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.1 MiB     71.1 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.1 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1045.6 MiB    974.5 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 974.58 MB, Time = 4.64 s
+Run 8 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1072.8 MiB   1001.8 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 1001.94 MB, Time = 4.71 s
+Run 9 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.2 MiB     71.2 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.2 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1057.8 MiB    986.7 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 986.80 MB, Time = 4.72 s
+Run 10 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/polars_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    26     71.0 MiB     71.0 MiB           1   @profile
+    27                                         def stress_test(scale_factors: List[int]):
+    28     71.0 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    29   1086.7 MiB   1015.6 MiB           1       run_polars_query(parquet_files)
+
+
+Memory = 1015.77 MB, Time = 4.71 s
 
 --- Elapsed Time (s) ---
-Mean:   27.71
-Std:    12.44
-CV:     44.9%
-Min:    13.39
-Max:    42.67
-Span:   29.28
+Mean:   1.34
+Std:    1.69
+CV:     126.1%
+Min:    0.10
+Max:    4.70
+Span:   4.61
 
 ------------------------------------------------
 
 --- Memory Used (MB) ---
-Mean:   2209.60
-Std:    683.33
-CV:     30.9%
-Min:    1237.39
-Max:    2727.45
-Span:   1490.06
+Mean:   547.33
+Std:    349.71
+CV:     63.9%
+Min:    129.74
+Max:    987.06
+Span:   857.32
 
 ------------------------------------------------
 
-[START] duckdb - stress
+[START] duckdb - normal
 
 ------------------------------------------------
 
-[STRESS] Reading 2 tables with ca. 280 GB ...
+[NORMAL] Reading a table with ca. 2.2 GB ...
 
 ------------------------------------------------
 
-146200078
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     70.9 MiB     70.9 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     70.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    106.5 MiB     35.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 35.67 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    105.6 MiB     34.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 34.64 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     70.9 MiB     70.9 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     70.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    105.9 MiB     35.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 35.06 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    105.4 MiB     34.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 34.39 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     70.9 MiB     70.9 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     70.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    105.3 MiB     34.4 MiB           1       run_query([parquet_path])
+
+
+Memory = 34.48 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    105.6 MiB     34.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 34.66 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    106.6 MiB     35.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 35.56 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    107.9 MiB     36.7 MiB           1       run_query([parquet_path])
+
+
+Memory = 36.84 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.3 MiB     71.3 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    106.1 MiB     34.8 MiB           1       run_query([parquet_path])
+
+
+Memory = 34.95 MB, Time = 0.09 s
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    105.5 MiB     34.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 34.39 MB, Time = 0.09 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 4.4 GB ...
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     70.8 MiB     70.8 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    125.7 MiB     55.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 55.08 MB, Time = 0.24 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.5 MiB     71.5 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.5 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    127.0 MiB     55.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 55.64 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    127.9 MiB     56.8 MiB           1       run_query([parquet_path])
+
+
+Memory = 56.88 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    126.8 MiB     55.7 MiB           1       run_query([parquet_path])
+
+
+Memory = 55.84 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    126.7 MiB     55.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 55.64 MB, Time = 0.16 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    127.7 MiB     56.6 MiB           1       run_query([parquet_path])
+
+
+Memory = 56.72 MB, Time = 0.16 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.3 MiB     71.3 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    126.9 MiB     55.7 MiB           1       run_query([parquet_path])
+
+
+Memory = 55.78 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    126.8 MiB     55.8 MiB           1       run_query([parquet_path])
+
+
+Memory = 55.92 MB, Time = 0.15 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     70.8 MiB     70.8 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    127.3 MiB     56.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 56.58 MB, Time = 0.16 s
+
+------------------------------------------------
+
+2281119
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    126.9 MiB     55.9 MiB           1       run_query([parquet_path])
+
+
+Memory = 55.98 MB, Time = 0.15 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 8.8 GB ...
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    166.9 MiB     95.8 MiB           1       run_query([parquet_path])
+
+
+Memory = 95.88 MB, Time = 0.44 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    168.0 MiB     96.9 MiB           1       run_query([parquet_path])
+
+
+Memory = 97.03 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    167.5 MiB     96.4 MiB           1       run_query([parquet_path])
+
+
+Memory = 96.52 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    168.2 MiB     97.1 MiB           1       run_query([parquet_path])
+
+
+Memory = 97.23 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.3 MiB     71.3 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    167.5 MiB     96.2 MiB           1       run_query([parquet_path])
+
+
+Memory = 96.38 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    167.8 MiB     96.6 MiB           1       run_query([parquet_path])
+
+
+Memory = 96.70 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    167.8 MiB     96.7 MiB           1       run_query([parquet_path])
+
+
+Memory = 96.77 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    168.0 MiB     96.9 MiB           1       run_query([parquet_path])
+
+
+Memory = 97.00 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.6 MiB     71.6 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.6 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    168.2 MiB     96.6 MiB           1       run_query([parquet_path])
+
+
+Memory = 96.70 MB, Time = 0.29 s
+
+------------------------------------------------
+
+4565749
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    168.5 MiB     97.4 MiB           1       run_query([parquet_path])
+
+
+Memory = 97.52 MB, Time = 0.29 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 17.6 GB ...
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    242.8 MiB    171.6 MiB           1       run_query([parquet_path])
+
+
+Memory = 171.69 MB, Time = 0.88 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    243.3 MiB    172.1 MiB           1       run_query([parquet_path])
+
+
+Memory = 172.19 MB, Time = 0.89 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    242.6 MiB    171.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 171.61 MB, Time = 0.89 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    242.1 MiB    171.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 171.09 MB, Time = 0.88 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    243.2 MiB    172.2 MiB           1       run_query([parquet_path])
+
+
+Memory = 172.34 MB, Time = 0.90 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    242.7 MiB    171.6 MiB           1       run_query([parquet_path])
+
+
+Memory = 171.72 MB, Time = 0.89 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    242.5 MiB    171.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 171.42 MB, Time = 0.89 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    242.2 MiB    171.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 171.14 MB, Time = 0.89 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    242.4 MiB    171.2 MiB           1       run_query([parquet_path])
+
+
+Memory = 171.36 MB, Time = 0.90 s
+
+------------------------------------------------
+
+9135381
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    243.2 MiB    172.2 MiB           1       run_query([parquet_path])
+
+
+Memory = 172.27 MB, Time = 0.91 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 35.2 GB ...
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.0 MiB    339.9 MiB           1       run_query([parquet_path])
+
+
+Memory = 339.98 MB, Time = 1.75 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     70.8 MiB     70.8 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     70.8 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.6 MiB    340.8 MiB           1       run_query([parquet_path])
+
+
+Memory = 340.89 MB, Time = 1.73 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     70.7 MiB     70.7 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     70.7 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.7 MiB    341.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 341.14 MB, Time = 1.75 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.6 MiB    340.4 MiB           1       run_query([parquet_path])
+
+
+Memory = 340.55 MB, Time = 1.74 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.8 MiB    340.6 MiB           1       run_query([parquet_path])
+
+
+Memory = 340.73 MB, Time = 1.75 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.4 MiB     71.4 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.4 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.4 MiB    340.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 340.12 MB, Time = 1.75 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.1 MiB    340.1 MiB           1       run_query([parquet_path])
+
+
+Memory = 340.17 MB, Time = 1.74 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.5 MiB    340.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 340.44 MB, Time = 1.74 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     70.9 MiB     70.9 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     70.9 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    410.7 MiB    339.8 MiB           1       run_query([parquet_path])
+
+
+Memory = 339.89 MB, Time = 1.77 s
+
+------------------------------------------------
+
+18269118
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    411.3 MiB    340.1 MiB           1       run_query([parquet_path])
+
+
+Memory = 340.25 MB, Time = 1.74 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 70.4 GB ...
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    737.5 MiB    666.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 666.41 MB, Time = 3.45 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    736.0 MiB    665.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 665.11 MB, Time = 3.47 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    736.1 MiB    665.2 MiB           1       run_query([parquet_path])
+
+
+Memory = 665.28 MB, Time = 3.46 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    737.0 MiB    666.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 666.14 MB, Time = 3.46 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    736.9 MiB    665.9 MiB           1       run_query([parquet_path])
+
+
+Memory = 665.98 MB, Time = 3.46 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    737.0 MiB    665.8 MiB           1       run_query([parquet_path])
+
+
+Memory = 665.92 MB, Time = 3.46 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    736.9 MiB    665.9 MiB           1       run_query([parquet_path])
+
+
+Memory = 666.00 MB, Time = 3.45 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    739.4 MiB    668.4 MiB           1       run_query([parquet_path])
+
+
+Memory = 668.50 MB, Time = 3.53 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.6 MiB     71.6 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.6 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    739.5 MiB    667.9 MiB           1       run_query([parquet_path])
+
+
+Memory = 667.98 MB, Time = 3.74 s
+
+------------------------------------------------
+
+36542597
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23    738.1 MiB    667.0 MiB           1       run_query([parquet_path])
+
+
+Memory = 667.08 MB, Time = 3.56 s
+
+------------------------------------------------
+
+[NORMAL] Reading a table with ca. 140.8 GB ...
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.3 MiB     71.3 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1387.6 MiB   1316.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 1316.41 MB, Time = 4.99 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1387.2 MiB   1316.2 MiB           1       run_query([parquet_path])
+
+
+Memory = 1316.28 MB, Time = 5.02 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.3 MiB     71.3 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.3 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1387.6 MiB   1316.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 1316.41 MB, Time = 5.09 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1387.3 MiB   1316.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 1316.44 MB, Time = 5.10 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.2 MiB     71.2 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.2 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1387.7 MiB   1316.5 MiB           1       run_query([parquet_path])
+
+
+Memory = 1316.67 MB, Time = 5.31 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.4 MiB     71.4 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.4 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1386.7 MiB   1315.3 MiB           1       run_query([parquet_path])
+
+
+Memory = 1315.45 MB, Time = 5.23 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1387.1 MiB   1316.1 MiB           1       run_query([parquet_path])
+
+
+Memory = 1316.22 MB, Time = 5.24 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.0 MiB     71.0 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.0 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1386.7 MiB   1315.8 MiB           1       run_query([parquet_path])
+
+
+Memory = 1315.88 MB, Time = 5.31 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1387.5 MiB   1316.4 MiB           1       run_query([parquet_path])
+
+
+Memory = 1316.47 MB, Time = 5.41 s
+
+------------------------------------------------
+
+73100039
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    20     71.1 MiB     71.1 MiB           1   @profile
+    21                                         def normal_test(scale_factor: int):
+    22     71.1 MiB      0.0 MiB           1       parquet_path = f"tpc/lineitem_{scale_factor}.parquet"
+    23   1386.9 MiB   1315.7 MiB           1       run_query([parquet_path])
+
+
+Memory = 1315.84 MB, Time = 5.44 s
+
+--- Elapsed Time (s) ---
+Mean:   1.70
+Std:    1.96
+CV:     115.4%
+Min:    0.09
+Max:    5.21
+Span:   5.12
+
+------------------------------------------------
+
+--- Memory Used (MB) ---
+Mean:   383.23
+Std:    466.83
+CV:     121.8%
+Min:    35.06
+Max:    1316.21
+Span:   1281.14
+
+------------------------------------------------
+
+[START] duckdb - stress-small
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 1 files with ca. 2.06 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    105.8 MiB     34.6 MiB           1       run_query(parquet_files)
+
+
+Memory = 34.75 MB, Time = 0.09 s
+Run 2 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     70.9 MiB     70.9 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     70.9 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    105.7 MiB     34.8 MiB           1       run_query(parquet_files)
+
+
+Memory = 34.89 MB, Time = 0.09 s
+Run 3 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    105.6 MiB     34.4 MiB           1       run_query(parquet_files)
+
+
+Memory = 34.48 MB, Time = 0.09 s
+Run 4 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    106.3 MiB     35.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 35.28 MB, Time = 0.09 s
+Run 5 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    105.7 MiB     34.7 MiB           1       run_query(parquet_files)
+
+
+Memory = 34.80 MB, Time = 0.09 s
+Run 6 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    105.8 MiB     34.6 MiB           1       run_query(parquet_files)
+
+
+Memory = 34.75 MB, Time = 0.09 s
+Run 7 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    106.2 MiB     35.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 35.27 MB, Time = 0.09 s
+Run 8 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    106.0 MiB     34.8 MiB           1       run_query(parquet_files)
+
+
+Memory = 34.88 MB, Time = 0.09 s
+Run 9 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    105.8 MiB     34.8 MiB           1       run_query(parquet_files)
+
+
+Memory = 34.91 MB, Time = 0.09 s
+Run 10 / 10
+
+------------------------------------------------
+
+1139264
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.3 MiB     71.3 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.3 MiB      0.0 MiB           2       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    105.6 MiB     34.3 MiB           1       run_query(parquet_files)
+
+
+Memory = 34.41 MB, Time = 0.09 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 2 files with ca. 4.12 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.5 MiB     71.5 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.5 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    113.4 MiB     41.9 MiB           1       run_query(parquet_files)
+
+
+Memory = 42.00 MB, Time = 0.15 s
+Run 2 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    113.8 MiB     42.5 MiB           1       run_query(parquet_files)
+
+
+Memory = 42.62 MB, Time = 0.15 s
+Run 3 / 10
+
+------------------------------------------------
+
+2278528
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
@@ -115,56 +3584,327 @@ Line #    Mem usage    Increment  Occurrences   Line Contents
     25     71.1 MiB     71.1 MiB           1   @profile
     26                                         def stress_test(scale_factors: List[int]):
     27     71.1 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
-    28   1725.0 MiB   1653.8 MiB           1       run_query(parquet_files)
+    28    113.7 MiB     42.6 MiB           1       run_query(parquet_files)
 
 
-Memory = 1653.95 MB, Time = 9.13 s
-
-------------------------------------------------
-
-[STRESS] Reading 4 tables with ca. 560 GB ...
+Memory = 42.69 MB, Time = 0.15 s
+Run 4 / 10
 
 ------------------------------------------------
 
-292400156
+2278528
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
-    25     71.3 MiB     71.3 MiB           1   @profile
+    25     70.6 MiB     70.6 MiB           1   @profile
     26                                         def stress_test(scale_factors: List[int]):
-    27     71.3 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
-    28   2559.9 MiB   2488.6 MiB           1       run_query(parquet_files)
+    27     70.6 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    113.7 MiB     43.1 MiB           1       run_query(parquet_files)
 
 
-Memory = 2488.80 MB, Time = 16.84 s
-
-------------------------------------------------
-
-[STRESS] Reading 6 tables with ca. 840 GB ...
+Memory = 43.19 MB, Time = 0.15 s
+Run 5 / 10
 
 ------------------------------------------------
 
-438600234
+2278528
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
 =============================================================
     25     71.0 MiB     71.0 MiB           1   @profile
     26                                         def stress_test(scale_factors: List[int]):
-    27     71.0 MiB      0.0 MiB           7       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
-    28   3492.8 MiB   3421.7 MiB           1       run_query(parquet_files)
+    27     71.0 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    113.6 MiB     42.6 MiB           1       run_query(parquet_files)
 
 
-Memory = 3421.86 MB, Time = 25.32 s
-
-------------------------------------------------
-
-[STRESS] Reading 8 tables with ca. 1120 GB ...
+Memory = 42.69 MB, Time = 0.15 s
+Run 6 / 10
 
 ------------------------------------------------
 
-584800312
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    113.5 MiB     42.4 MiB           1       run_query(parquet_files)
+
+
+Memory = 42.45 MB, Time = 0.15 s
+Run 7 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    114.1 MiB     43.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 43.22 MB, Time = 0.15 s
+Run 8 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    113.2 MiB     42.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 42.23 MB, Time = 0.15 s
+Run 9 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    113.9 MiB     42.9 MiB           1       run_query(parquet_files)
+
+
+Memory = 42.95 MB, Time = 0.15 s
+Run 10 / 10
+
+------------------------------------------------
+
+2278528
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.3 MiB     71.3 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.3 MiB      0.0 MiB           3       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    113.6 MiB     42.3 MiB           1       run_query(parquet_files)
+
+
+Memory = 42.39 MB, Time = 0.15 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 4 files with ca. 8.24 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     70.6 MiB     70.6 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     70.6 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    126.8 MiB     56.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.33 MB, Time = 0.26 s
+Run 2 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.2 MiB     56.0 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.11 MB, Time = 0.26 s
+Run 3 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.6 MiB     56.4 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.55 MB, Time = 0.26 s
+Run 4 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.2 MiB     56.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.19 MB, Time = 0.26 s
+Run 5 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.3 MiB     56.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.33 MB, Time = 0.26 s
+Run 6 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.1 MiB     56.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.17 MB, Time = 0.26 s
+Run 7 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.3 MiB     56.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.28 MB, Time = 0.27 s
+Run 8 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     70.7 MiB     70.7 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     70.7 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.5 MiB     56.8 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.95 MB, Time = 0.26 s
+Run 9 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.3 MiB     56.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.33 MB, Time = 0.26 s
+Run 10 / 10
+
+------------------------------------------------
+
+4557056
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB           5       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    127.0 MiB     55.9 MiB           1       run_query(parquet_files)
+
+
+Memory = 56.00 MB, Time = 0.26 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 8 files with ca. 16.48 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    154.7 MiB     83.6 MiB           1       run_query(parquet_files)
+
+
+Memory = 83.67 MB, Time = 0.48 s
+Run 2 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    154.9 MiB     83.9 MiB           1       run_query(parquet_files)
+
+
+Memory = 83.98 MB, Time = 0.48 s
+Run 3 / 10
+
+------------------------------------------------
+
+9114112
 Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
 
 Line #    Mem usage    Increment  Occurrences   Line Contents
@@ -172,31 +3912,639 @@ Line #    Mem usage    Increment  Occurrences   Line Contents
     25     71.2 MiB     71.2 MiB           1   @profile
     26                                         def stress_test(scale_factors: List[int]):
     27     71.2 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
-    28   4332.2 MiB   4261.0 MiB           1       run_query(parquet_files)
+    28    154.2 MiB     83.0 MiB           1       run_query(parquet_files)
 
 
-Memory = 4261.12 MB, Time = 35.64 s
+Memory = 83.16 MB, Time = 0.49 s
+Run 4 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    154.2 MiB     83.0 MiB           1       run_query(parquet_files)
+
+
+Memory = 83.14 MB, Time = 0.48 s
+Run 5 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    154.7 MiB     83.6 MiB           1       run_query(parquet_files)
+
+
+Memory = 83.70 MB, Time = 0.48 s
+Run 6 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    154.3 MiB     83.3 MiB           1       run_query(parquet_files)
+
+
+Memory = 83.44 MB, Time = 0.48 s
+Run 7 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    154.8 MiB     83.7 MiB           1       run_query(parquet_files)
+
+
+Memory = 83.78 MB, Time = 0.48 s
+Run 8 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    155.7 MiB     84.7 MiB           1       run_query(parquet_files)
+
+
+Memory = 84.78 MB, Time = 0.48 s
+Run 9 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    154.7 MiB     83.5 MiB           1       run_query(parquet_files)
+
+
+Memory = 83.64 MB, Time = 0.48 s
+Run 10 / 10
+
+------------------------------------------------
+
+9114112
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB           9       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    154.4 MiB     83.4 MiB           1       run_query(parquet_files)
+
+
+Memory = 83.48 MB, Time = 0.48 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 18 files with ca. 37.08 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.5 MiB    104.3 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.45 MB, Time = 1.04 s
+Run 2 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.3 MiB    104.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.22 MB, Time = 1.05 s
+Run 3 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.9 MiB    104.8 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.91 MB, Time = 1.04 s
+Run 4 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.9 MiB    104.7 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.77 MB, Time = 1.04 s
+Run 5 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.4 MiB    104.3 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.41 MB, Time = 1.02 s
+Run 6 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     70.7 MiB     70.7 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     70.7 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.6 MiB    105.0 MiB           1       run_query(parquet_files)
+
+
+Memory = 105.09 MB, Time = 1.03 s
+Run 7 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     70.9 MiB     70.9 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     70.9 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.6 MiB    104.7 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.84 MB, Time = 1.04 s
+Run 8 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.2 MiB    104.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.25 MB, Time = 1.04 s
+Run 9 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.3 MiB     71.3 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.3 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.4 MiB    104.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.25 MB, Time = 1.05 s
+Run 10 / 10
+
+------------------------------------------------
+
+20506752
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     70.9 MiB     70.9 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     70.9 MiB      0.0 MiB          19       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    175.1 MiB    104.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 104.28 MB, Time = 1.02 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 36 files with ca. 74.16 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     70.8 MiB     70.8 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     70.8 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    176.0 MiB    105.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 105.36 MB, Time = 2.05 s
+Run 2 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    176.8 MiB    105.6 MiB           1       run_query(parquet_files)
+
+
+Memory = 105.70 MB, Time = 2.02 s
+Run 3 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.3 MiB     71.3 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.3 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    194.5 MiB    123.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 123.27 MB, Time = 2.02 s
+Run 4 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    178.4 MiB    107.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 107.30 MB, Time = 2.04 s
+Run 5 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    176.0 MiB    104.9 MiB           1       run_query(parquet_files)
+
+
+Memory = 105.02 MB, Time = 2.02 s
+Run 6 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.5 MiB     71.5 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.5 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    179.0 MiB    107.5 MiB           1       run_query(parquet_files)
+
+
+Memory = 107.61 MB, Time = 2.02 s
+Run 7 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    176.6 MiB    105.5 MiB           1       run_query(parquet_files)
+
+
+Memory = 105.58 MB, Time = 1.99 s
+Run 8 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.4 MiB     71.4 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.4 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    176.4 MiB    104.9 MiB           1       run_query(parquet_files)
+
+
+Memory = 105.03 MB, Time = 2.03 s
+Run 9 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    216.5 MiB    145.4 MiB           1       run_query(parquet_files)
+
+
+Memory = 145.47 MB, Time = 2.00 s
+Run 10 / 10
+
+------------------------------------------------
+
+41013504
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          37       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    177.3 MiB    106.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 106.30 MB, Time = 2.03 s
+
+------------------------------------------------
+
+[STRESS-SMALL] Reading 72 files with ca. 148.32 GB ...
+Run 1 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    180.3 MiB    109.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 109.30 MB, Time = 3.97 s
+Run 2 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    176.9 MiB    105.7 MiB           1       run_query(parquet_files)
+
+
+Memory = 105.86 MB, Time = 4.02 s
+Run 3 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    177.0 MiB    105.8 MiB           1       run_query(parquet_files)
+
+
+Memory = 105.97 MB, Time = 4.00 s
+Run 4 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.2 MiB     71.2 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.2 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    194.5 MiB    123.4 MiB           1       run_query(parquet_files)
+
+
+Memory = 123.48 MB, Time = 4.00 s
+Run 5 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.3 MiB     71.3 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.3 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    180.5 MiB    109.2 MiB           1       run_query(parquet_files)
+
+
+Memory = 109.33 MB, Time = 3.99 s
+Run 6 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    183.1 MiB    112.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 112.22 MB, Time = 3.96 s
+Run 7 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     70.6 MiB     70.6 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     70.6 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    176.7 MiB    106.0 MiB           1       run_query(parquet_files)
+
+
+Memory = 106.17 MB, Time = 3.95 s
+Run 8 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.0 MiB     71.0 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.0 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    177.7 MiB    106.6 MiB           1       run_query(parquet_files)
+
+
+Memory = 106.77 MB, Time = 3.97 s
+Run 9 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.3 MiB     71.3 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.3 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    177.4 MiB    106.1 MiB           1       run_query(parquet_files)
+
+
+Memory = 106.20 MB, Time = 3.96 s
+Run 10 / 10
+
+------------------------------------------------
+
+82027008
+Filename: /Users/niklasniggemann/duckdb_motherduck_lab/duckdb_polars_stresstest/duckdb_olap.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    25     71.1 MiB     71.1 MiB           1   @profile
+    26                                         def stress_test(scale_factors: List[int]):
+    27     71.1 MiB      0.0 MiB          73       parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
+    28    177.8 MiB    106.6 MiB           1       run_query(parquet_files)
+
+
+Memory = 106.75 MB, Time = 3.93 s
 
 --- Elapsed Time (s) ---
-Mean:   21.73
-Std:    11.39
-CV:     52.4%
-Min:    9.13
-Max:    35.64
-Span:   26.51
+Mean:   1.15
+Std:    1.42
+CV:     124.1%
+Min:    0.09
+Max:    3.98
+Span:   3.89
 
 ------------------------------------------------
 
 --- Memory Used (MB) ---
-Mean:   2956.43
-Std:    1130.48
-CV:     38.2%
-Min:    1653.95
-Max:    4261.12
-Span:   2607.17
+Mean:   77.56
+Std:    32.72
+CV:     42.2%
+Min:    34.84
+Max:    111.66
+Span:   76.82
 
 ------------------------------------------------
 
 === Phase 2: Plotting figures (saving to disk) ===
-Plot saved to results/polars_duckdb_stress_memory.png
-Plot saved to results/polars_duckdb_stress_time.png
+Plot saved to results/polars_duckdb_normal_memory.png
+Plot saved to results/polars_duckdb_normal_time.png
+Plot saved to results/polars_duckdb_stress-small_memory.png
+Plot saved to results/polars_duckdb_stress-small_time.png
+Overlay plot saved to results/polars_duckdb_overlay_memory.png
+Overlay plot saved to results/polars_duckdb_overlay_time.png

@@ -28,7 +28,3 @@ def stress_test(scale_factors: List[int]):
     parquet_files = [f"tpc/lineitem_{sf}.parquet" for sf in scale_factors]
     run_polars_query(parquet_files)
 
-@profile
-def multiple_test(num_files: int):
-    parquet_files = [f"tpc/lineitem_10.parquet"] * num_files
-    run_polars_query(parquet_files)
