@@ -144,7 +144,7 @@ def run_normal_benchmark(tool: str, scale_factors: List[int]) -> Tuple[List[floa
         print(f"[NORMAL] Reading a table with ca. {factor * 0.22} GB ...")
         mem_tmp, t_tmp = [], []
         rows = size = scale = 0
-        for _ in range(10):
+        for i in range(10):
             print(f"Run {i+1} / 10")
             result = benchmark(tool, "normal", factor)
             if result:
@@ -217,7 +217,7 @@ def main():
         "polars": ["polars"],
     }
     test_map = {
-        "all": ["normal", "stress-small"],
+        "all": ["normal", "stress-small", "stress-big"],
         "normal": ["normal"],
         "stress-big": ["stress-big"],
         "stress-small": ["stress-small"],
